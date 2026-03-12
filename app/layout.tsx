@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import StickyCTA from '@/components/StickyCTA'
 
 export const metadata: Metadata = {
   title: 'Sunstate Devworks — Web, Mobile & AI Development',
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Nav />
         <main>{children}</main>
         <Footer />
+        <StickyCTA />
       </body>
     </html>
   )

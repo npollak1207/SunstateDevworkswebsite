@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import ScrollReveal from '@/components/ScrollReveal'
 
 const stack = [
   { cat: 'Web', items: ['Next.js', 'React', 'HTML/CSS', 'TypeScript', 'Node.js'] },
