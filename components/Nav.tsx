@@ -129,7 +129,6 @@ export default function Nav() {
               {/* Dropdown panel */}
               <div style={{
                 position: 'absolute', top: 'calc(100% + 16px)', left: '50%',
-                transform: 'translateX(-50%)',
                 width: 380,
                 background: 'var(--navy-mid)',
                 border: '1px solid rgba(0,212,200,0.12)',
