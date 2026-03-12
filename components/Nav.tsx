@@ -1,63 +1,145 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+'use client'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/works', label: 'Works' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+]
 
-:root {
-  --cyan: #00D4C8;
-  --orange: #F4622A;
-  --navy: #0D1B2A;
-  --navy-mid: #132235;
-  --navy-light: #1E3349;
-  --off-white: #F0EDE6;
-  --text-muted: #7A8FA6;
-}
+export default function Nav() {
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+  const pathname = usePathname()
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', fn)
+    return () => window.removeEventListener('scroll', fn)
+  }, [])
 
-body {
-  background: var(--navy);
-  color: var(--off-white);
-  font-family: 'DM Sans', sans-serif;
-  overflow-x: hidden;
-}
+  return (
+    <header
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        transition: 'all 0.3s ease',
+        background: scrolled ? 'rgba(13, 27, 42, 0.92)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(0,212,200,0.1)' : '1px solid transparent',
+      }}
+    >
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+          <Image src="/logo.png" alt="Sunstate Devworks" width={44} height={44} style={{ objectFit: 'contain' }} />
+          <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 15, color: 'var(--off-white)', letterSpacing: '0.02em' }}>
+            Sunstate<span style={{ color: 'var(--cyan)' }}>Devworks</span>
+          </span>
+        </Link>
 
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--navy); }
-::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
-::selection { background: var(--cyan); color: var(--navy); }
+        <nav style={{ display: 'flex', gap: 36, alignItems: 'center' }}>
+          {links.slice(0, -1).map(l => (
+            <Link
+              key={l.href}
+              href={l.href}
+              style={{
+                fontFamily: 'DM Sans, sans-serif',
+                fontSize: 14,
+                fontWeight: 500,
+                textDecoration: 'none',
+                color: pathname === l.href ? 'var(--cyan)' : 'var(--text-muted)',
+                transition: 'color 0.2s',
+                letterSpacing: '0.02em',
+              }}
+            >
+              {l.label}
+            </Link>
+          ))}
+          <Link
+            href="/contact"
+            style={{
+              background: 'var(--orange)',
+              color: 'white',
+              fontFamily: 'Syne, sans-serif',
+              fontWeight: 700,
+              fontSize: 13,
+              padding: '10px 22px',
+              borderRadius: 6,
+              textDecoration: 'none',
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+              transition: 'opacity 0.2s',
+            }}
+          >
+            Let&apos;s Build
+          </Link>
+        </nav>
 
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.marquee-track { animation: marquee 25s linear infinite; }
+        <button
+          onClick={() => setOpen(!open)}
+          style={{
+            display: 'none',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            color: 'var(--off-white)',
+            padding: 8,
+          }}
+          className="mobile-menu-btn"
+          aria-label="Menu"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            {open ? (
+              <path d="M18 6L6 18M6 6l12 12" />
+            ) : (
+              <path d="M3 12h18M3 6h18M3 18h18" />
+            )}
+          </svg>
+        </button>
+      </div>
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-up { animation: fadeInUp 0.6s ease forwards; }
+      {open && (
+        <div style={{
+          background: 'var(--navy-mid)',
+          borderTop: '1px solid rgba(0,212,200,0.1)',
+          padding: '16px 24px 24px',
+        }}>
+          {links.map(l => (
+            <Link
+              key={l.href}
+              href={l.href}
+              onClick={() => setOpen(false)}
+              style={{
+                display: 'block',
+                padding: '12px 0',
+                fontFamily: 'Syne, sans-serif',
+                fontSize: 18,
+                fontWeight: 600,
+                color: pathname === l.href ? 'var(--cyan)' : 'var(--off-white)',
+                textDecoration: 'none',
+                borderBottom: '1px solid rgba(255,255,255,0.05)',
+              }}
+            >
+              {l.label}
+            </Link>
+          ))}
+        </div>
+      )}
 
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-.cursor-blink { animation: blink 1s step-end infinite; }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
-}
-.float-anim { animation: float 4s ease-in-out infinite; }
-
-.card-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card-lift:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 64px rgba(0, 212, 200, 0.14);
-}
-.card-lift-orange:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 64px rgba(244, 98, 42, 0.16);
+      <style>{`
+        @media (max-width: 768px) {
+          nav { display: none !important; }
+          .mobile-menu-btn { display: block !important; }
+        }
+      `}</style>
+    </header>
+  )
 }
