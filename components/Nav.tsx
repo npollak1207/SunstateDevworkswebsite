@@ -138,8 +138,8 @@ export default function Nav() {
                 opacity: dropdownOpen ? 1 : 0,
                 pointerEvents: dropdownOpen ? 'auto' : 'none',
                 transform: dropdownOpen
-                  ? 'translateX(-50%) translateY(0)'
-                  : 'translateX(-50%) translateY(-8px)',
+                    ? 'translateX(-50%) translateY(0)'
+                    : 'translateX(-50%) translateY(-8px)',
                 transition: 'opacity 0.18s ease, transform 0.18s ease',
               }}>
                 {/* Top: all services link */}
