@@ -39,10 +39,10 @@ export default function AboutPage() {
             </div>
             <div style={{ paddingTop: 80 }}>
               <Image
-                src="/logo.png"
+                src="/about.png"
                 alt="Sunstate Devworks"
-                width={200}
-                height={200}
+                width={700}
+                height={700}
                 style={{ objectFit: 'contain', opacity: 0.9 }}
               />
             </div>

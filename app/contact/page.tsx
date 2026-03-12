@@ -7,12 +7,28 @@ const budgets = ['Under $1k', '$1k–$3k', '$3k–$7.5k', '$7.5k–$15k', '$15k+
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', company: '', service: '', budget: '', message: '' })
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [focused, setFocused] = useState('')
 
   const handle = (k: string, v: string) => setForm(p => ({ ...p, [k]: v }))
 
-  const inputStyle = (field: string) => ({
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('submitting')
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error()
+      setStatus('success')
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  const inputStyle = (field: string): React.CSSProperties => ({
     width: '100%',
     background: focused === field ? 'rgba(0,212,200,0.04)' : 'var(--navy)',
     border: `1px solid ${focused === field ? 'rgba(0,212,200,0.4)' : 'rgba(255,255,255,0.08)'}`,
@@ -23,14 +39,15 @@ export default function ContactPage() {
     fontSize: 15,
     outline: 'none',
     transition: 'border-color 0.2s, background 0.2s',
+    boxSizing: 'border-box',
   })
 
-  const labelStyle = {
+  const labelStyle: React.CSSProperties = {
     fontFamily: 'Space Mono, monospace',
     fontSize: 11,
     color: 'var(--text-muted)',
     letterSpacing: '0.08em',
-    textTransform: 'uppercase' as const,
+    textTransform: 'uppercase',
     marginBottom: 8,
     display: 'block',
   }
@@ -56,23 +73,25 @@ export default function ContactPage() {
 
       {/* Form + Sidebar */}
       <section style={{ padding: '20px 24px 120px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '3fr 2fr', gap: 80 }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '3fr 2fr', gap: 80 }} className="contact-grid">
 
-          {/* Form */}
-          {sent ? (
+          {/* Form / Success / Error */}
+          {status === 'success' ? (
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '60px 0' }}>
-              <div style={{ fontSize: 64, marginBottom: 24, color: 'var(--cyan)' }}>✦</div>
+              <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(40,200,64,0.1)', border: '1px solid rgba(40,200,64,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 28 }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#28C840" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
               <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>Message Received</p>
               <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 56px)', lineHeight: 1.05, marginBottom: 16 }}>
                 We got it.<br /><span style={{ color: 'var(--orange)' }}>Talk soon.</span>
               </h2>
               <p style={{ color: 'var(--text-muted)', fontSize: 16, lineHeight: 1.75, maxWidth: 400 }}>
-                Expect to hear from us within a few hours. We&apos;ll review your project and set up a discovery call at your convenience.
+                Check your inbox — we sent a confirmation to <span style={{ color: 'var(--cyan)' }}>{form.email}</span>. Expect to hear from us within a few hours.
               </p>
             </div>
           ) : (
-            <form onSubmit={e => { e.preventDefault(); setSent(true) }} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="name-grid">
                 <div>
                   <label style={labelStyle}>Name *</label>
                   <input required style={inputStyle('name')} placeholder="John Smith" value={form.name} onChange={e => handle('name', e.target.value)} onFocus={() => setFocused('name')} onBlur={() => setFocused('')} />
@@ -89,7 +108,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label style={labelStyle}>Service Needed *</label>
+                <label style={labelStyle}>Service Needed</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                   {services.map(s => (
                     <button key={s} type="button" onClick={() => handle('service', s)} style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, padding: '9px 16px', borderRadius: 999, border: `1px solid ${form.service === s ? 'var(--cyan)' : 'rgba(255,255,255,0.1)'}`, background: form.service === s ? 'rgba(0,212,200,0.1)' : 'transparent', color: form.service === s ? 'var(--cyan)' : 'var(--text-muted)', cursor: 'pointer', letterSpacing: '0.04em', textTransform: 'uppercase', transition: 'all 0.2s' }}>
@@ -112,11 +131,29 @@ export default function ContactPage() {
 
               <div>
                 <label style={labelStyle}>Tell Us About Your Project *</label>
-                <textarea required rows={5} style={{ ...inputStyle('message'), resize: 'vertical' as const }} placeholder="What are you building? What problem does it solve? Any existing site or app to reference?" value={form.message} onChange={e => handle('message', e.target.value)} onFocus={() => setFocused('message')} onBlur={() => setFocused('')} />
+                <textarea required rows={5} style={{ ...inputStyle('message'), resize: 'vertical' }} placeholder="What are you building? What problem does it solve? Any existing site or app to reference?" value={form.message} onChange={e => handle('message', e.target.value)} onFocus={() => setFocused('message')} onBlur={() => setFocused('')} />
               </div>
 
-              <button type="submit" className="glow-pulse" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 15, padding: '18px 40px', borderRadius: 8, border: 'none', cursor: 'pointer', letterSpacing: '0.06em', textTransform: 'uppercase', alignSelf: 'flex-start', transition: 'transform 0.2s' }}>
-                Send Message →
+              {/* Error banner */}
+              {status === 'error' && (
+                <div style={{ background: 'rgba(244,98,42,0.08)', border: '1px solid rgba(244,98,42,0.25)', borderRadius: 8, padding: '12px 16px', display: 'flex', gap: 10, alignItems: 'center' }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--orange)', letterSpacing: '0.04em' }}>Something went wrong. Please try again or email us directly at contact@sunstatedevworks.com</p>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === 'submitting'}
+                className="glow-pulse"
+                style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 15, padding: '18px 40px', borderRadius: 8, border: 'none', cursor: status === 'submitting' ? 'not-allowed' : 'pointer', letterSpacing: '0.06em', textTransform: 'uppercase', alignSelf: 'flex-start', opacity: status === 'submitting' ? 0.7 : 1, transition: 'opacity 0.2s', display: 'flex', alignItems: 'center', gap: 10 }}
+              >
+                {status === 'submitting' ? (
+                  <>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" style={{ animation: 'spin 0.8s linear infinite' }}><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                    Sending...
+                  </>
+                ) : 'Send Message →'}
               </button>
             </form>
           )}
@@ -132,9 +169,9 @@ export default function ContactPage() {
                   { step: '03', label: 'Weekly Updates', desc: 'We build in sprints. You stay informed without being in the weeds.' },
                   { step: '04', label: 'Launch Day', desc: 'We handle DNS, SSL, go-live testing, and hand you the keys.' },
                 ].map((s, i) => (
-                  <div key={s.step} style={{ display: 'flex', gap: 16, marginBottom: 28, paddingLeft: 0 }}>
+                  <div key={s.step} style={{ display: 'flex', gap: 16, marginBottom: 28 }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
-                      <span style={{ fontFamily: 'Space Mono, monospace', color: i % 2 === 0 ? 'var(--cyan)' : 'var(--orange)', borderRadius: "50%", border: `1px solid ${i % 2 === 0 ? "rgba(0,212,200,0.3)" : "rgba(244,98,42,0.3)"}`, display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, minWidth: 28, lineHeight: "1", fontSize: 10 }}>{s.step}</span>
+                      <span style={{ fontFamily: 'Space Mono, monospace', color: i % 2 === 0 ? 'var(--cyan)' : 'var(--orange)', borderRadius: '50%', border: `1px solid ${i % 2 === 0 ? 'rgba(0,212,200,0.3)' : 'rgba(244,98,42,0.3)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, minWidth: 28, fontSize: 10 }}>{s.step}</span>
                       {i < 3 && <div style={{ width: 1, flex: 1, background: 'rgba(255,255,255,0.06)', margin: '6px 0' }} />}
                     </div>
                     <div style={{ paddingBottom: i < 3 ? 20 : 0 }}>
@@ -163,11 +200,10 @@ export default function ContactPage() {
       </section>
 
       <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
         @media (max-width: 768px) {
-          form + div, div:has(form) + div { grid-column: 1 !important; }
-          section > div[style*="grid-template-columns: 3fr"] {
-            grid-template-columns: 1fr !important;
-          }
+          .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+          .name-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </>
