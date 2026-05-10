@@ -1,4 +1,4 @@
-import { MetadataRoute } from 'next'
+﻿import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/'],
       },
     ],
-    sitemap: 'https://www.sunstatedevworks.com/sitemap.xml',
-    host: 'https://www.sunstatedevworks.com',
+    sitemap: 'https://sunstatedevworks.com/sitemap.xml',
+    host: 'https://sunstatedevworks.com',
   }
 }

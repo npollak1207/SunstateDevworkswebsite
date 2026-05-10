@@ -1,9 +1,9 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Web Design Scottsdale AZ | Sunstate DevWorks',
-  description: 'Premium web design in Scottsdale, AZ for luxury brands, hospitality, and high-end businesses. Hand-coded custom sites, branding & AI — no templates. Gilbert-based studio.',
+  description: 'Premium web design in Scottsdale, AZ for luxury brands, hospitality, and high-end businesses. Hand-coded custom sites, branding & AI â€” no templates. Gilbert-based studio.',
   keywords: [
     'web design Scottsdale AZ',
     'web designer Scottsdale Arizona',
@@ -17,10 +17,10 @@ export const metadata: Metadata = {
     'mobile app developer Scottsdale AZ',
   ],
   alternates: {
-    canonical: 'https://www.sunstatedevworks.com/web-design-scottsdale',
+    canonical: 'https://sunstatedevworks.com/web-design-scottsdale',
   },
   openGraph: {
-    url: 'https://www.sunstatedevworks.com/web-design-scottsdale',
+    url: 'https://sunstatedevworks.com/web-design-scottsdale',
     title: 'Web Design Scottsdale AZ | Sunstate DevWorks',
     description: 'Premium web design in Scottsdale, AZ for luxury brands, hospitality & high-end businesses. Hand-coded custom sites, no templates.',
   },
@@ -34,9 +34,9 @@ const services = [
 ]
 
 const localReasons = [
-  'Scottsdale commands premium expectations — from luxury resorts to high-end retail, your website needs to reflect the caliber of your brand, not a generic template.',
+  'Scottsdale commands premium expectations â€” from luxury resorts to high-end retail, your website needs to reflect the caliber of your brand, not a generic template.',
   'We understand Scottsdale\'s hospitality and tourism industry. From spa booking flows to restaurant experiences, we design digital products that convert affluent visitors.',
-  'In-person meetings available for Scottsdale clients. We are a short drive from Old Town — not an overseas agency working across six time zones.',
+  'In-person meetings available for Scottsdale clients. We are a short drive from Old Town â€” not an overseas agency working across six time zones.',
   'Scottsdale\'s competitive luxury market means your digital presence must be flawless. We target 100 on Lighthouse and obsess over every pixel.',
 ]
 
@@ -50,10 +50,10 @@ export default function ScottsdalePage() {
         <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
             <Link href="/" style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--text-muted)', textDecoration: 'none', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Home</Link>
-            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>→</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>â†’</span>
             <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Web Design Scottsdale</span>
           </div>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Scottsdale, AZ — Luxury & Hospitality</p>
+          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Scottsdale, AZ â€” Luxury & Hospitality</p>
           <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(44px, 6vw, 88px)', lineHeight: 0.95, letterSpacing: '-0.025em', marginBottom: 32, maxWidth: 800 }}>
             Scottsdale Web Design<br /><span style={{ color: 'var(--cyan)' }}>& Development</span>
           </h1>
@@ -62,7 +62,7 @@ export default function ScottsdalePage() {
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-              Start a Project →
+              Start a Project â†’
             </Link>
             <Link href="/services" style={{ border: '1px solid rgba(0,212,200,0.25)', color: 'var(--cyan)', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               Our Services
@@ -105,7 +105,7 @@ export default function ScottsdalePage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {localReasons.map((reason, i) => (
               <div key={i} style={{ background: 'var(--navy-mid)', padding: '20px 24px', display: 'flex', gap: 16, alignItems: 'start', border: '1px solid rgba(255,255,255,0.04)' }}>
-                <span style={{ color: 'var(--cyan)', fontFamily: 'Space Mono, monospace', fontSize: 13, marginTop: 2, flexShrink: 0 }}>→</span>
+                <span style={{ color: 'var(--cyan)', fontFamily: 'Space Mono, monospace', fontSize: 13, marginTop: 2, flexShrink: 0 }}>â†’</span>
                 <p style={{ color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.75 }}>{reason}</p>
               </div>
             ))}
@@ -117,7 +117,7 @@ export default function ScottsdalePage() {
       <section style={{ padding: '100px 24px', textAlign: 'center', background: 'var(--navy-mid)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(0,212,200,0.012) 20px, rgba(0,212,200,0.012) 40px)' }} />
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Based in Gilbert, AZ · Serving Scottsdale</p>
+          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Based in Gilbert, AZ Â· Serving Scottsdale</p>
           <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(32px, 5vw, 60px)', lineHeight: 1.0, marginBottom: 24 }}>
             Ready to build something<br /><span style={{ color: 'var(--cyan)' }}>in Scottsdale?</span>
           </h2>
@@ -125,7 +125,7 @@ export default function ScottsdalePage() {
             30-minute discovery call, free of charge. We scope the project, put it in writing, and get to work.
           </p>
           <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 14, padding: '16px 40px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-            Get a Free Quote →
+            Get a Free Quote â†’
           </Link>
         </div>
       </section>

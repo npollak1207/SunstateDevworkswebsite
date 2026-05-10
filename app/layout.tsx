@@ -1,14 +1,14 @@
-import './globals.css'
+﻿import './globals.css'
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import ConditionalLayout from '@/components/ConditionalLayout'
 import StructuredData from '@/components/StructuredData'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.sunstatedevworks.com'),
+  metadataBase: new URL('https://sunstatedevworks.com'),
   title: {
-    default: 'Sunstate DevWorks | Custom Web & Mobile Development — Phoenix, AZ',
-    template: '%s | Sunstate DevWorks — Phoenix Web Design',
+    default: 'Sunstate DevWorks | Custom Web & Mobile Development â€” Phoenix, AZ',
+    template: '%s | Sunstate DevWorks â€” Phoenix Web Design',
   },
   description: "Phoenix-area custom web design, iOS app development, branding & AI automation. Hand-coded, no templates, 100% code ownership. Serving Gilbert, Scottsdale, Chandler, Mesa, Tempe & all of metro Phoenix.",
   keywords: [
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     'no WordPress custom code Arizona',
     'hand coded website Phoenix',
   ],
-  authors: [{ name: 'Sunstate DevWorks', url: 'https://www.sunstatedevworks.com' }],
+  authors: [{ name: 'Sunstate DevWorks', url: 'https://sunstatedevworks.com' }],
   creator: 'Sunstate DevWorks',
   publisher: 'Sunstate DevWorks',
   robots: {
@@ -74,16 +74,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://www.sunstatedevworks.com',
+    url: 'https://sunstatedevworks.com',
     siteName: 'Sunstate DevWorks',
-    title: 'Sunstate DevWorks | Custom Web & Mobile Development — Phoenix, AZ',
+    title: 'Sunstate DevWorks | Custom Web & Mobile Development â€” Phoenix, AZ',
     description: "Phoenix-area custom web design, iOS apps, branding & AI automation. Hand-coded, no templates, 100% yours. Serving Gilbert, Scottsdale, Chandler, Mesa, Tempe & all of metro Phoenix.",
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Sunstate DevWorks — Custom Web & Mobile Development, Phoenix AZ',
+        alt: 'Sunstate DevWorks â€” Custom Web & Mobile Development, Phoenix AZ',
       },
     ],
   },
@@ -94,7 +94,7 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   alternates: {
-    canonical: 'https://www.sunstatedevworks.com',
+    canonical: 'https://sunstatedevworks.com',
   },
   icons: {
     icon: '/favicon.ico',

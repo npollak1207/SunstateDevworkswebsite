@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -17,10 +17,10 @@ export const metadata: Metadata = {
     'mobile app developer Chandler AZ',
   ],
   alternates: {
-    canonical: 'https://www.sunstatedevworks.com/web-design-chandler',
+    canonical: 'https://sunstatedevworks.com/web-design-chandler',
   },
   openGraph: {
-    url: 'https://www.sunstatedevworks.com/web-design-chandler',
+    url: 'https://sunstatedevworks.com/web-design-chandler',
     title: 'Web Design Chandler AZ | Sunstate DevWorks',
     description: 'Custom web design in Chandler, AZ for tech companies, B2B SaaS & startups. Hand-coded sites, no templates. Gilbert-based studio.',
   },
@@ -34,9 +34,9 @@ const services = [
 ]
 
 const localReasons = [
-  'Chandler is the Silicon Desert\'s beating heart — home to Intel, PayPal, and a thriving startup corridor. We understand the technical bar that B2B and SaaS companies need to clear.',
+  'Chandler is the Silicon Desert\'s beating heart â€” home to Intel, PayPal, and a thriving startup corridor. We understand the technical bar that B2B and SaaS companies need to clear.',
   'We build web applications, not just marketing sites. If your Chandler business needs a product, portal, or platform, we have done it before.',
-  'In-person meetings available for Chandler clients. We are minutes away — not a remote team that schedules a call two weeks out.',
+  'In-person meetings available for Chandler clients. We are minutes away â€” not a remote team that schedules a call two weeks out.',
   'Chandler\'s growing startup scene demands digital products that scale. We build with Next.js, TypeScript, and modern infrastructure from day one.',
 ]
 
@@ -50,10 +50,10 @@ export default function ChandlerPage() {
         <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
             <Link href="/" style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--text-muted)', textDecoration: 'none', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Home</Link>
-            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>→</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>â†’</span>
             <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Web Design Chandler</span>
           </div>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Chandler, AZ — Tech Corridor</p>
+          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Chandler, AZ â€” Tech Corridor</p>
           <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(44px, 6vw, 88px)', lineHeight: 0.95, letterSpacing: '-0.025em', marginBottom: 32, maxWidth: 800 }}>
             Chandler Web Design<br /><span style={{ color: 'var(--cyan)' }}>& Development</span>
           </h1>
@@ -62,7 +62,7 @@ export default function ChandlerPage() {
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-              Start a Project →
+              Start a Project â†’
             </Link>
             <Link href="/services" style={{ border: '1px solid rgba(0,212,200,0.25)', color: 'var(--cyan)', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               Our Services
@@ -99,13 +99,13 @@ export default function ChandlerPage() {
               Why choose a local<br /><span style={{ color: 'var(--orange)' }}>Chandler web agency?</span>
             </h2>
             <p style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.8 }}>
-              Chandler tech companies need partners who speak their language — not agencies that hand off your project to junior developers overseas.
+              Chandler tech companies need partners who speak their language â€” not agencies that hand off your project to junior developers overseas.
             </p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {localReasons.map((reason, i) => (
               <div key={i} style={{ background: 'var(--navy-mid)', padding: '20px 24px', display: 'flex', gap: 16, alignItems: 'start', border: '1px solid rgba(255,255,255,0.04)' }}>
-                <span style={{ color: 'var(--cyan)', fontFamily: 'Space Mono, monospace', fontSize: 13, marginTop: 2, flexShrink: 0 }}>→</span>
+                <span style={{ color: 'var(--cyan)', fontFamily: 'Space Mono, monospace', fontSize: 13, marginTop: 2, flexShrink: 0 }}>â†’</span>
                 <p style={{ color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.75 }}>{reason}</p>
               </div>
             ))}
@@ -117,7 +117,7 @@ export default function ChandlerPage() {
       <section style={{ padding: '100px 24px', textAlign: 'center', background: 'var(--navy-mid)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(0,212,200,0.012) 20px, rgba(0,212,200,0.012) 40px)' }} />
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Based in Gilbert, AZ · Serving Chandler</p>
+          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Based in Gilbert, AZ Â· Serving Chandler</p>
           <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(32px, 5vw, 60px)', lineHeight: 1.0, marginBottom: 24 }}>
             Ready to build something<br /><span style={{ color: 'var(--cyan)' }}>in Chandler?</span>
           </h2>
@@ -125,7 +125,7 @@ export default function ChandlerPage() {
             30-minute discovery call, free of charge. We scope the project, put it in writing, and get to work.
           </p>
           <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 14, padding: '16px 40px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-            Get a Free Quote →
+            Get a Free Quote â†’
           </Link>
         </div>
       </section>

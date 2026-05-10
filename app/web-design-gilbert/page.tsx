@@ -1,9 +1,9 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Web Design Gilbert AZ | Sunstate DevWorks',
-  description: 'Custom web design in Gilbert, AZ — hand-coded sites, mobile apps, branding & AI for East Valley businesses. No templates. You own the code. Based right here in Gilbert.',
+  description: 'Custom web design in Gilbert, AZ â€” hand-coded sites, mobile apps, branding & AI for East Valley businesses. No templates. You own the code. Based right here in Gilbert.',
   keywords: [
     'web design Gilbert AZ',
     'web designer Gilbert Arizona',
@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     'mobile app developer Gilbert AZ',
   ],
   alternates: {
-    canonical: 'https://www.sunstatedevworks.com/web-design-gilbert',
+    canonical: 'https://sunstatedevworks.com/web-design-gilbert',
   },
   openGraph: {
-    url: 'https://www.sunstatedevworks.com/web-design-gilbert',
+    url: 'https://sunstatedevworks.com/web-design-gilbert',
     title: 'Web Design Gilbert AZ | Sunstate DevWorks',
-    description: 'Custom web design in Gilbert, AZ — hand-coded sites, mobile apps, branding & AI for East Valley businesses. No templates. You own the code.',
+    description: 'Custom web design in Gilbert, AZ â€” hand-coded sites, mobile apps, branding & AI for East Valley businesses. No templates. You own the code.',
   },
 }
 
@@ -34,8 +34,8 @@ const services = [
 ]
 
 const localReasons = [
-  'We are based in Gilbert — we know the East Valley market, the neighborhoods, and the local business landscape firsthand.',
-  'In-person meetings are available. No timezone lag, no account manager relay — you talk directly to the developers.',
+  'We are based in Gilbert â€” we know the East Valley market, the neighborhoods, and the local business landscape firsthand.',
+  'In-person meetings are available. No timezone lag, no account manager relay â€” you talk directly to the developers.',
   'Gilbert is one of the fastest-growing cities in the country. We understand what it takes to stand out in a competitive, family-friendly market full of ambitious small businesses.',
   'We have helped Gilbert businesses from Agritopia to the SanTan District build digital infrastructure that matches their ambition.',
 ]
@@ -50,10 +50,10 @@ export default function GilbertPage() {
         <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
             <Link href="/" style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--text-muted)', textDecoration: 'none', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Home</Link>
-            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>→</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>â†’</span>
             <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Web Design Gilbert</span>
           </div>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Gilbert, AZ — East Valley</p>
+          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Gilbert, AZ â€” East Valley</p>
           <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(44px, 6vw, 88px)', lineHeight: 0.95, letterSpacing: '-0.025em', marginBottom: 32, maxWidth: 800 }}>
             Gilbert Web Design<br /><span style={{ color: 'var(--cyan)' }}>& Development</span>
           </h1>
@@ -62,7 +62,7 @@ export default function GilbertPage() {
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-              Start a Project →
+              Start a Project â†’
             </Link>
             <Link href="/services" style={{ border: '1px solid rgba(0,212,200,0.25)', color: 'var(--cyan)', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               Our Services
@@ -99,13 +99,13 @@ export default function GilbertPage() {
               Why choose a local<br /><span style={{ color: 'var(--orange)' }}>Gilbert web agency?</span>
             </h2>
             <p style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.8 }}>
-              Gilbert is our home. We are not a remote vendor — we are your neighbors, and we are invested in your success.
+              Gilbert is our home. We are not a remote vendor â€” we are your neighbors, and we are invested in your success.
             </p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {localReasons.map((reason, i) => (
               <div key={i} style={{ background: 'var(--navy-mid)', padding: '20px 24px', display: 'flex', gap: 16, alignItems: 'start', border: '1px solid rgba(255,255,255,0.04)' }}>
-                <span style={{ color: 'var(--cyan)', fontFamily: 'Space Mono, monospace', fontSize: 13, marginTop: 2, flexShrink: 0 }}>→</span>
+                <span style={{ color: 'var(--cyan)', fontFamily: 'Space Mono, monospace', fontSize: 13, marginTop: 2, flexShrink: 0 }}>â†’</span>
                 <p style={{ color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.75 }}>{reason}</p>
               </div>
             ))}
@@ -117,7 +117,7 @@ export default function GilbertPage() {
       <section style={{ padding: '100px 24px', textAlign: 'center', background: 'var(--navy-mid)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(0,212,200,0.012) 20px, rgba(0,212,200,0.012) 40px)' }} />
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Based in Gilbert, AZ · Serving the East Valley</p>
+          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Based in Gilbert, AZ Â· Serving the East Valley</p>
           <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(32px, 5vw, 60px)', lineHeight: 1.0, marginBottom: 24 }}>
             Ready to build something<br /><span style={{ color: 'var(--cyan)' }}>in Gilbert?</span>
           </h2>
@@ -125,7 +125,7 @@ export default function GilbertPage() {
             30-minute discovery call, free of charge. We scope the project, put it in writing, and get to work.
           </p>
           <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 14, padding: '16px 40px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-            Get a Free Quote →
+            Get a Free Quote â†’
           </Link>
         </div>
       </section>

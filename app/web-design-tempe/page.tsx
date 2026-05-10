@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -17,10 +17,10 @@ export const metadata: Metadata = {
     'mobile app developer Tempe AZ',
   ],
   alternates: {
-    canonical: 'https://www.sunstatedevworks.com/web-design-tempe',
+    canonical: 'https://sunstatedevworks.com/web-design-tempe',
   },
   openGraph: {
-    url: 'https://www.sunstatedevworks.com/web-design-tempe',
+    url: 'https://sunstatedevworks.com/web-design-tempe',
     title: 'Web Design Tempe AZ | Sunstate DevWorks',
     description: 'Custom web design in Tempe, AZ for startups, restaurants & young brands near ASU. Hand-coded sites, no templates. Gilbert-based studio.',
   },
@@ -34,10 +34,10 @@ const services = [
 ]
 
 const localReasons = [
-  'Tempe is one of the most energetic cities in the Valley — ASU\'s presence drives a constant flow of young brands, startups, and hospitality businesses that need digital products that move fast.',
+  'Tempe is one of the most energetic cities in the Valley â€” ASU\'s presence drives a constant flow of young brands, startups, and hospitality businesses that need digital products that move fast.',
   'We build for Tempe\'s nightlife, restaurant, and entertainment economy. Online ordering, reservation systems, and event pages that actually work on mobile.',
   'Startups in Tempe move fast and need a dev partner who can keep up. We deliver in weeks, not months, and we scope everything in writing up front.',
-  'In-person meetings available. Tempe is a quick trip from our Gilbert studio — no account manager relay, just the people building your product.',
+  'In-person meetings available. Tempe is a quick trip from our Gilbert studio â€” no account manager relay, just the people building your product.',
 ]
 
 export default function TempePage() {
@@ -50,10 +50,10 @@ export default function TempePage() {
         <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
             <Link href="/" style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--text-muted)', textDecoration: 'none', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Home</Link>
-            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>→</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>â†’</span>
             <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Web Design Tempe</span>
           </div>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Tempe, AZ — Startups & Young Brands</p>
+          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Tempe, AZ â€” Startups & Young Brands</p>
           <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(44px, 6vw, 88px)', lineHeight: 0.95, letterSpacing: '-0.025em', marginBottom: 32, maxWidth: 800 }}>
             Tempe Web Design<br /><span style={{ color: 'var(--cyan)' }}>& Development</span>
           </h1>
@@ -62,7 +62,7 @@ export default function TempePage() {
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-              Start a Project →
+              Start a Project â†’
             </Link>
             <Link href="/services" style={{ border: '1px solid rgba(0,212,200,0.25)', color: 'var(--cyan)', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               Our Services
@@ -99,13 +99,13 @@ export default function TempePage() {
               Why choose a local<br /><span style={{ color: 'var(--orange)' }}>Tempe web agency?</span>
             </h2>
             <p style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.8 }}>
-              Tempe moves fast. Your digital partner should too — and they should understand the unique energy of a city built around innovation and hospitality.
+              Tempe moves fast. Your digital partner should too â€” and they should understand the unique energy of a city built around innovation and hospitality.
             </p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {localReasons.map((reason, i) => (
               <div key={i} style={{ background: 'var(--navy-mid)', padding: '20px 24px', display: 'flex', gap: 16, alignItems: 'start', border: '1px solid rgba(255,255,255,0.04)' }}>
-                <span style={{ color: 'var(--cyan)', fontFamily: 'Space Mono, monospace', fontSize: 13, marginTop: 2, flexShrink: 0 }}>→</span>
+                <span style={{ color: 'var(--cyan)', fontFamily: 'Space Mono, monospace', fontSize: 13, marginTop: 2, flexShrink: 0 }}>â†’</span>
                 <p style={{ color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.75 }}>{reason}</p>
               </div>
             ))}
@@ -117,7 +117,7 @@ export default function TempePage() {
       <section style={{ padding: '100px 24px', textAlign: 'center', background: 'var(--navy-mid)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(0,212,200,0.012) 20px, rgba(0,212,200,0.012) 40px)' }} />
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Based in Gilbert, AZ · Serving Tempe</p>
+          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Based in Gilbert, AZ Â· Serving Tempe</p>
           <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(32px, 5vw, 60px)', lineHeight: 1.0, marginBottom: 24 }}>
             Ready to build something<br /><span style={{ color: 'var(--cyan)' }}>in Tempe?</span>
           </h2>
@@ -125,7 +125,7 @@ export default function TempePage() {
             30-minute discovery call, free of charge. We scope the project, put it in writing, and get to work.
           </p>
           <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 14, padding: '16px 40px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-            Get a Free Quote →
+            Get a Free Quote â†’
           </Link>
         </div>
       </section>

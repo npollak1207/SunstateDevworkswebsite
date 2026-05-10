@@ -1,9 +1,9 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Web Design Queen Creek AZ | Sunstate DevWorks',
-  description: 'Custom web design in Queen Creek, AZ — hand-coded websites, mobile apps, branding & AI for SE Valley businesses. Family-owned, fast, no templates. You own 100% of the code.',
+  description: 'Custom web design in Queen Creek, AZ â€” hand-coded websites, mobile apps, branding & AI for SE Valley businesses. Family-owned, fast, no templates. You own 100% of the code.',
   keywords: [
     'web design Queen Creek AZ',
     'web designer Queen Creek Arizona',
@@ -16,11 +16,11 @@ export const metadata: Metadata = {
     'branding Queen Creek AZ',
     'mobile app developer Queen Creek Arizona',
   ],
-  alternates: { canonical: 'https://www.sunstatedevworks.com/web-design-queen-creek' },
+  alternates: { canonical: 'https://sunstatedevworks.com/web-design-queen-creek' },
   openGraph: {
-    url: 'https://www.sunstatedevworks.com/web-design-queen-creek',
+    url: 'https://sunstatedevworks.com/web-design-queen-creek',
     title: 'Web Design Queen Creek AZ | Sunstate DevWorks',
-    description: 'Custom web design in Queen Creek, AZ — hand-coded websites, mobile apps, branding & AI for SE Valley businesses. No templates. 100% yours.',
+    description: 'Custom web design in Queen Creek, AZ â€” hand-coded websites, mobile apps, branding & AI for SE Valley businesses. No templates. 100% yours.',
   },
 }
 
@@ -32,10 +32,10 @@ const services = [
 ]
 
 const localReasons = [
-  'Queen Creek is one of Arizona\'s fastest-growing communities — a market full of new residents, growing families, and local entrepreneurs who need standout digital presence.',
+  'Queen Creek is one of Arizona\'s fastest-growing communities â€” a market full of new residents, growing families, and local entrepreneurs who need standout digital presence.',
   'We are based in Gilbert, right next door. We know the SE Valley corridor from Schnepf Farms to the Harvest district, and understand what resonates with Queen Creek\'s tight-knit community.',
   'Local businesses in Queen Creek face increasing competition as the area grows. A custom-coded site with strong local SEO is the edge that gets you found before your competitors.',
-  'In-person meetings are available, and you deal directly with the developers — no middlemen, no overseas handoffs, no guessing what stage your project is at.',
+  'In-person meetings are available, and you deal directly with the developers â€” no middlemen, no overseas handoffs, no guessing what stage your project is at.',
 ]
 
 export default function QueenCreekPage() {
@@ -47,18 +47,18 @@ export default function QueenCreekPage() {
         <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
             <Link href="/" style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--text-muted)', textDecoration: 'none', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Home</Link>
-            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>→</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>â†’</span>
             <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Web Design Queen Creek</span>
           </div>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Queen Creek, AZ — SE Valley</p>
+          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Queen Creek, AZ â€” SE Valley</p>
           <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(44px, 6vw, 88px)', lineHeight: 0.95, letterSpacing: '-0.025em', marginBottom: 32, maxWidth: 800 }}>
             Queen Creek Web Design<br /><span style={{ color: 'var(--cyan)' }}>& Development</span>
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: 18, lineHeight: 1.8, maxWidth: 560, marginBottom: 40 }}>
-            Sunstate DevWorks builds custom websites, mobile apps, branding, and AI tools for Queen Creek businesses. Neighbor-close in Gilbert — hand-coded, no templates, 100% yours.
+            Sunstate DevWorks builds custom websites, mobile apps, branding, and AI tools for Queen Creek businesses. Neighbor-close in Gilbert â€” hand-coded, no templates, 100% yours.
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Start a Project →</Link>
+            <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Start a Project â†’</Link>
             <Link href="/services" style={{ border: '1px solid rgba(0,212,200,0.25)', color: 'var(--cyan)', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Our Services</Link>
           </div>
         </div>
@@ -94,7 +94,7 @@ export default function QueenCreekPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {localReasons.map((reason, i) => (
               <div key={i} style={{ background: 'var(--navy-mid)', padding: '20px 24px', display: 'flex', gap: 16, alignItems: 'start', border: '1px solid rgba(255,255,255,0.04)' }}>
-                <span style={{ color: 'var(--cyan)', fontFamily: 'Space Mono, monospace', fontSize: 13, marginTop: 2, flexShrink: 0 }}>→</span>
+                <span style={{ color: 'var(--cyan)', fontFamily: 'Space Mono, monospace', fontSize: 13, marginTop: 2, flexShrink: 0 }}>â†’</span>
                 <p style={{ color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.75 }}>{reason}</p>
               </div>
             ))}
@@ -105,12 +105,12 @@ export default function QueenCreekPage() {
       <section style={{ padding: '100px 24px', textAlign: 'center', background: 'var(--navy-mid)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(0,212,200,0.012) 20px, rgba(0,212,200,0.012) 40px)' }} />
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Based in Gilbert, AZ · Serving Queen Creek & the SE Valley</p>
+          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Based in Gilbert, AZ Â· Serving Queen Creek & the SE Valley</p>
           <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(32px, 5vw, 60px)', lineHeight: 1.0, marginBottom: 24 }}>
             Ready to build something<br /><span style={{ color: 'var(--cyan)' }}>in Queen Creek?</span>
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: 16, maxWidth: 420, margin: '0 auto 40px' }}>30-minute discovery call, free of charge. We scope the project, put it in writing, and get to work.</p>
-          <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 14, padding: '16px 40px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Get a Free Quote →</Link>
+          <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 14, padding: '16px 40px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Get a Free Quote â†’</Link>
         </div>
       </section>
 

@@ -1,9 +1,9 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Web Design Paradise Valley AZ | Sunstate DevWorks',
-  description: 'Premium custom web design in Paradise Valley, AZ — hand-coded sites, mobile apps, luxury branding & AI for high-end businesses. No templates, no lock-in. 100% code ownership.',
+  description: 'Premium custom web design in Paradise Valley, AZ â€” hand-coded sites, mobile apps, luxury branding & AI for high-end businesses. No templates, no lock-in. 100% code ownership.',
   keywords: [
     'web design Paradise Valley AZ',
     'web designer Paradise Valley Arizona',
@@ -16,26 +16,26 @@ export const metadata: Metadata = {
     'luxury branding Paradise Valley AZ',
     'mobile app developer Paradise Valley Arizona',
   ],
-  alternates: { canonical: 'https://www.sunstatedevworks.com/web-design-paradise-valley' },
+  alternates: { canonical: 'https://sunstatedevworks.com/web-design-paradise-valley' },
   openGraph: {
-    url: 'https://www.sunstatedevworks.com/web-design-paradise-valley',
+    url: 'https://sunstatedevworks.com/web-design-paradise-valley',
     title: 'Web Design Paradise Valley AZ | Sunstate DevWorks',
-    description: 'Premium custom web design in Paradise Valley, AZ — hand-coded sites, mobile apps, luxury branding & AI. No templates. 100% yours.',
+    description: 'Premium custom web design in Paradise Valley, AZ â€” hand-coded sites, mobile apps, luxury branding & AI. No templates. 100% yours.',
   },
 }
 
 const services = [
-  { label: 'Web Development', desc: 'Hand-coded, blazing-fast websites built from scratch. No templates, no WordPress — every element crafted to reflect your brand.', accent: 'var(--cyan)' },
+  { label: 'Web Development', desc: 'Hand-coded, blazing-fast websites built from scratch. No templates, no WordPress â€” every element crafted to reflect your brand.', accent: 'var(--cyan)' },
   { label: 'Mobile Apps', desc: 'iOS and Android apps built with SwiftUI and React Native. Premium UX for discerning clients.', accent: 'var(--orange)' },
   { label: 'Branding', desc: 'Logo, color system, typography, brand guidelines. Elevated identity design for luxury and professional services.', accent: 'var(--cyan)' },
   { label: 'AI & Automation', desc: 'Custom AI integrations and workflow automation that give high-end businesses a competitive edge.', accent: 'var(--orange)' },
 ]
 
 const localReasons = [
-  'Paradise Valley demands a level of design and execution that generic agencies cannot deliver. We build fully custom — no shared templates, no recognizable themes, nothing that makes your site look like anyone else\'s.',
+  'Paradise Valley demands a level of design and execution that generic agencies cannot deliver. We build fully custom â€” no shared templates, no recognizable themes, nothing that makes your site look like anyone else\'s.',
   'From luxury resorts and boutique medical practices to private wealth advisors and high-end real estate brands, we understand the Paradise Valley clientele and what instills their confidence.',
   'We are based in Gilbert and serve the entire Phoenix metro. You deal directly with the developers, and in-person meetings at a time of your choosing are always available.',
-  'A premium digital presence requires premium performance: sub-second load times, flawless mobile experience, and pristine SEO — all engineered in from the first line of code.',
+  'A premium digital presence requires premium performance: sub-second load times, flawless mobile experience, and pristine SEO â€” all engineered in from the first line of code.',
 ]
 
 export default function ParadiseValleyPage() {
@@ -47,18 +47,18 @@ export default function ParadiseValleyPage() {
         <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
             <Link href="/" style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--text-muted)', textDecoration: 'none', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Home</Link>
-            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>→</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>â†’</span>
             <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Web Design Paradise Valley</span>
           </div>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Paradise Valley, AZ — Greater Scottsdale</p>
+          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Paradise Valley, AZ â€” Greater Scottsdale</p>
           <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(44px, 6vw, 88px)', lineHeight: 0.95, letterSpacing: '-0.025em', marginBottom: 32, maxWidth: 800 }}>
             Paradise Valley Web Design<br /><span style={{ color: 'var(--cyan)' }}>& Development</span>
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: 18, lineHeight: 1.8, maxWidth: 560, marginBottom: 40 }}>
-            Sunstate DevWorks builds premium custom websites, mobile apps, luxury branding, and AI tools for Paradise Valley businesses. Hand-coded to match the standard your clients expect — no templates, 100% yours.
+            Sunstate DevWorks builds premium custom websites, mobile apps, luxury branding, and AI tools for Paradise Valley businesses. Hand-coded to match the standard your clients expect â€” no templates, 100% yours.
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Start a Project →</Link>
+            <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Start a Project â†’</Link>
             <Link href="/services" style={{ border: '1px solid rgba(0,212,200,0.25)', color: 'var(--cyan)', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, padding: '14px 32px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Our Services</Link>
           </div>
         </div>
@@ -89,12 +89,12 @@ export default function ParadiseValleyPage() {
             <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(26px, 3.5vw, 48px)', lineHeight: 1.05, letterSpacing: '-0.02em', marginBottom: 16 }}>
               Why choose a local<br /><span style={{ color: 'var(--orange)' }}>Paradise Valley web agency?</span>
             </h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.8 }}>We serve Paradise Valley businesses with a premium, fully custom approach — the same level of craft that has earned us clients across the entire Phoenix metro.</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.8 }}>We serve Paradise Valley businesses with a premium, fully custom approach â€” the same level of craft that has earned us clients across the entire Phoenix metro.</p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {localReasons.map((reason, i) => (
               <div key={i} style={{ background: 'var(--navy-mid)', padding: '20px 24px', display: 'flex', gap: 16, alignItems: 'start', border: '1px solid rgba(255,255,255,0.04)' }}>
-                <span style={{ color: 'var(--cyan)', fontFamily: 'Space Mono, monospace', fontSize: 13, marginTop: 2, flexShrink: 0 }}>→</span>
+                <span style={{ color: 'var(--cyan)', fontFamily: 'Space Mono, monospace', fontSize: 13, marginTop: 2, flexShrink: 0 }}>â†’</span>
                 <p style={{ color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.75 }}>{reason}</p>
               </div>
             ))}
@@ -105,12 +105,12 @@ export default function ParadiseValleyPage() {
       <section style={{ padding: '100px 24px', textAlign: 'center', background: 'var(--navy-mid)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(0,212,200,0.012) 20px, rgba(0,212,200,0.012) 40px)' }} />
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Based in Gilbert, AZ · Serving Paradise Valley & Greater Scottsdale</p>
+          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Based in Gilbert, AZ Â· Serving Paradise Valley & Greater Scottsdale</p>
           <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(32px, 5vw, 60px)', lineHeight: 1.0, marginBottom: 24 }}>
             Ready to build something<br /><span style={{ color: 'var(--cyan)' }}>in Paradise Valley?</span>
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: 16, maxWidth: 420, margin: '0 auto 40px' }}>30-minute discovery call, free of charge. We scope the project, put it in writing, and get to work.</p>
-          <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 14, padding: '16px 40px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Get a Free Quote →</Link>
+          <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 14, padding: '16px 40px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Get a Free Quote â†’</Link>
         </div>
       </section>
 
