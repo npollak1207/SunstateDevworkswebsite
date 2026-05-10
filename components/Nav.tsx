@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 const serviceLinks = [
@@ -85,14 +84,12 @@ export default function Nav() {
         }}>
           <div style={{ maxWidth: 1260, margin: '0 auto', padding: '0 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 68 }}>
 
-            {/* Logo */}
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', flexShrink: 0 }}>
-              <div style={{ width: 34, height: 34, borderRadius: 8, background: 'rgba(0,212,200,0.1)', border: '1px solid rgba(0,212,200,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                <Image src="/logo.png" alt="Sunstate Devworks" width={28} height={28} style={{ objectFit: 'contain' }} />
-              </div>
-              <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 15, color: 'var(--off-white)', letterSpacing: '-0.01em' }}>
-              Sunstate<span style={{ color: 'var(--cyan)' }}>Devworks</span>
-            </span>
+            {/* Wordmark */}
+            <Link href="/" className="wordmark-link" style={{ display: 'flex', alignItems: 'center', gap: 7, textDecoration: 'none', flexShrink: 0 }}>
+              <span className="wordmark-slash" style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, fontWeight: 400, letterSpacing: '0.06em', userSelect: 'none', color: 'var(--cyan)' }}>//</span>
+              <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 18, letterSpacing: '-0.025em', lineHeight: 1 }}>
+                <span className="wordmark-sunstate">Sunstate</span><span className="wordmark-devworks">Devworks</span>
+              </span>
             </Link>
 
             {/* Desktop nav */}
@@ -233,13 +230,11 @@ export default function Nav() {
         }}>
           {/* Drawer header */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            <Link href="/" onClick={() => setOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 9, textDecoration: 'none' }}>
-              <div style={{ width: 30, height: 30, borderRadius: 7, background: 'rgba(0,212,200,0.1)', border: '1px solid rgba(0,212,200,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                <Image src="/logo.png" alt="Sunstate Devworks" width={24} height={24} style={{ objectFit: 'contain' }} />
-              </div>
-              <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 14, color: 'var(--off-white)' }}>
-              Sunstate<span style={{ color: 'var(--cyan)' }}>Devworks</span>
-            </span>
+            <Link href="/" onClick={() => setOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 7, textDecoration: 'none' }}>
+              <span className="wordmark-slash" style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, fontWeight: 400, letterSpacing: '0.06em', userSelect: 'none', color: 'var(--cyan)' }}>//</span>
+              <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 16, letterSpacing: '-0.025em', lineHeight: 1 }}>
+                <span className="wordmark-sunstate">Sunstate</span><span className="wordmark-devworks">Devworks</span>
+              </span>
             </Link>
             <button onClick={() => setOpen(false)} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, cursor: 'pointer', color: 'var(--text-muted)', padding: '6px 8px', display: 'flex', alignItems: 'center' }} aria-label="Close">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -292,6 +287,39 @@ export default function Nav() {
         @keyframes mobileIn {
           from { opacity: 0; transform: translateX(16px); }
           to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes wordmarkFlow {
+          0%   { background-position: 0% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes slashPulse {
+          0%, 100% { opacity: 0.45; }
+          50%       { opacity: 1; }
+        }
+        .wordmark-sunstate {
+          color: #f0f4f8;
+          text-shadow: 0 0 28px rgba(255,255,255,0.12);
+        }
+        .wordmark-devworks {
+          background: linear-gradient(90deg, #00d4c8 0%, #7ef9f4 35%, #f4622a 65%, #00d4c8 100%);
+          background-size: 220% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: wordmarkFlow 5s linear infinite;
+          filter: drop-shadow(0 0 10px rgba(0,212,200,0.5));
+        }
+        .wordmark-slash {
+          animation: slashPulse 3.2s ease-in-out infinite;
+        }
+        .wordmark-link {
+          transition: transform 0.2s ease;
+        }
+        .wordmark-link:hover {
+          transform: scale(1.03);
+        }
+        .wordmark-link:hover .wordmark-devworks {
+          filter: drop-shadow(0 0 16px rgba(0,212,200,0.75));
         }
         @media (min-width: 769px) { .nav-hamburger { display: none !important; } }
         @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-hamburger { display: flex !important; } }
