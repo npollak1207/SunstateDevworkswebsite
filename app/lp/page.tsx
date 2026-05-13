@@ -1274,6 +1274,7 @@ export default function LandingPage() {
           </div>
         </nav>
 
+
         <div style={{position:'relative',zIndex:2}}>
           {/* ══════════════════════════════════════════════
             HERO — left: copy, right: VS Code editor

@@ -303,23 +303,23 @@ export default function HomePage() {
             {/* Left: text */}
             <div>
               {/* Availability badge */}
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(0,212,200,0.06)', border: '1px solid rgba(0,212,200,0.18)', borderRadius: 999, padding: '6px 16px', marginBottom: 40 }}>
+              <div className="hero-rise" style={{ animationDelay: '0ms', display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(0,212,200,0.06)', border: '1px solid rgba(0,212,200,0.18)', borderRadius: 999, padding: '6px 16px', marginBottom: 40 }}>
                 <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--cyan)', display: 'inline-block', boxShadow: '0 0 10px var(--cyan)' }} />
                 <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Gilbert, Arizona · Available Now</span>
               </div>
 
-              <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(48px, 6vw, 100px)', lineHeight: 0.92, letterSpacing: '-0.03em', marginBottom: 36 }}>
+              <h1 className="hero-rise" style={{ animationDelay: '120ms', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(48px, 6vw, 100px)', lineHeight: 0.92, letterSpacing: '-0.03em', marginBottom: 36 }}>
                 <span style={{ display: 'block', color: 'var(--off-white)' }}>We build</span>
                 <span style={{ display: 'block', minHeight: '1.05em' }}><HeroTyping /></span>
               </h1>
 
-              <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 'clamp(16px, 1.5vw, 19px)', color: 'var(--text-muted)', maxWidth: 460, lineHeight: 1.8, marginBottom: 48 }}>
+              <p className="hero-rise" style={{ animationDelay: '240ms', fontFamily: 'DM Sans, sans-serif', fontSize: 'clamp(16px, 1.5vw, 19px)', color: 'var(--text-muted)', maxWidth: 460, lineHeight: 1.8, marginBottom: 40 }}>
                 Custom code. No templates, no page builders, no lock-in.
                 Web, mobile, branding, and AI —{' '}
                 <span style={{ color: 'var(--off-white)', fontWeight: 500 }}>you own 100% of everything.</span>
               </p>
 
-              <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: 32 }}>
+              <div className="hero-rise" style={{ animationDelay: '360ms', display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: 32 }}>
                 <Link href="/contact" className="glow-pulse" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 14, padding: '16px 38px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                   Start a Project →
                 </Link>
@@ -329,7 +329,7 @@ export default function HomePage() {
               </div>
 
               {/* Stats row */}
-              <div style={{ display: 'flex', gap: 0, marginBottom: 48, borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 28 }} className="hero-stats">
+              <div className="hero-rise hero-stats" style={{ animationDelay: '480ms', display: 'flex', gap: 0, marginBottom: 40, borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 28 }}>
                 {[
                   { num: '15+', label: 'Projects Shipped' },
                   { num: '4.9★', label: 'Avg Rating' },
@@ -343,19 +343,27 @@ export default function HomePage() {
                 ))}
               </div>
 
-              {/* Tech stack badges */}
-              <div>
-                <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>Built with</p>
+              {/* Recently shipped strip */}
+              <div className="hero-rise" style={{ animationDelay: '600ms' }}>
+                <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>Recently shipped</p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                  {stackLogos.map(s => (
-                      <span key={s.label} style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 4, padding: '5px 10px', letterSpacing: '0.04em' }}>{s.label}</span>
+                  {[
+                    { name: 'Liberty Military Housing', stat: '−60% tickets', c: 'var(--cyan)' },
+                    { name: 'ELS', stat: '20 hrs/wk saved', c: 'var(--orange)' },
+                    { name: 'Cloak Wraps', stat: "Tempe's #1", c: 'var(--cyan)' },
+                  ].map(p => (
+                    <span key={p.name} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 4, padding: '5px 10px', letterSpacing: '0.04em' }}>
+                      <span style={{ width: 5, height: 5, borderRadius: '50%', background: p.c, boxShadow: `0 0 6px ${p.c}` }} />
+                      <span style={{ color: 'var(--off-white)' }}>{p.name}</span>
+                      <span style={{ color: p.c }}>{p.stat}</span>
+                    </span>
                   ))}
                 </div>
               </div>
             </div>
 
             {/* Right: animated hero visual */}
-            <div className="hero-visual">
+            <div className="hero-visual hero-rise" style={{ animationDelay: '300ms' }}>
               <HeroVisual />
             </div>
           </div>

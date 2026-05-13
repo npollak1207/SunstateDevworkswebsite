@@ -34,8 +34,21 @@ export default function HeroTyping() {
   }, [displayed, deleting, paused, wordIndex])
 
   return (
-    <span style={{ color: 'var(--cyan)' }}>
-      {displayed}<span className="cursor">|</span>
+    <span style={{ position: 'relative', display: 'inline-block' }}>
+      <span
+        className="hero-typing-gradient"
+        style={{
+          backgroundImage: 'linear-gradient(90deg, #00D4C8 0%, #00D4C8 35%, #F4622A 65%, #00D4C8 100%)',
+          backgroundSize: '200% 100%',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          color: 'transparent',
+          WebkitTextFillColor: 'transparent',
+        }}
+      >
+        {displayed || ' '}
+      </span>
+      <span className="cursor" style={{ color: 'var(--cyan)' }}>|</span>
     </span>
   )
 }

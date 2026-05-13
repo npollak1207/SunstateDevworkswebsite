@@ -64,6 +64,27 @@ body {
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 .cursor { animation: blink 1s step-end infinite; color: var(--cyan); }
 
+/* ── Hero typing gradient sweep ── */
+@keyframes heroTypingSweep {
+  0%   { background-position:   0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.hero-typing-gradient { animation: heroTypingSweep 6s linear infinite; }
+
+/* ── Hero mount-rise stagger ── */
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-rise {
+  opacity: 0;
+  animation: heroRise 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise { opacity: 1; animation: none; transform: none; }
+  .hero-typing-gradient { animation: none; }
+}
+
 /* ── Sticky CTA ── */
 .sticky-cta {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 90;

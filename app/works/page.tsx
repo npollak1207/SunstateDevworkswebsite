@@ -1,9 +1,30 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import ScrollReveal from '@/components/ScrollReveal'
+import ProjectVisual from '@/components/ProjectVisual'
 
-const projects = [
+type Metric = { value: string; label: string }
+type Testimonial = { name: string; role: string; body: string; initials: string; rating: number }
+
+type Project = {
+  num: string
+  title: string
+  cat: string
+  tag: string
+  accent: string
+  tech: string[]
+  year: string
+  url?: string
+  desc: string
+  highlight: string
+  metrics: Metric[]
+  tags: string[]
+  testimonial?: Testimonial
+  featured?: boolean
+}
+
+const projects: Project[] = [
   {
     num: '01',
     title: 'Liberty Military Housing',
@@ -13,10 +34,14 @@ const projects = [
     tech: ['Next.js', 'Python', 'OpenAI', 'PostgreSQL'],
     year: '2024',
     desc: 'A centralized AI-driven construction management platform that turned thousands of data points across military housing renovations into a real-time source of truth.',
-    result: '60% reduction in support tickets',
-    resultLabel: 'Support Tickets',
     highlight: 'Natural language interface — managers ask questions in plain English, the AI returns live data visualizations instantly.',
+    metrics: [
+      { value: '−60%', label: 'Support Tickets' },
+      { value: '10k+', label: 'Housing Units' },
+      { value: '4 wks', label: 'Build Time' },
+    ],
     tags: ['AI', 'Web App'],
+    featured: true,
   },
   {
     num: '02',
@@ -28,10 +53,21 @@ const projects = [
     year: '2024',
     url: 'https://apps.apple.com/us/app/easy-ls-business-app/id6755699624',
     desc: 'A full business-in-a-box iOS app and web dashboard for Easy Landscape Solutions — replacing 5 disconnected apps with one unified platform for scheduling, invoicing, CRM, and real-time P&L tracking.',
-    result: '20hrs saved per week',
-    resultLabel: 'Admin Time',
     highlight: 'Custom financial module tracks profitability per job in real time — something no off-the-shelf software could provide.',
+    metrics: [
+      { value: '20 hrs', label: 'Saved Per Week' },
+      { value: '5 → 1', label: 'Apps Replaced' },
+      { value: 'Live', label: 'On App Store' },
+    ],
     tags: ['iOS', 'Web App'],
+    testimonial: {
+      name: 'Alex M.',
+      role: 'Owner, Easy Landscape Solutions',
+      body: 'We were running five different apps just to keep the business moving. Sunstate built us one platform that does everything. We got back at least 20 hours a week and actually know where our money is going now.',
+      initials: 'AM',
+      rating: 5,
+    },
+    featured: true,
   },
   {
     num: '03',
@@ -43,10 +79,19 @@ const projects = [
     year: '2024',
     url: 'https://www.cloakwraps.com',
     desc: "Premium custom website for Tempe's leading vehicle wrap and PPF studio. Full rebrand with cinematic hero video, animated service pages, and a bespoke quote request flow.",
-    result: "Tempe's #1 wrap studio",
-    resultLabel: 'Market Position',
     highlight: 'EV specialist studio page built to capture the fast-growing Tesla / Rivian wrap market in the Phoenix Valley.',
+    metrics: [
+      { value: '#1', label: 'Tempe Wrap Studio' },
+      { value: 'EV', label: 'Specialist Page' },
+    ],
     tags: ['Web', 'Branding'],
+    testimonial: {
+      name: 'Zach H.',
+      role: 'Owner, Cloak Wraps',
+      body: 'I wanted something that looked as premium as the work we do on cars. They nailed it. The site is clean, fast, and gets compliments from customers before they even walk in the door.',
+      initials: 'ZH',
+      rating: 5,
+    },
   },
   {
     num: '04',
@@ -58,10 +103,19 @@ const projects = [
     year: '2024',
     url: 'https://www.zonapestsolutions.com',
     desc: "Modern website and SEO strategy for Scottsdale and Mesa's top-rated pest control company. Built to rank, convert, and integrate with their FieldRoutes customer portal.",
-    result: '#1 in Scottsdale & Mesa',
-    resultLabel: 'Local SEO Rank',
     highlight: 'Subscription plan architecture designed to drive $59–$99/mo recurring revenue directly from the site.',
+    metrics: [
+      { value: '#1', label: 'Scottsdale & Mesa' },
+      { value: '$59+', label: 'Monthly Plans' },
+    ],
     tags: ['Web', 'SEO'],
+    testimonial: {
+      name: 'Billy W.',
+      role: 'Owner, Zona Pest Solutions',
+      body: 'The site looks better than anything I could have imagined and it actually brings in leads. We went from invisible online to ranking in Scottsdale and Mesa in a few months. These guys know what they\'re doing.',
+      initials: 'BW',
+      rating: 5,
+    },
   },
   {
     num: '05',
@@ -73,9 +127,11 @@ const projects = [
     year: '2024',
     url: 'https://www.easylandscapesolutions.com',
     desc: 'Full rebrand and custom site for a Gilbert, AZ hardscape and artificial turf company. Before/after drag slider, consultation form with photo uploads, and ROC license trust signals.',
-    result: '67+ five-star reviews',
-    resultLabel: 'Google Reviews',
     highlight: 'Interactive before/after drag comparison built custom — no plugins, no libraries, pure JS.',
+    metrics: [
+      { value: '67+', label: 'Five-Star Reviews' },
+      { value: 'ROC', label: 'Licensed Trust' },
+    ],
     tags: ['Web', 'Branding'],
   },
   {
@@ -88,26 +144,228 @@ const projects = [
     year: '2025',
     url: 'https://canyon-cleaning-solutions-tmr5.vercel.app',
     desc: 'Clean, conversion-focused website for a residential and commercial cleaning company. Service area pages, instant quote request flow, and trust-building social proof sections.',
-    result: 'Live on Vercel',
-    resultLabel: 'Deployment',
     highlight: 'Structured for local SEO from the ground up — service area pages built to rank city by city.',
+    metrics: [
+      { value: '5', label: 'Service Areas' },
+      { value: 'Live', label: 'On Vercel' },
+    ],
     tags: ['Web'],
   },
 ]
 
 const allTags = ['All', 'Web', 'iOS', 'Web App', 'AI', 'Branding', 'SEO']
 
+const clientMarks = [
+  'Liberty Military Housing',
+  'Easy Landscape Solutions',
+  'Cloak Wraps',
+  'Zona Pest Solutions',
+  'Canyon Cleaning',
+]
+
+const heroStats = [
+  { num: '6', label: 'Projects Shipped' },
+  { num: '4.9★', label: 'Avg Rating' },
+  { num: '<1.2s', label: 'Avg Load Time' },
+  { num: '100%', label: 'Custom Code' },
+]
+
+function colorRgb(accent: string) {
+  return accent === 'var(--cyan)' ? '0,212,200' : '244,98,42'
+}
+
+function TestimonialBlock({ t, accent }: { t: Testimonial; accent: string }) {
+  const rgb = colorRgb(accent)
+  return (
+    <div style={{ background: `rgba(${rgb},0.04)`, border: `1px solid rgba(${rgb},0.12)`, borderRadius: 10, padding: '18px 20px', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+      <div style={{ width: 40, height: 40, borderRadius: '50%', background: `rgba(${rgb},0.15)`, border: `1px solid rgba(${rgb},0.3)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 13, color: accent, letterSpacing: '0.02em' }}>{t.initials}</div>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ display: 'flex', gap: 2, marginBottom: 6 }}>
+          {Array.from({ length: t.rating }).map((_, i) => (
+            <svg key={i} width="11" height="11" viewBox="0 0 24 24" fill={accent} stroke="none"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18 5.5 22 7 14.5 2 9.5 9 9" /></svg>
+          ))}
+        </div>
+        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, color: 'var(--off-white)', lineHeight: 1.65, marginBottom: 8, fontStyle: 'italic' }}>&ldquo;{t.body}&rdquo;</p>
+        <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.06em' }}>
+          <span style={{ color: 'var(--off-white)' }}>{t.name}</span> · {t.role}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function ProjectCTA({ p }: { p: Project }) {
+  const rgb = colorRgb(p.accent)
+  if (!p.url) {
+    return <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.06em', textTransform: 'uppercase', opacity: 0.6 }}>Private Client · NDA</span>
+  }
+  return (
+    <a href={p.url} target="_blank" rel="noopener noreferrer" className="project-cta" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: `1px solid rgba(${rgb},0.35)`, color: p.accent, fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, padding: '11px 24px', borderRadius: 7, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase', background: `rgba(${rgb},0.04)`, transition: 'background 0.2s, transform 0.2s' }}>
+      {p.url.includes('apple.com') ? 'View on App Store' : 'Visit Site'}
+      <svg className="project-cta-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    </a>
+  )
+}
+
+function FeaturedCard({ p }: { p: Project }) {
+  const rgb = colorRgb(p.accent)
+  return (
+    <article className="project-card featured-card" style={{ background: 'var(--navy-mid)', borderLeft: `4px solid ${p.accent}`, borderRadius: '0 12px 12px 0', overflow: 'hidden', position: 'relative' }}>
+      <div className="featured-grid" style={{ display: 'grid', gridTemplateColumns: '1.05fr 1fr', gap: 0, alignItems: 'stretch' }}>
+        {/* Left: content */}
+        <div style={{ padding: '44px 48px', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 22, flexWrap: 'wrap' }}>
+            <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: p.accent, fontWeight: 600 }}>{p.num}</span>
+            <span style={{ width: 1, height: 12, background: 'rgba(255,255,255,0.12)' }} />
+            <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{p.cat}</span>
+            <span style={{ width: 1, height: 12, background: 'rgba(255,255,255,0.12)' }} />
+            <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)' }}>{p.year}</span>
+            <span style={{ marginLeft: 'auto', fontFamily: 'Space Mono, monospace', fontSize: 9, padding: '3px 9px', borderRadius: 999, background: `rgba(${rgb},0.1)`, border: `1px solid rgba(${rgb},0.25)`, color: p.accent, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Featured</span>
+          </div>
+
+          <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(30px, 3.2vw, 46px)', lineHeight: 1, letterSpacing: '-0.02em', marginBottom: 18, color: 'var(--off-white)' }}>{p.title}</h2>
+
+          <p style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.75, marginBottom: 22 }}>{p.desc}</p>
+
+          <div style={{ background: `rgba(${rgb},0.06)`, border: `1px solid rgba(${rgb},0.15)`, borderRadius: 8, padding: '12px 16px', marginBottom: 24, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={p.accent} strokeWidth="2" style={{ marginTop: 2, flexShrink: 0 }}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, color: 'var(--off-white)', lineHeight: 1.6 }}>{p.highlight}</p>
+          </div>
+
+          {/* Metric stack */}
+          <div style={{ display: 'grid', gridTemplateColumns: `repeat(${p.metrics.length}, 1fr)`, gap: 16, marginBottom: 24, paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+            {p.metrics.map((m, i) => (
+              <div key={m.label} style={{ paddingRight: i < p.metrics.length - 1 ? 16 : 0, borderRight: i < p.metrics.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(22px, 2.4vw, 30px)', color: p.accent, lineHeight: 1, marginBottom: 6 }}>{m.value}</div>
+                <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 9, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{m.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 22 }}>
+            {p.tech.map(t => (
+              <span key={t} style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 4, padding: '4px 10px', letterSpacing: '0.04em' }}>{t}</span>
+            ))}
+          </div>
+
+          <div style={{ marginTop: 'auto' }}>
+            <ProjectCTA p={p} />
+          </div>
+        </div>
+
+        {/* Right: visual + testimonial */}
+        <div style={{ background: 'var(--navy)', borderLeft: '1px solid rgba(255,255,255,0.04)', padding: '44px 40px', display: 'flex', flexDirection: 'column', gap: 22, position: 'relative', overflow: 'hidden' }}>
+          <span className="ghost-num" style={{ position: 'absolute', bottom: -28, right: -8, fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 200, color: `rgba(${rgb},0.04)`, lineHeight: 1, pointerEvents: 'none', userSelect: 'none', transition: 'color 0.3s ease' }}>{p.num}</span>
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <ProjectVisual num={p.num} accent={p.accent} variant="featured" />
+          </div>
+          {p.testimonial && (
+            <div style={{ position: 'relative', zIndex: 1, marginTop: 'auto' }}>
+              <TestimonialBlock t={p.testimonial} accent={p.accent} />
+            </div>
+          )}
+          {!p.testimonial && (
+            <div style={{ position: 'relative', zIndex: 1, marginTop: 'auto', display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {p.tags.map(t => (
+                <span key={t} style={{ fontFamily: 'Space Mono, monospace', fontSize: 9, padding: '5px 11px', borderRadius: 4, background: `rgba(${rgb},0.08)`, border: `1px solid rgba(${rgb},0.2)`, color: p.accent, letterSpacing: '0.06em', textTransform: 'uppercase' }}>{t}</span>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </article>
+  )
+}
+
+function GridCard({ p }: { p: Project }) {
+  const rgb = colorRgb(p.accent)
+  return (
+    <article className="project-card grid-card" style={{ background: 'var(--navy-mid)', borderLeft: `4px solid ${p.accent}`, borderRadius: '0 10px 10px 0', overflow: 'hidden', position: 'relative', display: 'flex', flexDirection: 'column' }}>
+      <span className="ghost-num" style={{ position: 'absolute', top: 10, right: 16, fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 64, color: `rgba(${rgb},0.05)`, lineHeight: 1, pointerEvents: 'none', userSelect: 'none', transition: 'color 0.3s ease' }}>{p.num}</span>
+
+      <div style={{ padding: '28px 28px 0', position: 'relative', zIndex: 1 }}>
+        <ProjectVisual num={p.num} accent={p.accent} variant="compact" />
+      </div>
+
+      <div style={{ padding: '20px 28px 28px', display: 'flex', flexDirection: 'column', flex: 1, position: 'relative', zIndex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
+          <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: p.accent }}>{p.num}</span>
+          <span style={{ width: 1, height: 10, background: 'rgba(255,255,255,0.12)' }} />
+          <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 9, color: 'var(--text-muted)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{p.cat}</span>
+          <span style={{ marginLeft: 'auto', fontFamily: 'Space Mono, monospace', fontSize: 9, color: 'var(--text-muted)' }}>{p.year}</span>
+        </div>
+
+        <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 24, lineHeight: 1.05, letterSpacing: '-0.02em', marginBottom: 12, color: 'var(--off-white)' }}>{p.title}</h2>
+
+        <p style={{ color: 'var(--text-muted)', fontSize: 13, lineHeight: 1.7, marginBottom: 16 }}>{p.desc}</p>
+
+        {/* Metrics inline */}
+        <div style={{ display: 'flex', gap: 0, marginBottom: 16, borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '14px 0' }}>
+          {p.metrics.map((m, i) => (
+            <div key={m.label} style={{ flex: 1, paddingLeft: i > 0 ? 16 : 0, borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+              <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 18, color: p.accent, lineHeight: 1, marginBottom: 4 }}>{m.value}</div>
+              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 8, color: 'var(--text-muted)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{m.label}</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginBottom: 16 }}>
+          {p.tech.map(t => (
+            <span key={t} style={{ fontFamily: 'Space Mono, monospace', fontSize: 9, color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 4, padding: '3px 8px', letterSpacing: '0.04em' }}>{t}</span>
+          ))}
+        </div>
+
+        {p.testimonial && (
+          <div style={{ marginBottom: 16 }}>
+            <TestimonialBlock t={p.testimonial} accent={p.accent} />
+          </div>
+        )}
+
+        <div style={{ marginTop: 'auto' }}>
+          <ProjectCTA p={p} />
+        </div>
+      </div>
+    </article>
+  )
+}
+
 export default function WorksPage() {
   const [active, setActive] = useState('All')
 
-  const filtered = active === 'All'
-      ? projects
-      : projects.filter(p => p.tags.includes(active))
+  // Hydrate filter from URL on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const f = params.get('filter')
+    if (f && allTags.includes(f)) setActive(f)
+  }, [])
+
+  // Push filter to URL without navigation
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (active === 'All') params.delete('filter')
+    else params.set('filter', active)
+    const qs = params.toString()
+    const next = `${window.location.pathname}${qs ? '?' + qs : ''}`
+    window.history.replaceState(null, '', next)
+  }, [active])
+
+  const counts = useMemo(() => {
+    const out: Record<string, number> = { All: projects.length }
+    for (const t of allTags) {
+      if (t === 'All') continue
+      out[t] = projects.filter(p => p.tags.includes(t)).length
+    }
+    return out
+  }, [])
+
+  const filtered = active === 'All' ? projects : projects.filter(p => p.tags.includes(active))
+  const featured = filtered.filter(p => p.featured && active === 'All')
+  const grid = filtered.filter(p => !(p.featured && active === 'All'))
 
   return (
       <>
         {/* ── Header ── */}
-        <section style={{ padding: '160px 24px 80px', position: 'relative', overflow: 'hidden' }}>
+        <section style={{ padding: '160px 24px 60px', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(0,212,200,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,200,0.03) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
           <div style={{ position: 'absolute', right: '-5%', top: '10%', width: 700, height: 700, borderRadius: '50%', background: 'radial-gradient(circle, rgba(244,98,42,0.05) 0%, transparent 70%)' }} />
 
@@ -122,105 +380,103 @@ export default function WorksPage() {
               </p>
             </div>
 
-            {/* Filter tabs */}
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 56 }}>
-              {allTags.map(tag => (
+            {/* Filter tabs with counts */}
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 48 }}>
+              {allTags.map(tag => {
+                const sel = active === tag
+                const c = counts[tag] ?? 0
+                return (
                   <button
-                      key={tag}
-                      onClick={() => setActive(tag)}
-                      style={{
-                        fontFamily: 'Space Mono, monospace', fontSize: 11,
-                        padding: '8px 18px', borderRadius: 999,
-                        border: `1px solid ${active === tag ? 'var(--cyan)' : 'rgba(255,255,255,0.1)'}`,
-                        background: active === tag ? 'rgba(0,212,200,0.1)' : 'transparent',
-                        color: active === tag ? 'var(--cyan)' : 'var(--text-muted)',
-                        cursor: 'pointer', letterSpacing: '0.06em', textTransform: 'uppercase',
-                        transition: 'all 0.2s',
-                      }}
+                    key={tag}
+                    onClick={() => setActive(tag)}
+                    className="filter-tab"
+                    data-active={sel}
+                    disabled={c === 0 && tag !== 'All'}
+                    style={{
+                      fontFamily: 'Space Mono, monospace', fontSize: 11,
+                      padding: '8px 16px', borderRadius: 999,
+                      border: `1px solid ${sel ? 'var(--cyan)' : 'rgba(255,255,255,0.1)'}`,
+                      background: sel ? 'rgba(0,212,200,0.1)' : 'transparent',
+                      color: sel ? 'var(--cyan)' : 'var(--text-muted)',
+                      cursor: c === 0 && tag !== 'All' ? 'not-allowed' : 'pointer',
+                      letterSpacing: '0.06em', textTransform: 'uppercase',
+                      transition: 'all 0.2s',
+                      display: 'inline-flex', alignItems: 'center', gap: 8,
+                      opacity: c === 0 && tag !== 'All' ? 0.35 : 1,
+                    }}
                   >
                     {tag}
+                    <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 9, padding: '1px 6px', borderRadius: 999, background: sel ? 'rgba(0,212,200,0.18)' : 'rgba(255,255,255,0.05)', color: sel ? 'var(--cyan)' : 'var(--text-muted)' }}>{c}</span>
                   </button>
-              ))}
+                )
+              })}
             </div>
+          </div>
+        </section>
+
+        {/* ── Trusted by strip ── */}
+        <section style={{ padding: '24px 24px', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'rgba(13,27,42,0.4)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Trusted by</span>
+            {clientMarks.map((c, i) => (
+              <span key={c} style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, color: 'var(--off-white)', opacity: 0.55, letterSpacing: '-0.01em', borderLeft: i === 0 ? 'none' : '1px solid rgba(255,255,255,0.08)', paddingLeft: i === 0 ? 0 : 28 }}>{c}</span>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Stats banner ── */}
+        <section style={{ padding: '40px 24px 60px' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, overflow: 'hidden', background: 'var(--navy-mid)' }} className="stats-banner">
+            {heroStats.map((s, i) => (
+              <div key={s.label} style={{ padding: '24px 28px', borderRight: i < heroStats.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
+                <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 32, color: i % 2 === 0 ? 'var(--cyan)' : 'var(--orange)', lineHeight: 1, marginBottom: 8 }}>{s.num}</div>
+                <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{s.label}</div>
+              </div>
+            ))}
           </div>
         </section>
 
         {/* ── Project list ── */}
         <section style={{ padding: '0 24px 140px' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 3 }}>
-            {filtered.map((p, i) => (
-                <ScrollReveal key={p.num} delay={i * 50}>
-                  <div style={{ background: 'var(--navy-mid)', borderLeft: `4px solid ${p.accent}`, overflow: 'hidden' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', alignItems: 'stretch' }} className="project-card-grid">
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            {/* Featured projects (only on "All") */}
+            {featured.length > 0 && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 24, marginBottom: 48 }}>
+                {featured.map((p, i) => (
+                  <ScrollReveal key={p.num} delay={i * 60}>
+                    <FeaturedCard p={p} />
+                  </ScrollReveal>
+                ))}
+              </div>
+            )}
 
-                      {/* Left: content */}
-                      <div style={{ padding: '48px 52px' }}>
-                        {/* Meta row */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
-                          <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: p.accent }}>{p.num}</span>
-                          <span style={{ width: 1, height: 12, background: 'rgba(255,255,255,0.12)' }} />
-                          <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{p.cat}</span>
-                          <span style={{ width: 1, height: 12, background: 'rgba(255,255,255,0.12)' }} />
-                          <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)' }}>{p.year}</span>
-                        </div>
-
-                        <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(28px, 3vw, 44px)', lineHeight: 1, letterSpacing: '-0.02em', marginBottom: 20, color: 'var(--off-white)' }}>
-                          {p.title}
-                        </h2>
-
-                        <p style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.8, maxWidth: 540, marginBottom: 24 }}>{p.desc}</p>
-
-                        {/* Highlight callout */}
-                        <div style={{ background: `rgba(${p.accent === 'var(--cyan)' ? '0,212,200' : '244,98,42'},0.06)`, border: `1px solid rgba(${p.accent === 'var(--cyan)' ? '0,212,200' : '244,98,42'},0.15)`, borderRadius: 8, padding: '12px 16px', marginBottom: 28, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={p.accent} strokeWidth="2" style={{ marginTop: 2, flexShrink: 0 }}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                          <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, color: 'var(--off-white)', lineHeight: 1.6 }}>{p.highlight}</p>
-                        </div>
-
-                        {/* Tech badges */}
-                        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 32 }}>
-                          {p.tech.map(t => (
-                              <span key={t} style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 4, padding: '4px 10px', letterSpacing: '0.04em' }}>{t}</span>
-                          ))}
-                        </div>
-
-                        {/* CTA */}
-                        {p.url ? (
-                            <a href={p.url} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: `1px solid rgba(${p.accent === 'var(--cyan)' ? '0,212,200' : '244,98,42'},0.3)`, color: p.accent, fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, padding: '11px 24px', borderRadius: 7, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase', transition: 'background 0.2s' }}>
-                              {p.url.includes('apple.com') ? 'View on App Store' : 'Visit Site'}
-                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                            </a>
-                        ) : (
-                            <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.06em', textTransform: 'uppercase', opacity: 0.5 }}>Private Client · NDA</span>
-                        )}
-                      </div>
-
-                      {/* Right: stat panel */}
-                      <div style={{ background: 'var(--navy)', borderLeft: '1px solid rgba(255,255,255,0.04)', padding: '48px 36px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative', overflow: 'hidden' }}>
-                        {/* Ghost number */}
-                        <span style={{ position: 'absolute', bottom: -16, right: -4, fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 110, color: p.accent === 'var(--cyan)' ? 'rgba(0,212,200,0.04)' : 'rgba(244,98,42,0.04)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>{p.num}</span>
-
-                        {/* Key result */}
-                        <div style={{ position: 'relative', zIndex: 1 }}>
-                          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Key Result</p>
-                          <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(28px, 3vw, 40px)', color: p.accent, lineHeight: 1, marginBottom: 6 }}>{p.result}</p>
-                          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{p.resultLabel}</p>
-                        </div>
-
-                        {/* Tag pills */}
-                        <div style={{ position: 'relative', zIndex: 1, marginTop: 32 }}>
-                          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Category</p>
-                          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                            {p.tags.map(t => (
-                                <span key={t} style={{ fontFamily: 'Space Mono, monospace', fontSize: 9, padding: '4px 10px', borderRadius: 4, background: `rgba(${p.accent === 'var(--cyan)' ? '0,212,200' : '244,98,42'},0.08)`, border: `1px solid rgba(${p.accent === 'var(--cyan)' ? '0,212,200' : '244,98,42'},0.2)`, color: p.accent, letterSpacing: '0.06em', textTransform: 'uppercase' }}>{t}</span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
+            {/* Grid projects */}
+            {grid.length > 0 && (
+              <>
+                {featured.length > 0 && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 28 }}>
+                    <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>More Work</span>
+                    <span style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(0,212,200,0.2), transparent)' }} />
                   </div>
-                </ScrollReveal>
-            ))}
+                )}
+                <div className="works-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24 }}>
+                  {grid.map((p, i) => (
+                    <ScrollReveal key={p.num} delay={i * 50}>
+                      <GridCard p={p} />
+                    </ScrollReveal>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Empty state */}
+            {filtered.length === 0 && (
+              <div style={{ textAlign: 'center', padding: '80px 20px', border: '1px dashed rgba(255,255,255,0.1)', borderRadius: 12, background: 'rgba(255,255,255,0.02)' }}>
+                <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 22, color: 'var(--off-white)', marginBottom: 10 }}>No projects in <span style={{ color: 'var(--cyan)' }}>{active}</span> yet.</p>
+                <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 24 }}>This could be your project. Let&apos;s talk.</p>
+                <button onClick={() => setActive('All')} style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, padding: '10px 22px', borderRadius: 999, border: '1px solid rgba(0,212,200,0.3)', background: 'rgba(0,212,200,0.06)', color: 'var(--cyan)', cursor: 'pointer', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Show All Projects</button>
+              </div>
+            )}
           </div>
         </section>
 
@@ -244,15 +500,57 @@ export default function WorksPage() {
         </section>
 
         <style>{`
-        .project-card-grid { grid-template-columns: 1fr 320px; }
-        @media (max-width: 900px) {
-          .project-card-grid { grid-template-columns: 1fr !important; }
-          .project-card-grid > div:last-child { border-left: none !important; border-top: 1px solid rgba(255,255,255,0.04) !important; }
-        }
-        @media (max-width: 600px) {
-          section { padding-left: 16px !important; padding-right: 16px !important; }
-        }
-      `}</style>
+          /* Filter tabs */
+          .filter-tab:not([data-active="true"]):hover:not(:disabled) {
+            border-color: rgba(0,212,200,0.35) !important;
+            color: var(--off-white) !important;
+          }
+
+          /* Card hover */
+          .project-card {
+            transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease;
+          }
+          .project-card:hover {
+            transform: translateY(-4px);
+          }
+          .featured-card:hover {
+            box-shadow: 0 14px 50px rgba(0,212,200,0.10), 0 0 0 1px rgba(0,212,200,0.08);
+          }
+          .grid-card:hover {
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+          }
+          .project-card:hover .ghost-num {
+            color: rgba(0,212,200,0.10) !important;
+          }
+          .project-card:hover .project-cta {
+            background: rgba(0,212,200,0.1) !important;
+          }
+          .project-cta:hover .project-cta-arrow {
+            transform: translate(2px, -2px);
+            transition: transform 0.2s ease;
+          }
+
+          /* Featured layout — stack on tablet */
+          @media (max-width: 1024px) {
+            .featured-grid { grid-template-columns: 1fr !important; }
+            .featured-grid > div:last-child { border-left: none !important; border-top: 1px solid rgba(255,255,255,0.04) !important; }
+          }
+
+          /* Grid — stack on tablet */
+          @media (max-width: 900px) {
+            .works-grid { grid-template-columns: 1fr !important; }
+            .stats-banner { grid-template-columns: repeat(2, 1fr) !important; }
+            .stats-banner > div:nth-child(2) { border-right: none !important; }
+            .stats-banner > div:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,0.06); }
+          }
+
+          @media (max-width: 600px) {
+            section { padding-left: 16px !important; padding-right: 16px !important; }
+            .stats-banner { grid-template-columns: 1fr !important; }
+            .stats-banner > div { border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.06) !important; }
+            .stats-banner > div:last-child { border-bottom: none !important; }
+          }
+        `}</style>
       </>
   )
 }
