@@ -16,6 +16,7 @@ type Project = {
   tech: string[]
   year: string
   url?: string
+  repo?: string
   desc: string
   highlight: string
   metrics: Metric[]
@@ -151,6 +152,79 @@ const projects: Project[] = [
     ],
     tags: ['Web'],
   },
+  {
+    num: '07',
+    title: 'The Mystical Universe',
+    cat: 'Web App · iOS App',
+    tag: 'Next.js · SwiftUI · Supabase',
+    accent: 'var(--cyan)',
+    tech: ['Next.js 16', 'SwiftUI', 'Supabase', 'LiveKit'],
+    year: '2025',
+    url: 'https://www.justmystical.com',
+    repo: 'https://github.com/npollak1207/mystical-universe',
+    desc: 'A two-platform fan universe for a YouTube channel — part editorial magazine, part TMDB-powered review hub, part Discord-style community with live watch parties. One Supabase backend powers a Next.js web app and a native SwiftUI iOS app with full feature parity.',
+    highlight: 'Web and iOS share a single Postgres backend governed by row-level security — plus LiveKit voice/video watch parties with native CallKit on iOS.',
+    metrics: [
+      { value: '2', label: 'Native Clients' },
+      { value: '1', label: 'Shared Backend' },
+      { value: 'Live', label: 'Watch Parties' },
+    ],
+    tags: ['Web App', 'iOS', 'AI'],
+    featured: true,
+  },
+  {
+    num: '08',
+    title: 'MyFlix',
+    cat: 'Web App · Streaming',
+    tag: 'React · Vite · Jellyfin',
+    accent: 'var(--orange)',
+    tech: ['React', 'TypeScript', 'Vite', 'Jellyfin'],
+    year: '2025',
+    url: 'https://myflix-steel-six.vercel.app',
+    repo: 'https://github.com/npollak1207/myflix',
+    desc: 'A private, self-hosted "Netflix for yourself" — a cinematic streaming front-end built over a Jellyfin media server. Adaptive 4K HLS playback, dynamic color theming, Continue Watching, collections, and a polished custom player.',
+    highlight: 'Custom React UI over Jellyfin delivers 4K adaptive HLS, skip-intro, and autoplay-next — reachable privately over Tailscale with zero public ports.',
+    metrics: [
+      { value: '4K', label: 'Adaptive HLS' },
+      { value: '0', label: 'Public Ports' },
+      { value: 'Self-Host', label: 'Private' },
+    ],
+    tags: ['Web App'],
+  },
+  {
+    num: '09',
+    title: 'DWGS',
+    cat: 'Web · Branding',
+    tag: 'Next.js · Tailwind',
+    accent: 'var(--cyan)',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+    year: '2025',
+    url: 'https://www.dwgsusa.com',
+    desc: 'Bold, military-inspired marketing site for a property maintenance and renovation contractor specializing in military housing and multifamily portfolios. Split-screen hero, services grid, and industry pages built to win over property managers.',
+    highlight: 'Stencil-and-olive brand system engineered to read as rugged and dependable — anchored by their 15+ year military-housing specialty and nationwide reach.',
+    metrics: [
+      { value: '15+', label: 'Years Experience' },
+      { value: '10', label: 'Service Lines' },
+    ],
+    tags: ['Web', 'Branding'],
+  },
+  {
+    num: '10',
+    title: 'Canyon Supply Co',
+    cat: 'E-Commerce · SEO',
+    tag: 'Next.js · Supabase · Stripe',
+    accent: 'var(--orange)',
+    tech: ['Next.js', 'Supabase', 'Stripe', 'SEO'],
+    year: '2025',
+    url: 'https://canyonsupplyco.vercel.app',
+    desc: 'Full e-commerce storefront for a Phoenix cleaning-equipment supplier — pressure washers, jetters, chemicals, and parts. Product catalog, cart, Stripe checkout, blog, and an admin dashboard, all built for local search.',
+    highlight: 'Authorized-dealer catalog with Supabase-backed inventory and Stripe checkout — structured for Phoenix-area local SEO from the ground up.',
+    metrics: [
+      { value: '20+', label: 'Years In Phoenix' },
+      { value: 'Stripe', label: 'Live Checkout' },
+    ],
+    tags: ['Web', 'SEO'],
+  },
 ]
 
 const allTags = ['All', 'Web', 'iOS', 'Web App', 'AI', 'Branding', 'SEO']
@@ -161,10 +235,12 @@ const clientMarks = [
   'Cloak Wraps',
   'Zona Pest Solutions',
   'Canyon Cleaning',
+  'DWGS',
+  'Canyon Supply Co',
 ]
 
 const heroStats = [
-  { num: '6', label: 'Projects Shipped' },
+  { num: '10', label: 'Projects Shipped' },
   { num: '4.9★', label: 'Avg Rating' },
   { num: '<1.2s', label: 'Avg Load Time' },
   { num: '100%', label: 'Custom Code' },
@@ -196,14 +272,24 @@ function TestimonialBlock({ t, accent }: { t: Testimonial; accent: string }) {
 
 function ProjectCTA({ p }: { p: Project }) {
   const rgb = colorRgb(p.accent)
-  if (!p.url) {
+  if (!p.url && !p.repo) {
     return <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.06em', textTransform: 'uppercase', opacity: 0.6 }}>Private Client · NDA</span>
   }
   return (
-    <a href={p.url} target="_blank" rel="noopener noreferrer" className="project-cta" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: `1px solid rgba(${rgb},0.35)`, color: p.accent, fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, padding: '11px 24px', borderRadius: 7, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase', background: `rgba(${rgb},0.04)`, transition: 'background 0.2s, transform 0.2s' }}>
-      {p.url.includes('apple.com') ? 'View on App Store' : 'Visit Site'}
-      <svg className="project-cta-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-    </a>
+    <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+      {p.url && (
+        <a href={p.url} target="_blank" rel="noopener noreferrer" className="project-cta" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: `1px solid rgba(${rgb},0.35)`, color: p.accent, fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, padding: '11px 24px', borderRadius: 7, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase', background: `rgba(${rgb},0.04)`, transition: 'background 0.2s, transform 0.2s' }}>
+          {p.url.includes('apple.com') ? 'View on App Store' : 'Visit Site'}
+          <svg className="project-cta-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      )}
+      {p.repo && (
+        <a href={p.repo} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: '1px solid rgba(255,255,255,0.12)', color: 'var(--text-muted)', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, padding: '11px 22px', borderRadius: 7, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase', background: 'rgba(255,255,255,0.02)', transition: 'background 0.2s, color 0.2s, border-color 0.2s' }}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.69c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg>
+          View Code
+        </a>
+      )}
+    </div>
   )
 }
 
@@ -376,7 +462,7 @@ export default function WorksPage() {
                 1 of 1.<br /><span style={{ color: 'var(--orange)' }}>Every time.</span>
               </h1>
               <p style={{ color: 'var(--text-muted)', fontSize: 17, lineHeight: 1.8, maxWidth: 380 }}>
-                Every project is custom. No templates, no shortcuts, no recycled layouts. Six clients. Six completely different builds.
+                Every project is custom. No templates, no shortcuts, no recycled layouts. Ten projects. Ten completely different builds.
               </p>
             </div>
 
@@ -485,7 +571,7 @@ export default function WorksPage() {
           <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(0,212,200,0.012) 20px, rgba(0,212,200,0.012) 40px)' }} />
           <ScrollReveal>
             <div style={{ position: 'relative', zIndex: 1 }}>
-              <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Project 07</p>
+              <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Project 11</p>
               <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 72px)', lineHeight: 0.95, letterSpacing: '-0.02em', marginBottom: 28 }}>
                 Your project<br /><span style={{ color: 'var(--orange)' }}>goes here.</span>
               </h2>

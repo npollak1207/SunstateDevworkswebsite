@@ -177,7 +177,8 @@ export default function ProjectVisual({ num, accent, variant = 'compact' }: { nu
     )
   }
 
-  // num === '06' — Canyon Cleaning — service area map + booking
+  if (num === '06') {
+  // Canyon Cleaning — service area map + booking
   const areas = [
     { x: 28, y: 38 }, { x: 55, y: 32 }, { x: 72, y: 50 }, { x: 42, y: 62 }, { x: 60, y: 70 },
   ]
@@ -206,6 +207,153 @@ export default function ProjectVisual({ num, accent, variant = 'compact' }: { nu
             </div>
           ))}
         </div>
+      </div>
+    </div>
+  )
+  }
+
+  if (num === '07') {
+    // Mystical Universe — editorial magazine + reviews + live watch parties (web + iOS)
+    const ratings = [4, 5, 4]
+    return (
+      <div style={shell}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: variant === 'featured' ? 14 : 8 }}>
+          <span style={{ fontFamily: 'Space Mono, monospace', fontSize: labelSize, color: ac, letterSpacing: '0.06em', textTransform: 'uppercase' }}>The Mystical Universe</span>
+          <span style={{ fontFamily: 'Space Mono, monospace', fontSize: variant === 'featured' ? 9 : 7, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.04em' }}>Web + iOS</span>
+        </div>
+        {/* Featured article band */}
+        <div style={{ position: 'relative', height: variant === 'featured' ? 92 : 38, borderRadius: 6, overflow: 'hidden', marginBottom: variant === 'featured' ? 12 : 6, border: '1px solid rgba(255,255,255,0.06)', background: `linear-gradient(120deg, #160d2e 0%, #2a1a4a 55%, ${acA}0.5) 165%)` }}>
+          <span style={{ position: 'absolute', top: variant === 'featured' ? 8 : 5, left: variant === 'featured' ? 10 : 7, fontFamily: 'Space Mono, monospace', fontSize: variant === 'featured' ? 8 : 6, color: ac, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Featured</span>
+          <div style={{ position: 'absolute', bottom: variant === 'featured' ? 10 : 6, left: variant === 'featured' ? 10 : 7, right: variant === 'featured' ? 10 : 7 }}>
+            <div style={{ height: variant === 'featured' ? 7 : 4, width: '70%', background: 'rgba(255,255,255,0.85)', borderRadius: 2, marginBottom: 4 }} />
+            <div style={{ height: variant === 'featured' ? 5 : 3, width: '45%', background: 'rgba(255,255,255,0.35)', borderRadius: 2 }} />
+          </div>
+        </div>
+        {/* Title cards with review ratings */}
+        <div style={{ display: 'flex', gap: variant === 'featured' ? 8 : 5 }}>
+          {ratings.map((r, i) => (
+            <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 3 }}>
+              <div style={{ height: variant === 'featured' ? 34 : 16, borderRadius: 4, background: `${acA}${0.1 + i * 0.06})`, border: '1px solid rgba(255,255,255,0.05)' }} />
+              <div style={{ display: 'flex', gap: 1 }}>
+                {Array.from({ length: 5 }).map((_, s) => (
+                  <div key={s} style={{ width: variant === 'featured' ? 5 : 3, height: variant === 'featured' ? 5 : 3, borderRadius: '50%', background: s < r ? ac : 'rgba(255,255,255,0.15)' }} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        {variant === 'featured' && (
+          <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: 'Space Mono, monospace', fontSize: 9, color: ac, padding: '3px 9px', borderRadius: 999, background: `${acA}0.1)`, border: `1px solid ${acA}0.25)`, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+              <span style={{ width: 5, height: 5, borderRadius: '50%', background: ac, boxShadow: `0 0 6px ${ac}` }} />Live · Watch Party
+            </span>
+            <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 9, color: 'rgba(255,255,255,0.4)' }}>12 watching</span>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  if (num === '08') {
+    // MyFlix — Netflix-style hero + poster rail
+    const posters = [0, 1, 2, 3, 4]
+    return (
+      <div style={shell}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: variant === 'featured' ? 12 : 7 }}>
+          <span style={{ fontFamily: 'Space Mono, monospace', fontSize: labelSize, color: ac, letterSpacing: '0.06em', textTransform: 'uppercase' }}>MyFlix · Streaming</span>
+          <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: variant === 'featured' ? 13 : 9, color: ac }}>4K HLS</span>
+        </div>
+        {/* Hero band with resume button */}
+        <div style={{ position: 'relative', height: variant === 'featured' ? 84 : 36, borderRadius: 6, overflow: 'hidden', marginBottom: variant === 'featured' ? 12 : 6, background: `linear-gradient(115deg, #0b0b14 0%, #1a1330 50%, ${acA}0.45) 155%)`, border: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ position: 'absolute', bottom: variant === 'featured' ? 10 : 6, left: variant === 'featured' ? 10 : 7, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div style={{ width: variant === 'featured' ? 22 : 14, height: variant === 'featured' ? 22 : 14, borderRadius: '50%', background: ac, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg width={variant === 'featured' ? 9 : 6} height={variant === 'featured' ? 9 : 6} viewBox="0 0 24 24" fill="#000"><polygon points="6 4 20 12 6 20 6 4" /></svg>
+            </div>
+            <div>
+              <div style={{ height: variant === 'featured' ? 6 : 4, width: variant === 'featured' ? 72 : 42, background: 'rgba(255,255,255,0.8)', borderRadius: 2, marginBottom: 3 }} />
+              <div style={{ height: variant === 'featured' ? 3 : 2, width: variant === 'featured' ? 42 : 26, background: ac, borderRadius: 2 }} />
+            </div>
+          </div>
+        </div>
+        {/* Poster rail (Top 10 style) */}
+        <div style={{ display: 'flex', gap: variant === 'featured' ? 8 : 4 }}>
+          {posters.map((p, i) => (
+            <div key={i} style={{ flex: 1, height: variant === 'featured' ? 44 : 22, borderRadius: 4, background: i === 1 ? `${acA}0.18)` : 'rgba(255,255,255,0.05)', border: i === 1 ? `1px solid ${acA}0.3)` : '1px solid rgba(255,255,255,0.05)' }} />
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  if (num === '09') {
+    // DWGS — military housing / property maintenance: stencil brand + stats
+    const stats = [{ v: '15+', l: 'Years' }, { v: 'US', l: 'Nationwide' }, { v: '10', l: 'Services' }]
+    return (
+      <div style={shell}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: variant === 'featured' ? 14 : 8 }}>
+          <span style={{ fontFamily: 'Space Mono, monospace', fontSize: labelSize, color: ac, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Property Maintenance</span>
+          <span style={{ fontFamily: 'Space Mono, monospace', fontSize: variant === 'featured' ? 9 : 7, color: 'rgba(255,255,255,0.4)' }}>Military Housing</span>
+        </div>
+        <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: variant === 'featured' ? 46 : 22, letterSpacing: '0.08em', color: 'var(--off-white)', lineHeight: 1, marginBottom: variant === 'featured' ? 16 : 8 }}>DWGS</div>
+        <div style={{ display: 'flex', gap: 0, borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: variant === 'featured' ? 14 : 8 }}>
+          {stats.map((s, i) => (
+            <div key={s.l} style={{ flex: 1, paddingLeft: i > 0 ? (variant === 'featured' ? 14 : 8) : 0, borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
+              <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: variant === 'featured' ? 22 : 13, color: ac, lineHeight: 1, marginBottom: 4 }}>{s.v}</div>
+              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: variant === 'featured' ? 9 : 7, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{s.l}</div>
+            </div>
+          ))}
+        </div>
+        {variant === 'featured' && (
+          <div style={{ marginTop: 16, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            {['Unit Turns', 'Renovations', 'Emergency Repair', 'Turnkey'].map(c => (
+              <span key={c} style={{ fontFamily: 'Space Mono, monospace', fontSize: 9, color: 'rgba(255,255,255,0.55)', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 3, padding: '3px 8px', letterSpacing: '0.04em' }}>{c}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  if (num === '10') {
+    // Canyon Supply Co — e-commerce product cards
+    const products = ['Pressure Washer', 'Surface Cleaner', 'Hose Reel']
+    return (
+      <div style={shell}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: variant === 'featured' ? 14 : 8 }}>
+          <span style={{ fontFamily: 'Space Mono, monospace', fontSize: labelSize, color: ac, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Canyon Supply Co</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <svg width={variant === 'featured' ? 12 : 9} height={variant === 'featured' ? 12 : 9} viewBox="0 0 24 24" fill="none" stroke={ac} strokeWidth="2"><circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" /><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" /></svg>
+            <span style={{ fontFamily: 'Space Mono, monospace', fontSize: variant === 'featured' ? 9 : 7, color: 'rgba(255,255,255,0.4)' }}>Cart</span>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: variant === 'featured' ? 10 : 5 }}>
+          {products.map((tag, i) => (
+            <div key={i} style={{ flex: 1, borderRadius: 6, background: 'rgba(255,255,255,0.03)', border: i === 0 ? `1px solid ${acA}0.25)` : '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}>
+              <div style={{ height: variant === 'featured' ? 54 : 26, background: `linear-gradient(135deg, rgba(255,255,255,0.06), ${acA}0.08))`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width={variant === 'featured' ? 22 : 14} height={variant === 'featured' ? 22 : 14} viewBox="0 0 24 24" fill="none" stroke={i === 0 ? ac : 'rgba(255,255,255,0.3)'} strokeWidth="1.6"><path d="M3 9l1-5h16l1 5" /><path d="M5 9v11h14V9" /><path d="M9 13h6" /></svg>
+              </div>
+              <div style={{ padding: variant === 'featured' ? '7px 8px' : '4px 5px' }}>
+                {variant === 'featured' && <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 7, color: ac, letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: 3 }}>{tag}</div>}
+                <div style={{ height: variant === 'featured' ? 4 : 3, width: '80%', background: 'rgba(255,255,255,0.25)', borderRadius: 2, marginBottom: 3 }} />
+                <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: variant === 'featured' ? 9 : 6, color: 'rgba(255,255,255,0.7)' }}>Call for Quote</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {variant === 'featured' && (
+          <div style={{ marginTop: 14, fontFamily: 'Space Mono, monospace', fontSize: 9, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.04em' }}>Authorized Dealer · Phoenix, AZ · 20+ years</div>
+        )}
+      </div>
+    )
+  }
+
+  // generic fallback
+  return (
+    <div style={shell}>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%', gap: 8 }}>
+        <div style={{ height: variant === 'featured' ? 10 : 6, width: '60%', background: `${acA}0.3)`, borderRadius: 3 }} />
+        <div style={{ height: variant === 'featured' ? 8 : 5, width: '85%', background: 'rgba(255,255,255,0.06)', borderRadius: 3 }} />
+        <div style={{ height: variant === 'featured' ? 8 : 5, width: '70%', background: 'rgba(255,255,255,0.06)', borderRadius: 3 }} />
       </div>
     </div>
   )
