@@ -1,15 +1,50 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// ── Basic in-memory rate limit (best-effort per warm instance) ──
+const RATE_LIMIT = 5 // max submissions
+const RATE_WINDOW_MS = 10 * 60 * 1000 // per 10 minutes per IP
+const hits = new Map<string, number[]>()
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const recent = (hits.get(ip) || []).filter(t => now - t < RATE_WINDOW_MS)
+  recent.push(now)
+  hits.set(ip, recent)
+  // Opportunistic cleanup so the map doesn't grow unbounded
+  if (hits.size > 5000) {
+    for (const [k, v] of hits) if (v.every(t => now - t >= RATE_WINDOW_MS)) hits.delete(k)
+  }
+  return recent.length > RATE_LIMIT
+}
 
 export async function POST(req: Request) {
   try {
-    const { name, email, company, service, budget, message } = await req.json()
+    const body = await req.json()
+    const { name, email, company, service, budget, message } = body
+    const honeypot = body._hp ?? body.website ?? ''
+
+    // ── Honeypot: bots fill the hidden field. Pretend success, send nothing. ──
+    if (typeof honeypot === 'string' && honeypot.trim() !== '') {
+      return NextResponse.json({ success: true })
+    }
+
+    // ── Rate limit by client IP ──
+    const ip = (req.headers.get('x-forwarded-for')?.split(',')[0].trim()) || 'unknown'
+    if (isRateLimited(ip)) {
+      return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 })
+    }
 
     if (!name || !email || !message) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
+
+    const apiKey = process.env.RESEND_API_KEY
+    if (!apiKey) {
+      console.error('RESEND_API_KEY is not set')
+      return NextResponse.json({ error: 'Email service is not configured' }, { status: 500 })
+    }
+    const resend = new Resend(apiKey)
 
     // ── Notification email to Sunstate team ──
     await resend.emails.send({
