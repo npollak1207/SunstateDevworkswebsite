@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import ProjectVisual from '@/components/ProjectVisual'
 
 /* ─────────────────────────────────────────────────────────────────────────────
    SUNSTATE DEVWORKS — GOOGLE ADS LANDING PAGE
@@ -54,20 +55,123 @@ const HERO_VARIANTS: Record<string, HeroVariant> = {
   seo: { a: 'Websites built to rank and', grad: 'convert.', sub: 'Fast, SEO-engineered websites for Arizona businesses — built to climb Google and turn traffic into leads.' },
 }
 
-/* ─── PROOF / WORK (pulled from /works) ─────────────────────────────────────── */
-const WORKS = [
-  { title: 'ELS Platform', cat: 'iOS App · Web Dashboard', accent: 'var(--orange)', rgb: '244,98,42', result: '20 hrs', resultSub: 'saved per week', desc: 'A business-in-a-box iOS app + web dashboard — scheduling, invoicing, CRM and live P&L — replacing 5 disconnected tools.' },
-  { title: 'Zona Pest Solutions', cat: 'Web · SEO', accent: 'var(--cyan)', rgb: '0,212,200', result: '#1', resultSub: 'in Scottsdale & Mesa', desc: 'Modern site + SEO strategy that took a pest control company from invisible to top-ranked in months.' },
-  { title: 'Cloak Wraps', cat: 'Web · Branding', accent: 'var(--orange)', rgb: '244,98,42', result: "Tempe's #1", resultSub: 'wrap studio', desc: 'Full rebrand and cinematic website for a premium vehicle wrap and PPF studio.' },
-  { title: 'Liberty Military Housing', cat: 'AI Dashboard', accent: 'var(--cyan)', rgb: '0,212,200', result: '−60%', resultSub: 'support tickets', desc: 'An AI-driven construction platform — managers ask questions in plain English and get live data across 10k+ housing units.' },
-  { title: 'Easy Landscape Solutions', cat: 'Web · Branding', accent: 'var(--orange)', rgb: '244,98,42', result: '67+', resultSub: 'five-star reviews', desc: 'Full rebrand and custom site for a Gilbert hardscape & turf company, with a custom before/after slider and ROC trust signals.' },
-  { title: 'Canyon Supply Co', cat: 'E-Commerce · SEO', accent: 'var(--cyan)', rgb: '0,212,200', result: 'Stripe', resultSub: 'live checkout', desc: 'A full e-commerce storefront for a Phoenix equipment supplier — catalog, cart, Stripe checkout and admin, built for local SEO.' },
+/* ─── PROOF / WORK (every project on site) ──────────────────────────────────── */
+type Work = {
+  num: string
+  title: string
+  cat: string
+  year: string
+  accent: string
+  rgb: string
+  result: string
+  resultSub: string
+  desc: string
+  highlight: string
+  tech: string[]
+  tags: string[]
+  metrics: { value: string; label: string }[]
+  url?: string
+  repo?: string
+}
+const WORKS: Work[] = [
+  {
+    num: '01', title: 'Liberty Military Housing', cat: 'AI Dashboard', year: '2024',
+    accent: 'var(--cyan)', rgb: '0,212,200', result: '−60%', resultSub: 'support tickets',
+    desc: 'A centralized AI-driven construction management platform that turned thousands of data points across military housing renovations into a real-time source of truth.',
+    highlight: 'Natural language interface — managers ask questions in plain English and the AI returns live data visualizations instantly.',
+    tech: ['Next.js', 'Python', 'OpenAI', 'PostgreSQL'], tags: ['AI', 'Web App'],
+    metrics: [{ value: '−60%', label: 'Support Tickets' }, { value: '10k+', label: 'Housing Units' }, { value: '4 wks', label: 'Build Time' }],
+  },
+  {
+    num: '02', title: 'ELS Platform', cat: 'iOS App · Web Dashboard', year: '2024',
+    accent: 'var(--orange)', rgb: '244,98,42', result: '20 hrs', resultSub: 'saved per week',
+    desc: 'A full business-in-a-box iOS app and web dashboard for Easy Landscape Solutions — replacing 5 disconnected apps with one unified platform for scheduling, invoicing, CRM and real-time P&L tracking.',
+    highlight: 'Custom financial module tracks profitability per job in real time — something no off-the-shelf software could provide.',
+    tech: ['SwiftUI', 'Firebase', 'Stripe API', 'Mapbox'], tags: ['iOS', 'Web App'],
+    metrics: [{ value: '20 hrs', label: 'Saved Per Week' }, { value: '5 → 1', label: 'Apps Replaced' }, { value: 'Live', label: 'On App Store' }],
+    url: 'https://apps.apple.com/us/app/easy-ls-business-app/id6755699624',
+  },
+  {
+    num: '03', title: 'Cloak Wraps', cat: 'Web · Branding', year: '2024',
+    accent: 'var(--cyan)', rgb: '0,212,200', result: "Tempe's #1", resultSub: 'wrap studio',
+    desc: "Premium custom website for Tempe's leading vehicle wrap and PPF studio. Full rebrand with cinematic hero video, animated service pages and a bespoke quote request flow.",
+    highlight: 'EV specialist studio page built to capture the fast-growing Tesla / Rivian wrap market in the Phoenix Valley.',
+    tech: ['Next.js', 'TypeScript', 'Framer Motion', 'CSS'], tags: ['Web', 'Branding'],
+    metrics: [{ value: '#1', label: 'Tempe Wrap Studio' }, { value: 'EV', label: 'Specialist Page' }],
+    url: 'https://www.cloakwraps.com',
+  },
+  {
+    num: '04', title: 'Zona Pest Solutions', cat: 'Web · SEO', year: '2024',
+    accent: 'var(--orange)', rgb: '244,98,42', result: '#1', resultSub: 'in Scottsdale & Mesa',
+    desc: "Modern website and SEO strategy for Scottsdale and Mesa's top-rated pest control company. Built to rank, convert and integrate with their FieldRoutes customer portal.",
+    highlight: 'Subscription plan architecture designed to drive $59–$99/mo recurring revenue directly from the site.',
+    tech: ['Next.js', 'TypeScript', 'FieldRoutes API', 'SEO'], tags: ['Web', 'SEO'],
+    metrics: [{ value: '#1', label: 'Scottsdale & Mesa' }, { value: '$59+', label: 'Monthly Plans' }],
+    url: 'https://www.zonapestsolutions.com',
+  },
+  {
+    num: '05', title: 'Easy Landscape Solutions', cat: 'Web · Branding', year: '2024',
+    accent: 'var(--cyan)', rgb: '0,212,200', result: '67+', resultSub: 'five-star reviews',
+    desc: 'Full rebrand and custom site for a Gilbert, AZ hardscape and artificial turf company. Project gallery, consultation form with photo uploads and ROC license trust signals.',
+    highlight: 'Conversion-built site backed by 67+ five-star reviews and ROC-licensed trust signals to turn browsers into booked consultations.',
+    tech: ['Next.js', 'TypeScript', 'CSS', 'Figma'], tags: ['Web', 'Branding'],
+    metrics: [{ value: '67+', label: 'Five-Star Reviews' }, { value: 'ROC', label: 'Licensed Trust' }],
+    url: 'https://www.easylandscapesolutions.com',
+  },
+  {
+    num: '06', title: 'Canyon Cleaning Solutions', cat: 'Web', year: '2025',
+    accent: 'var(--orange)', rgb: '244,98,42', result: '5', resultSub: 'service areas live',
+    desc: 'Clean, conversion-focused website for a residential and commercial cleaning company. Service area pages, instant quote request flow and trust-building social proof sections.',
+    highlight: 'Structured for local SEO from the ground up — service area pages built to rank city by city.',
+    tech: ['Next.js', 'TypeScript', 'CSS'], tags: ['Web'],
+    metrics: [{ value: '5', label: 'Service Areas' }, { value: 'Live', label: 'On Vercel' }],
+    url: 'https://canyon-cleaning-solutions-tmr5.vercel.app',
+  },
+  {
+    num: '07', title: 'The Mystical Universe', cat: 'Web App · iOS App', year: '2025',
+    accent: 'var(--cyan)', rgb: '0,212,200', result: '2 apps', resultSub: '1 shared backend',
+    desc: 'A two-platform fan universe for a YouTube channel — part editorial magazine, part TMDB-powered review hub, part Discord-style community with live watch parties. One Supabase backend powers a Next.js web app and a native SwiftUI iOS app.',
+    highlight: 'Web and iOS share a single Postgres backend governed by row-level security — plus LiveKit voice/video watch parties with native CallKit on iOS.',
+    tech: ['Next.js 16', 'SwiftUI', 'Supabase', 'LiveKit'], tags: ['Web App', 'iOS', 'AI'],
+    metrics: [{ value: '2', label: 'Native Clients' }, { value: '1', label: 'Shared Backend' }, { value: 'Live', label: 'Watch Parties' }],
+    url: 'https://www.justmystical.com', repo: 'https://github.com/npollak1207/mystical-universe',
+  },
+  {
+    num: '08', title: 'MyFlix', cat: 'Web App · Streaming', year: '2025',
+    accent: 'var(--orange)', rgb: '244,98,42', result: '4K', resultSub: 'adaptive HLS',
+    desc: 'A private, self-hosted "Netflix for yourself" — a cinematic streaming front-end built over a Jellyfin media server. Adaptive 4K HLS playback, dynamic color theming, Continue Watching, collections and a polished custom player.',
+    highlight: 'Custom React UI over Jellyfin delivers 4K adaptive HLS, skip-intro and autoplay-next — reachable privately over Tailscale with zero public ports.',
+    tech: ['React', 'TypeScript', 'Vite', 'Jellyfin'], tags: ['Web App'],
+    metrics: [{ value: '4K', label: 'Adaptive HLS' }, { value: '0', label: 'Public Ports' }, { value: 'Self-Host', label: 'Private' }],
+    url: 'https://myflix-steel-six.vercel.app', repo: 'https://github.com/npollak1207/myflix',
+  },
+  {
+    num: '09', title: 'DWGS', cat: 'Web · Branding', year: '2025',
+    accent: 'var(--cyan)', rgb: '0,212,200', result: '15+', resultSub: 'years specialty',
+    desc: 'Bold, military-inspired marketing site for a property maintenance and renovation contractor specializing in military housing and multifamily portfolios. Split-screen hero, services grid and industry pages built to win over property managers.',
+    highlight: 'Stencil-and-olive brand system engineered to read as rugged and dependable — anchored by their 15+ year military-housing specialty and nationwide reach.',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS'], tags: ['Web', 'Branding'],
+    metrics: [{ value: '15+', label: 'Years Experience' }, { value: '10', label: 'Service Lines' }],
+    url: 'https://www.dwgsusa.com',
+  },
+  {
+    num: '10', title: 'Canyon Supply Co', cat: 'E-Commerce · SEO', year: '2025',
+    accent: 'var(--orange)', rgb: '244,98,42', result: 'Stripe', resultSub: 'live checkout',
+    desc: 'Full e-commerce storefront for a Phoenix cleaning-equipment supplier — pressure washers, jetters, chemicals and parts. Product catalog, cart, Stripe checkout, blog and an admin dashboard, all built for local search.',
+    highlight: 'Authorized-dealer catalog with Supabase-backed inventory and Stripe checkout — structured for Phoenix-area local SEO from the ground up.',
+    tech: ['Next.js', 'Supabase', 'Stripe', 'SEO'], tags: ['Web', 'SEO'],
+    metrics: [{ value: '20+', label: 'Years In Phoenix' }, { value: 'Stripe', label: 'Live Checkout' }],
+    url: 'https://canyonsupplyco.vercel.app',
+  },
 ]
 
 const TESTIMONIALS = [
   { initials: 'AM', name: 'Alex M.', role: 'Owner, Easy Landscape Solutions', accent: 'var(--cyan)', rgb: '0,212,200', body: 'We were running five different apps just to keep the business moving. Sunstate built us one platform that does everything. We got back at least 20 hours a week.' },
   { initials: 'BW', name: 'Billy W.', role: 'Owner, Zona Pest Solutions', accent: 'var(--orange)', rgb: '244,98,42', body: 'The site looks better than I could have imagined and it actually brings in leads. We went from invisible online to ranking in Scottsdale and Mesa.' },
   { initials: 'ZH', name: 'Zach H.', role: 'Owner, Cloak Wraps', accent: 'var(--cyan)', rgb: '0,212,200', body: 'I wanted something that looked as premium as the work we do on cars. They nailed it. Clean, fast, and gets compliments before customers walk in.' },
+  { initials: 'DL', name: 'David L.', role: 'Liberty Military Housing', accent: 'var(--orange)', rgb: '244,98,42', body: 'We were drowning in spreadsheets and tickets across thousands of units. Now our team just asks the dashboard a question and gets the answer instantly. Support tickets dropped more than 60% in the first month.' },
+  { initials: 'MA', name: 'Matt A.', role: 'Owner, DWGS', accent: 'var(--cyan)', rgb: '0,212,200', body: 'Our old site made us look small. Sunstate gave us a brand that finally matches the work — rugged, sharp, and built to win over property managers. We started landing bigger contracts within weeks.' },
+  { initials: 'CT', name: 'Cole T.', role: 'Owner, Canyon Supply Co & Canyon Cleaning', accent: 'var(--orange)', rgb: '244,98,42', body: 'They built both of my companies and nailed each one. The supply store takes Stripe orders around the clock and the cleaning site books jobs while I sleep. Two businesses, one team, zero headaches.' },
 ]
 
 const SERVICES = [
@@ -192,7 +296,7 @@ textarea.lp-f-input{resize:vertical;min-height:84px}
 
 /* ── MARQUEE (trust strip) ── */
 .lp-mq{position:relative;z-index:2;overflow:hidden;background:var(--orange);padding:11px 0;}
-.lp-mq-track{display:flex;width:max-content;animation:lp-mqf 30s linear infinite;}
+.lp-mq-track{display:flex;width:max-content;animation:lp-mqf 70s linear infinite;}
 .lp-mq-item{font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#fff;white-space:nowrap;margin-right:26px;display:flex;align-items:center;gap:26px;}
 .lp-mq-item::after{content:'◆';opacity:.5;font-size:9px}
 @keyframes lp-mqf{to{transform:translateX(-50%)}}
@@ -232,15 +336,39 @@ textarea.lp-f-input{resize:vertical;min-height:84px}
 .lp-svc-tags{display:flex;gap:6px;flex-wrap:wrap}
 .lp-svc-tagbadge{font-family:var(--mono);font-size:9px;border-radius:4px;padding:3px 9px;letter-spacing:.04em;border:1px solid}
 
-/* ── WORK ── */
-.lp-work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.lp-work{background:var(--navy-mid);border:1px solid var(--border);border-top-width:3px;border-radius:12px;padding:30px 28px;display:flex;flex-direction:column;transition:transform .2s,background .25s}
-.lp-work:hover{transform:translateY(-3px);background:var(--navy-light)}
-.lp-work-cat{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
-.lp-work-title{font-family:var(--display);font-weight:800;font-size:22px;margin-bottom:12px}
-.lp-work-desc{color:var(--muted);font-size:13.5px;line-height:1.65;flex:1;margin-bottom:20px}
-.lp-work-result{font-family:var(--display);font-weight:800;font-size:30px;line-height:1;letter-spacing:-.02em}
-.lp-work-result-sub{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:6px}
+/* ── WORK (carousel) ── */
+.lp-work-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.lp-work-counter{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.06em}
+.lp-work-counter-sep{width:22px;height:1px;background:rgba(255,255,255,.18)}
+.lp-carousel{position:relative}
+.lp-cw-card{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:0;background:var(--navy-mid);border:1px solid var(--border);border-left-width:4px;border-radius:0 14px 14px 0;overflow:hidden;animation:lp-cw-in .45s cubic-bezier(.22,1,.36,1)}
+@keyframes lp-cw-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.lp-cw-ghost{position:absolute;bottom:-34px;right:-6px;font-family:var(--display);font-weight:800;font-size:210px;line-height:1;pointer-events:none;user-select:none;z-index:0}
+.lp-cw-body{position:relative;z-index:1;padding:clamp(28px,3.4vw,46px);display:flex;flex-direction:column}
+.lp-cw-meta{display:flex;align-items:center;gap:11px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px}
+.lp-cw-meta-sep{width:1px;height:11px;background:rgba(255,255,255,.14)}
+.lp-cw-title{font-family:var(--display);font-weight:800;font-size:clamp(26px,3vw,40px);line-height:1.02;letter-spacing:-.02em;margin-bottom:14px;color:var(--off-white)}
+.lp-cw-desc{color:var(--muted);font-size:14.5px;line-height:1.72;margin-bottom:20px}
+.lp-cw-highlight{display:flex;gap:10px;align-items:flex-start;border:1px solid;border-radius:9px;padding:12px 15px;margin-bottom:20px}
+.lp-cw-highlight span{font-size:13px;line-height:1.6;color:var(--off-white)}
+.lp-cw-tech{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+.lp-cw-chip{font-family:var(--mono);font-size:10px;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:4px;padding:4px 10px;letter-spacing:.04em}
+.lp-cw-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+.lp-cw-link{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;padding:11px 22px;border-radius:7px;border:1px solid;transition:transform .15s,box-shadow .2s,background .2s}
+.lp-cw-link:hover{transform:translateY(-2px)}
+.lp-cw-link-ghost{color:var(--muted);border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.02)}
+.lp-cw-link-ghost:hover{color:var(--off-white);border-color:rgba(255,255,255,.25)}
+.lp-cw-side{position:relative;z-index:1;background:var(--navy);border-left:1px solid rgba(255,255,255,.05);padding:clamp(28px,3.4vw,44px);display:flex;flex-direction:column;gap:20px;justify-content:center}
+.lp-cw-metrics{display:grid;gap:14px;border-top:1px solid rgba(255,255,255,.07);padding-top:20px}
+.lp-cw-metric{padding-right:14px}
+.lp-cw-metric-val{font-family:var(--display);font-weight:800;font-size:clamp(22px,2.4vw,30px);line-height:1;margin-bottom:6px}
+.lp-cw-metric-lbl{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}
+.lp-cw-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:28px}
+.lp-cw-arrow{width:44px;height:44px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:var(--off-white);transition:border-color .2s,background .2s,color .2s,transform .15s}
+.lp-cw-arrow:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,200,.06);transform:translateY(-1px)}
+.lp-cw-dots{display:flex;align-items:center;gap:8px}
+.lp-cw-dot{width:9px;height:9px;border-radius:40px;background:rgba(255,255,255,.16);border:none;padding:0;transition:width .25s,background .25s}
+.lp-cw-dot:hover{background:rgba(255,255,255,.4)}
 
 /* ── TESTIMONIALS ── */
 .lp-testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -251,6 +379,16 @@ textarea.lp-f-input{resize:vertical;min-height:84px}
 .lp-testi-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:13px;flex-shrink:0}
 .lp-testi-name{font-family:var(--display);font-weight:700;font-size:14px}
 .lp-testi-role{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:3px}
+/* Never-ending review marquee — full-bleed, two identical halves loop via -50% */
+.lp-revmq{position:relative;width:100vw;margin-left:calc(50% - 50vw);overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+.lp-revmq-track{display:flex;width:max-content;align-items:stretch;animation:lp-revscroll 60s linear infinite;}
+.lp-revmq:hover .lp-revmq-track{animation-play-state:paused}
+.lp-revmq-half{display:flex;gap:18px;padding-right:18px;flex-shrink:0}
+@keyframes lp-revscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.lp-revmq-card{flex:0 0 360px;width:360px;background:var(--navy);border:1px solid var(--border);border-radius:12px;padding:26px 26px;display:flex;flex-direction:column}
+.lp-revmq-card .lp-testi-body{font-size:14px;margin-bottom:18px}
 
 /* ── STEPS ── */
 .lp-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:36px;position:relative}
@@ -283,6 +421,17 @@ textarea.lp-f-input{resize:vertical;min-height:84px}
 .lp-footer{position:relative;z-index:2;background:rgba(5,9,14,1);border-top:1px solid var(--border);padding:26px clamp(20px,5vw,80px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .lp-footer-copy{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.05em}
 .lp-footer a{font-family:var(--mono);font-size:10px;color:var(--cyan);letter-spacing:.05em}
+/* Ad-page disclosure — sits on its own full-width row at the top of the footer */
+.lp-footer-disclosure{flex-basis:100%;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px;
+  padding-bottom:18px;margin-bottom:6px;border-bottom:1px solid var(--border);
+  font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.04em;text-align:center}
+.lp-footer-disclosure strong{color:var(--off-white);font-weight:700}
+.lp-footer-tag{display:inline-flex;align-items:center;gap:7px;flex-shrink:0;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);
+  background:rgba(0,212,200,.07);border:1px solid rgba(0,212,200,.22);border-radius:40px;padding:5px 12px}
+.lp-footer-tag-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.lp-footer a.lp-footer-site{font-size:inherit;color:var(--off-white);font-weight:700;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(0,212,200,.45);transition:color .2s}
+.lp-footer a.lp-footer-site:hover{color:var(--cyan)}
 
 /* ── STICKY MOBILE BAR ── */
 #lp-mobar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:500;background:rgba(8,14,23,.96);backdrop-filter:blur(18px);border-top:1px solid rgba(0,212,200,.16);padding:10px 12px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0));gap:10px;box-shadow:0 -6px 30px rgba(0,0,0,.4)}
@@ -304,7 +453,10 @@ textarea.lp-f-input{resize:vertical;min-height:84px}
 @media(max-width:980px){
   .lp-hero-inner{grid-template-columns:1fr;gap:36px}
   .lp-why-grid{grid-template-columns:repeat(2,1fr)}
-  .lp-work-grid,.lp-testi-grid{grid-template-columns:repeat(2,1fr)}
+  .lp-testi-grid{grid-template-columns:repeat(2,1fr)}
+  .lp-cw-card{grid-template-columns:1fr}
+  .lp-cw-side{border-left:none;border-top:1px solid rgba(255,255,255,.05)}
+  .lp-cw-ghost{font-size:150px;bottom:-22px}
   .lp-steps{grid-template-columns:repeat(2,1fr);gap:30px}
   .lp-steps::before{display:none}
   .lp-audit-box{grid-template-columns:1fr;gap:24px}
@@ -327,7 +479,10 @@ textarea.lp-f-input{resize:vertical;min-height:84px}
   .lp-final-ctas .lp-btn{flex:1 1 100%;width:100%}
 }
 @media(max-width:600px){
-  .lp-work-grid,.lp-testi-grid{grid-template-columns:1fr}
+  .lp-testi-grid{grid-template-columns:1fr}
+  .lp-revmq-card{flex-basis:78vw;width:78vw}
+  .lp-cw-links{flex-direction:column}
+  .lp-cw-link{width:100%;justify-content:center}
   .lp-form-title{font-size:21px}
   .lp-logo small{display:none}
   .lp-formcard-in{padding:22px 18px}
@@ -356,11 +511,68 @@ const IconCheck = () => (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
 )
 
+/* Custom carousel visual for Easy Landscape Solutions (#05) — reviews + ROC trust,
+   instead of the shared before/after slider. Matches the 240px featured visual shell. */
+const EasyLandscapeVisual = ({ accent }: { accent: string }) => {
+  const ac = accent === 'var(--cyan)' ? '#00D4C8' : '#F4622A'
+  const acA = accent === 'var(--cyan)' ? 'rgba(0,212,200,' : 'rgba(244,98,42,'
+  const reviews = [
+    { initials: 'JR', text: 'Turf looks incredible — neighbors keep asking.' },
+    { initials: 'MS', text: 'On time, on budget, ROC licensed. Easy 5 stars.' },
+    { initials: 'DK', text: 'Best hardscape crew in Gilbert, hands down.' },
+  ]
+  return (
+    <div style={{ height: 240, borderRadius: 10, background: `${acA}0.04)`, border: `1px solid ${acA}0.1)`, padding: '20px 24px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+        <span style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: ac, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Customer Reviews</span>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+          <span style={{ color: ac, fontSize: 12, letterSpacing: 1 }}>★★★★★</span>
+          <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 14, color: ac }}>67+</span>
+        </span>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1 }}>
+        {reviews.map((r, i) => (
+          <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 7, padding: '9px 11px' }}>
+            <div style={{ width: 24, height: 24, borderRadius: '50%', flexShrink: 0, background: `${acA}0.15)`, border: `1px solid ${acA}0.3)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 9, color: ac }}>{r.initials}</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: 'flex', gap: 1, marginBottom: 3 }}>
+                {Array.from({ length: 5 }).map((_, s) => (
+                  <span key={s} style={{ width: 4, height: 4, borderRadius: '50%', background: ac }} />
+                ))}
+              </div>
+              <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.7)', lineHeight: 1.45, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.text}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'Space Mono, monospace', fontSize: 9, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.04em' }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, color: ac, padding: '3px 9px', borderRadius: 999, background: `${acA}0.1)`, border: `1px solid ${acA}0.25)`, textTransform: 'uppercase' }}>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={ac} strokeWidth="2.5"><polyline points="20 6 9 17 4 12" /></svg>ROC Licensed
+        </span>
+        <span>Gilbert, AZ · Hardscape + Turf</span>
+      </div>
+    </div>
+  )
+}
+
 export default function LandingPage() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', service: '', hasSite: '', message: '' })
   const [hp, setHp] = useState('') // honeypot — humans never see/fill this
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [hero, setHero] = useState<HeroVariant>(HERO_VARIANTS.default)
+
+  // ── Work carousel ──
+  const [work, setWork] = useState(0)
+  const [workPaused, setWorkPaused] = useState(false)
+  const goWork = (dir: number) => setWork(w => (w + dir + WORKS.length) % WORKS.length)
+
+  // Autoplay — the `work` dep makes the timer reset whenever the slide changes,
+  // including manual arrow/dot clicks, so you always get a fresh 7s window.
+  useEffect(() => {
+    if (workPaused) return
+    const id = setTimeout(() => setWork(w => (w + 1) % WORKS.length), 7000)
+    return () => clearTimeout(id)
+  }, [workPaused, work])
 
   const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm(f => ({ ...f, [k]: e.target.value }))
@@ -578,11 +790,15 @@ export default function LandingPage() {
       {/* ── TRUST MARQUEE ── */}
       <div className="lp-mq">
         <div className="lp-mq-track">
-          {[0, 1].map(dup => (
-            <div className="lp-mq-item" key={dup}>
-              {['Hand-Coded', 'No Templates', 'You Own It', 'Built To Convert', 'Flat-Rate Pricing', 'Local Arizona', '2-Hour Reply', 'SEO-Ready'].map(t => (
-                <span key={t}>{t}</span>
-              ))}
+          {/* Two identical halves → translateX(-50%) loops seamlessly. Each half repeats
+              the words enough times to always be wider than the viewport (no end gap). */}
+          {[0, 1].map(half => (
+            <div className="lp-mq-item" key={half} aria-hidden={half === 1}>
+              {Array.from({ length: 3 }).flatMap((_, r) =>
+                ['Hand-Coded', 'No Templates', 'You Own It', 'Built To Convert', 'Flat-Rate Pricing', 'Local Arizona', '2-Hour Reply', 'SEO-Ready'].map(t => (
+                  <span key={`${r}-${t}`}>{t}</span>
+                ))
+              )}
             </div>
           ))}
         </div>
@@ -654,46 +870,143 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── WORK ── */}
+      {/* ── WORK (carousel — one project at a time) ── */}
       <section className="lp-section">
         <div className="lp-inner">
-          <div className="rv" style={{ marginBottom: 40 }}>
-            <div className="lp-kicker o">Selected Work</div>
-            <h2 className="lp-h2">Real results for <span className="o">real businesses.</span></h2>
+          <div className="rv lp-work-head" style={{ marginBottom: 32 }}>
+            <div>
+              <div className="lp-kicker o">Selected Work</div>
+              <h2 className="lp-h2">Real results for <span className="o">real businesses.</span></h2>
+            </div>
+            <div className="lp-work-counter">
+              <span style={{ color: 'var(--off-white)' }}>{WORKS[work].num}</span>
+              <span className="lp-work-counter-sep" />
+              <span>{String(WORKS.length).padStart(2, '0')}</span>
+            </div>
           </div>
-          <div className="lp-work-grid">
-            {WORKS.map((w, i) => (
-              <div className={`lp-work rv d${(i % 3) + 1}`} key={w.title} style={{ borderTopColor: w.accent }}>
-                <div className="lp-work-cat">{w.cat}</div>
-                <div className="lp-work-title">{w.title}</div>
-                <p className="lp-work-desc">{w.desc}</p>
-                <div className="lp-work-result" style={{ color: w.accent }}>{w.result}</div>
-                <div className="lp-work-result-sub">{w.resultSub}</div>
-              </div>
-            ))}
+
+          <div
+            className="lp-carousel rv"
+            onMouseEnter={() => setWorkPaused(true)}
+            onMouseLeave={() => setWorkPaused(false)}
+          >
+            {(() => {
+              const w = WORKS[work]
+              const rgb = w.rgb
+              return (
+                <article className="lp-cw-card" key={w.num} style={{ borderLeftColor: w.accent }}>
+                  <span className="lp-cw-ghost" style={{ color: `rgba(${rgb},.05)` }}>{w.num}</span>
+
+                  {/* Left: profile content */}
+                  <div className="lp-cw-body">
+                    <div className="lp-cw-meta">
+                      <span style={{ color: w.accent }}>{w.num}</span>
+                      <span className="lp-cw-meta-sep" />
+                      <span>{w.cat}</span>
+                      <span className="lp-cw-meta-sep" />
+                      <span>{w.year}</span>
+                    </div>
+
+                    <h3 className="lp-cw-title">{w.title}</h3>
+                    <p className="lp-cw-desc">{w.desc}</p>
+
+                    <div className="lp-cw-highlight" style={{ background: `rgba(${rgb},.06)`, borderColor: `rgba(${rgb},.18)` }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={w.accent} strokeWidth="2" style={{ flexShrink: 0, marginTop: 2 }}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
+                      <span>{w.highlight}</span>
+                    </div>
+
+                    <div className="lp-cw-tech">
+                      {w.tech.map(t => <span key={t} className="lp-cw-chip">{t}</span>)}
+                    </div>
+
+                    {(w.url || w.repo) && (
+                      <div className="lp-cw-links">
+                        {w.url && (
+                          <a href={w.url} target="_blank" rel="noopener noreferrer" className="lp-cw-link" style={{ color: w.accent, borderColor: `rgba(${rgb},.35)`, background: `rgba(${rgb},.05)` }}>
+                            {w.url.includes('apple.com') ? 'View on App Store' : 'Visit Live Site'}
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
+                          </a>
+                        )}
+                        {w.repo && (
+                          <a href={w.repo} target="_blank" rel="noopener noreferrer" className="lp-cw-link lp-cw-link-ghost">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.69c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" /></svg>
+                            View Code
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Right: visual + metrics */}
+                  <div className="lp-cw-side">
+                    {w.num === '05'
+                      ? <EasyLandscapeVisual accent={w.accent} />
+                      : <ProjectVisual num={w.num} accent={w.accent} variant="featured" />}
+                    <div className="lp-cw-metrics" style={{ gridTemplateColumns: `repeat(${w.metrics.length}, 1fr)` }}>
+                      {w.metrics.map((m, i) => (
+                        <div key={m.label} className="lp-cw-metric" style={{ borderRight: i < w.metrics.length - 1 ? '1px solid rgba(255,255,255,.06)' : 'none' }}>
+                          <div className="lp-cw-metric-val" style={{ color: w.accent }}>{m.value}</div>
+                          <div className="lp-cw-metric-lbl">{m.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              )
+            })()}
+          </div>
+
+          {/* Controls */}
+          <div className="lp-cw-controls rv">
+            <button className="lp-cw-arrow" aria-label="Previous project" onClick={() => goWork(-1)}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6" /></svg>
+            </button>
+            <div className="lp-cw-dots">
+              {WORKS.map((w, i) => (
+                <button
+                  key={w.num}
+                  aria-label={`Go to ${w.title}`}
+                  className={`lp-cw-dot${i === work ? ' on' : ''}`}
+                  style={i === work ? { background: w.accent, width: 26 } : undefined}
+                  onClick={() => setWork(i)}
+                />
+              ))}
+            </div>
+            <button className="lp-cw-arrow" aria-label="Next project" onClick={() => goWork(1)}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
+            </button>
           </div>
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ── */}
-      <section className="lp-section" style={{ background: 'var(--navy-mid)' }}>
+      {/* ── TESTIMONIALS (never-ending review marquee) ── */}
+      <section className="lp-section lp-testi-section" style={{ background: 'var(--navy-mid)' }}>
         <div className="lp-inner">
-          <div className="rv" style={{ marginBottom: 40 }}>
-            <div className="lp-kicker">Client Results</div>
+          <div className="rv" style={{ marginBottom: 40, textAlign: 'center' }}>
+            <div className="lp-kicker" style={{ justifyContent: 'center' }}>Client Results</div>
             <h2 className="lp-h2">Don&apos;t take our word <em>for it.</em></h2>
           </div>
-          <div className="lp-testi-grid">
-            {TESTIMONIALS.map((t, i) => (
-              <div className={`lp-testi rv d${(i % 3) + 1}`} key={t.name}>
-                <div className="lp-testi-stars">★★★★★</div>
-                <p className="lp-testi-body">&ldquo;{t.body}&rdquo;</p>
-                <div className="lp-testi-who">
-                  <div className="lp-testi-av" style={{ background: `rgba(${t.rgb},.1)`, border: `2px solid rgba(${t.rgb},.28)`, color: t.accent }}>{t.initials}</div>
-                  <div>
-                    <div className="lp-testi-name" style={{ color: t.accent }}>{t.name}</div>
-                    <div className="lp-testi-role">{t.role}</div>
-                  </div>
-                </div>
+        </div>
+        {/* Full-bleed marquee — two identical halves loop seamlessly via translateX(-50%) */}
+        <div className="lp-revmq rv">
+          <div className="lp-revmq-track">
+            {[0, 1].map(half => (
+              <div className="lp-revmq-half" key={half} aria-hidden={half === 1}>
+                {Array.from({ length: 2 }).flatMap((_, r) =>
+                  TESTIMONIALS.map(t => (
+                    <div className="lp-revmq-card" key={`${r}-${t.name}`}>
+                      <div className="lp-testi-stars">★★★★★</div>
+                      <p className="lp-testi-body">&ldquo;{t.body}&rdquo;</p>
+                      <div className="lp-testi-who">
+                        <div className="lp-testi-av" style={{ background: `rgba(${t.rgb},.1)`, border: `2px solid rgba(${t.rgb},.28)`, color: t.accent }}>{t.initials}</div>
+                        <div>
+                          <div className="lp-testi-name" style={{ color: t.accent }}>{t.name}</div>
+                          <div className="lp-testi-role">{t.role}</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             ))}
           </div>
@@ -758,6 +1071,10 @@ export default function LandingPage() {
 
       {/* ── FOOTER ── */}
       <footer className="lp-footer">
+        <div className="lp-footer-disclosure">
+          <span className="lp-footer-tag"><span className="lp-footer-tag-dot" />Official Landing Page</span>
+          <span>A Sunstate Devworks campaign page — see everything we do at <a href="https://www.sunstatedevworks.com" target="_blank" rel="noopener noreferrer" className="lp-footer-site">sunstatedevworks.com</a></span>
+        </div>
         <span className="lp-footer-copy">© 2026 Sunstate DevWorks · Gilbert, AZ · All rights reserved</span>
         <span style={{ display: 'flex', gap: 18, flexWrap: 'wrap', justifyContent: 'center' }}>
           <a href="/privacy">Privacy Policy</a>
