@@ -29,7 +29,7 @@ const EMAIL = 'contact@sunstatedevworks.com'
    e.g. send_to "AW-18140545756/AbC-dEfGhIjK" → label is "AbC-dEfGhIjK").
    Leave blank to skip the Ads event — a GA4-style event still fires either way. */
 const GADS_ID = 'AW-18140545756'
-const FORM_CONVERSION_LABEL = 'gqFlCPX-u8ccENyFi8pD' // "Sunstate Form Success"
+const FORM_CONVERSION_LABEL = 'UE_CCNyTwMccENyFi8pD' // "Lead – Quote Submitted"
 const CALL_CONVERSION_LABEL = '' // TODO: paste your "Phone call" conversion label (optional)
 
 function fireConversion(label: string, eventName: string, extra: Record<string, unknown> = {}) {
