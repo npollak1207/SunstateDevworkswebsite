@@ -1,78 +1,115 @@
 import Link from 'next/link'
-import Image from 'next/image'
+
+const PHONE_DISPLAY = '(480) 793-9161'
+const PHONE_TEL = '+14807939161'
+
+const columns = [
+  {
+    title: 'Studio',
+    links: [
+      { href: '/works', label: 'Work' },
+      { href: '/about', label: 'About' },
+      { href: '/pricing', label: 'Pricing' },
+      { href: '/contact', label: 'Contact' },
+    ],
+  },
+  {
+    title: 'Services',
+    links: [
+      { href: '/services/web-development', label: 'Web Development' },
+      { href: '/services/mobile-apps', label: 'Mobile Apps' },
+      { href: '/services/branding', label: 'Branding & Identity' },
+      { href: '/services/ai-automation', label: 'AI & Automation' },
+    ],
+  },
+  {
+    title: 'Service Areas',
+    links: [
+      { href: '/web-design-gilbert', label: 'Gilbert' },
+      { href: '/web-design-scottsdale', label: 'Scottsdale' },
+      { href: '/web-design-chandler', label: 'Chandler' },
+      { href: '/web-design-phoenix', label: 'Phoenix' },
+    ],
+  },
+]
+
+function SunGlyph() {
+  return (
+    <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <circle cx="16" cy="18" r="7.5" fill="var(--accent)" />
+      <path d="M4 18h24" stroke="var(--ink)" strokeWidth="1.4" strokeLinecap="round" />
+      {[...Array(7)].map((_, i) => {
+        const a = Math.PI - (i / 6) * Math.PI
+        const r = (n: number) => Math.round(n * 100) / 100
+        const x1 = r(16 + Math.cos(a) * 10), y1 = r(18 - Math.sin(a) * 10)
+        const x2 = r(16 + Math.cos(a) * 13.5), y2 = r(18 - Math.sin(a) * 13.5)
+        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--ink)" strokeWidth="1.2" strokeLinecap="round" />
+      })}
+    </svg>
+  )
+}
 
 export default function Footer() {
   return (
-    <footer style={{
-      background: 'var(--navy-mid)',
-      borderTop: '1px solid rgba(0,212,200,0.1)',
-      padding: '60px 24px 32px',
-    }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 48, marginBottom: 48 }}>
+    <footer style={{ background: 'var(--paper)', borderTop: '1px solid var(--line)', padding: 'clamp(64px, 9vh, 96px) clamp(20px, 5vw, 44px) 40px' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))', gap: 48, marginBottom: 'clamp(48px, 8vh, 80px)' }}>
           {/* Brand */}
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-              <Image src="/logo.png" alt="Sunstate Devworks" width={40} height={40} style={{ objectFit: 'contain' }} />
-              <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 15, color: 'var(--off-white)' }}>
-                Sunstate<span style={{ color: 'var(--cyan)' }}>Devworks</span>
+          <div style={{ gridColumn: 'auto', minWidth: 220 }}>
+            <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 11, textDecoration: 'none', marginBottom: 20 }}>
+              <SunGlyph />
+              <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, letterSpacing: '-0.02em', color: 'var(--ink)' }}>Sunstate Devworks</span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--faint)', marginTop: 3 }}>Design & Engineering Studio</span>
               </span>
-            </div>
-            <p style={{ color: 'var(--text-muted)', fontSize: 13, lineHeight: 1.7, maxWidth: 220 }}>
-              Custom digital products built from scratch. Gilbert, Arizona.
+            </Link>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, lineHeight: 1.7, color: 'var(--muted)', maxWidth: 260, marginBottom: 22 }}>
+              Custom digital products, engineered from scratch in Gilbert, Arizona. You own 100% of everything we build.
             </p>
+            <Link href="/contact" className="btn btn-primary" style={{ padding: '13px 22px' }}>
+              Start a Project
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+            </Link>
           </div>
 
-          {/* Pages */}
-          <div>
-            <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>Navigate</p>
-            {[['/', 'Home'], ['/works', 'Works'], ['/pricing', 'Pricing'], ['/about', 'About'], ['/contact', 'Contact']].map(([href, label]) => (
-              <Link key={href} href={href} style={{ display: 'block', color: 'var(--text-muted)', textDecoration: 'none', fontSize: 14, marginBottom: 8, transition: 'color 0.2s' }}>
-                {label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Services */}
-          <div>
-            <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>Services</p>
-            {['Web Development', 'Mobile Apps', 'Branding & Identity', 'AI & Automation', 'Hosting & Maintenance'].map(s => (
-              <p key={s} style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 8 }}>{s}</p>
-            ))}
-          </div>
+          {/* Link columns */}
+          {columns.map((col) => (
+            <div key={col.title}>
+              <p className="eyebrow" style={{ marginBottom: 18, color: 'var(--accent)' }}>{col.title}</p>
+              {col.links.map((l) => (
+                <Link key={l.href} href={l.href} className="ft-link" style={{ display: 'block', fontFamily: 'var(--font-body)', fontSize: 14.5, color: 'var(--muted)', textDecoration: 'none', marginBottom: 11, width: 'fit-content' }}>
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+          ))}
 
           {/* Contact */}
           <div>
-            <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>Get In Touch</p>
-            <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 8 }}>Gilbert, Arizona</p>
-            <Link href="/contact" style={{
-              display: 'inline-block',
-              marginTop: 16,
-              background: 'var(--orange)',
-              color: 'white',
-              fontFamily: 'Syne, sans-serif',
-              fontWeight: 700,
-              fontSize: 12,
-              padding: '10px 20px',
-              borderRadius: 6,
-              textDecoration: 'none',
-              letterSpacing: '0.05em',
-              textTransform: 'uppercase',
-            }}>
-              Start a Project
-            </Link>
+            <p className="eyebrow" style={{ marginBottom: 18, color: 'var(--accent)' }}>Get in touch</p>
+            <a href={`tel:${PHONE_TEL}`} className="ft-link" style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: 14, color: 'var(--ink)', textDecoration: 'none', marginBottom: 11 }}>{PHONE_DISPLAY}</a>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 14.5, color: 'var(--muted)', marginBottom: 11 }}>Gilbert, Arizona</p>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--faint)', display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 6 }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)' }} /> Booking now
+            </p>
           </div>
         </div>
 
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
-          <p style={{ color: 'var(--text-muted)', fontSize: 12, fontFamily: 'Space Mono, monospace' }}>
+        <div style={{ borderTop: '1px solid var(--line)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 14 }}>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--faint)', letterSpacing: '0.02em' }}>
             © {new Date().getFullYear()} Sunstate Devworks. All rights reserved.
           </p>
-          <p style={{ color: 'var(--text-muted)', fontSize: 12 }}>
-            Built with <span style={{ color: 'var(--orange)' }}>♥</span> in Arizona
-          </p>
+          <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+            <Link href="/privacy" className="ft-link" style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--faint)', textDecoration: 'none', letterSpacing: '0.02em' }}>Privacy</Link>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--faint)', letterSpacing: '0.02em' }}>Hand-coded in Arizona ☀</p>
+          </div>
         </div>
       </div>
+
+      <style>{`
+        .ft-link { transition: color 0.2s; }
+        .ft-link:hover { color: var(--accent-deep) !important; }
+      `}</style>
     </footer>
   )
 }

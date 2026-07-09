@@ -27,8 +27,8 @@ const sections: { h: string; body: React.ReactNode }[] = [
       <>
         <p>We collect information in two ways:</p>
         <ul>
-          <li><strong>Information you give us.</strong> When you submit a contact or quote form, we collect the details you provide — typically your name, email address, phone number (optional), and any project details you share.</li>
-          <li><strong>Information collected automatically.</strong> Like most websites, we and our analytics/advertising partners automatically receive standard technical data such as your IP address, browser type, device information, referring pages, and how you interact with our site, via cookies and similar technologies.</li>
+          <li><strong>Information you give us.</strong> When you submit a contact or quote form, we collect the details you provide, typically your name, email address, phone number (optional), and any project details you share.</li>
+          <li><strong>Information collected automatically.</strong> Like most websites, we and our analytics and advertising partners automatically receive standard technical data such as your IP address, browser type, device information, referring pages, and how you interact with our site, via cookies and similar technologies.</li>
         </ul>
       </>
     ),
@@ -63,9 +63,9 @@ const sections: { h: string; body: React.ReactNode }[] = [
       <>
         <p>We do not sell your personal information. We share it only with service providers who help us operate our business, including:</p>
         <ul>
-          <li><strong>Resend</strong> — to deliver contact-form and confirmation emails.</li>
-          <li><strong>Google</strong> — for analytics and advertising measurement.</li>
-          <li><strong>Vercel</strong> — our website hosting provider.</li>
+          <li><strong>Resend</strong>, to deliver contact-form and confirmation emails.</li>
+          <li><strong>Google</strong>, for analytics and advertising measurement.</li>
+          <li><strong>Vercel</strong>, our website hosting provider.</li>
         </ul>
         <p>We may also disclose information if required by law or to protect our rights, safety, or property.</p>
       </>
@@ -102,7 +102,7 @@ const sections: { h: string; body: React.ReactNode }[] = [
     h: 'Changes to this policy',
     body: (
       <p>
-        We may update this policy from time to time. When we do, we&apos;ll revise the &ldquo;Effective&rdquo; date
+        We may update this policy from time to time. When we do, we will revise the &ldquo;Effective&rdquo; date
         above. Material changes will be reflected on this page.
       </p>
     ),
@@ -112,7 +112,7 @@ const sections: { h: string; body: React.ReactNode }[] = [
     body: (
       <p>
         Questions about this policy or your information? Email us at <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.
-        Sunstate DevWorks · Gilbert, Arizona.
+        Sunstate DevWorks, Gilbert, Arizona.
       </p>
     ),
   },
@@ -120,39 +120,35 @@ const sections: { h: string; body: React.ReactNode }[] = [
 
 export default function PrivacyPage() {
   return (
-    <section style={{ padding: '160px 24px 100px', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(0,212,200,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,200,0.03) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-      <div style={{ maxWidth: 820, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-        <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 16 }}>Legal</p>
-        <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(40px, 6vw, 72px)', lineHeight: 0.98, letterSpacing: '-0.02em', marginBottom: 18 }}>
-          Privacy <span style={{ color: 'var(--orange)' }}>Policy</span>
+    <section style={{ position: 'relative', overflow: 'hidden', padding: 'clamp(128px, 20vh, 190px) clamp(20px, 5vw, 44px) clamp(80px, 11vh, 120px)' }}>
+      <div className="grid-bg" aria-hidden style={{ position: 'absolute', inset: 0, opacity: 0.5, maskImage: 'radial-gradient(ellipse at 50% 0%, #000, transparent 60%)', WebkitMaskImage: 'radial-gradient(ellipse at 50% 0%, #000, transparent 60%)' }} />
+      <div style={{ position: 'relative', maxWidth: 800, margin: '0 auto' }}>
+        <p className="eyebrow" style={{ marginBottom: 22 }}>Legal</p>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(40px, 6vw, 76px)', lineHeight: 0.98, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 16 }}>
+          Privacy <span className="serif-em" style={{ color: 'var(--accent)' }}>Policy.</span>
         </h1>
-        <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.06em', marginBottom: 48 }}>
-          Effective {EFFECTIVE}
-        </p>
+        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--muted)', letterSpacing: '0.06em', marginBottom: 52 }}>Effective {EFFECTIVE}</p>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 36 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
           {sections.map((s, i) => (
             <div key={i}>
-              <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 22, marginBottom: 12, color: 'var(--off-white)' }}>{s.h}</h2>
-              <div className="privacy-body" style={{ color: 'var(--text-muted)', fontSize: 16, lineHeight: 1.8 }}>
-                {s.body}
-              </div>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 22, letterSpacing: '-0.02em', marginBottom: 12, color: 'var(--ink)' }}>{s.h}</h2>
+              <div className="privacy-body" style={{ fontFamily: 'var(--font-body)', color: 'var(--muted)', fontSize: 16, lineHeight: 1.8 }}>{s.body}</div>
             </div>
           ))}
         </div>
 
-        <div style={{ marginTop: 56, paddingTop: 28, borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-          <Link href="/" style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, color: 'var(--cyan)', textDecoration: 'none' }}>← Back to home</Link>
+        <div style={{ marginTop: 56, paddingTop: 28, borderTop: '1px solid var(--line)' }}>
+          <Link href="/" className="u-link" style={{ fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--ink)' }}>Back to home</Link>
         </div>
       </div>
 
       <style>{`
-        .privacy-body a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+        .privacy-body a { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 2px; }
         .privacy-body ul { margin: 12px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
         .privacy-body li { line-height: 1.7; }
         .privacy-body p + p { margin-top: 12px; }
-        .privacy-body strong { color: var(--off-white); }
+        .privacy-body strong { color: var(--ink); font-weight: 600; }
       `}</style>
     </section>
   )

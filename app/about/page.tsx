@@ -1,6 +1,32 @@
-import Link from 'next/link'
+import type { Metadata } from 'next'
 import Image from 'next/image'
-import ScrollReveal from '@/components/ScrollReveal'
+import Reveal from '@/components/Reveal'
+import { SectionLabel, CTASection } from '@/components/editorial'
+
+export const metadata: Metadata = {
+  title: 'About the Studio',
+  description: 'Sunstate DevWorks is a boutique design and engineering studio in Gilbert, Arizona. Custom web, mobile, branding and AI, with 100% code ownership and no lock-in.',
+  alternates: { canonical: 'https://sunstatedevworks.com/about' },
+  openGraph: {
+    url: 'https://sunstatedevworks.com/about',
+    title: 'About the Studio | Sunstate DevWorks',
+    description: 'A boutique design and engineering studio in Gilbert, Arizona. Custom web, mobile, branding and AI, with 100% code ownership.',
+  },
+}
+
+const story = [
+  'We started Sunstate DevWorks because we were tired of watching clients get burned by agencies that handed them locked-down WordPress installs and disappeared the moment the invoice cleared.',
+  'So we flipped the model. Every line of code we write is yours. Every site we host, we built. When something breaks, there is no phone tree; you text us directly.',
+  'We work across web, mobile, branding and AI. Most studios make you hire three vendors for that. We do not. One relationship, one point of contact, complete accountability.',
+  'We are based in Gilbert, Arizona. Not a co-working space with a foosball table and six interns, but an actual technical studio that ships real products.',
+]
+
+const values = [
+  { title: 'Ownership first', desc: 'We never lock you into proprietary tools. You own 100% of the code, the domain, and every deliverable.' },
+  { title: 'No bloat', desc: 'No WordPress, no page builders, no drag-and-drop shortcuts. Just clean, performant, hand-written code.' },
+  { title: 'Radical transparency', desc: 'You see the same numbers we do. Pricing is public, scope is documented, and we say no when we should.' },
+  { title: 'Local & accountable', desc: 'Based in Gilbert, Arizona. Not a remote farm or an offshore agency. A real team you can reach directly.' },
+]
 
 const stack = [
   { cat: 'Web', items: ['Next.js', 'React', 'HTML/CSS', 'TypeScript', 'Node.js'] },
@@ -11,113 +37,101 @@ const stack = [
   { cat: 'Infra', items: ['Cloudflare', 'NVMe Hosting', 'CI/CD', 'SSL/DNS'] },
 ]
 
-const values = [
-  { title: 'Ownership First', desc: 'We never lock you into proprietary tools. You own 100% of the code, domain, and every deliverable.', accent: 'var(--cyan)' },
-  { title: 'No Bloat', desc: 'No WordPress, no page builders, no drag-and-drop shortcuts. Just clean, performant, hand-written code.', accent: 'var(--orange)' },
-  { title: 'Radical Transparency', desc: 'You see the same numbers we do. Pricing is public, scope is documented, and we say no when we need to.', accent: 'var(--cyan)' },
-  { title: 'Local & Accountable', desc: 'Based in Gilbert, Arizona. Not a remote farm or offshore agency. A real team you can reach directly.', accent: 'var(--orange)' },
-]
-
 export default function AboutPage() {
   return (
     <>
       {/* Header */}
-      <section style={{ padding: '160px 24px 80px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(0,212,200,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,200,0.03) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-        <div style={{ position: 'absolute', right: 0, top: '20%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(244,98,42,0.06) 0%, transparent 70%)' }} />
-
-        <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 40, alignItems: 'start' }}>
-            <div>
-              <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 16 }}>About the Studio</p>
-              <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(48px, 7vw, 96px)', lineHeight: 0.95, letterSpacing: '-0.02em', maxWidth: 700, marginBottom: 32 }}>
-                Built different.<br /><span style={{ color: 'var(--orange)' }}>On purpose.</span>
-              </h1>
-              <p style={{ color: 'var(--text-muted)', fontSize: 18, lineHeight: 1.8, maxWidth: 560 }}>
-                Sunstate Devworks is a boutique digital studio based in Gilbert, Arizona. We design and build custom digital products — websites, mobile apps, brands, and AI tools — for businesses that need serious digital infrastructure.
+      <section style={{ position: 'relative', overflow: 'hidden', padding: 'clamp(128px, 20vh, 200px) clamp(20px, 5vw, 44px) clamp(56px, 9vh, 96px)' }}>
+        <div className="grid-bg" aria-hidden style={{ position: 'absolute', inset: 0, opacity: 0.5, maskImage: 'radial-gradient(ellipse at 78% 10%, #000, transparent 70%)', WebkitMaskImage: 'radial-gradient(ellipse at 78% 10%, #000, transparent 70%)' }} />
+        <div aria-hidden style={{ position: 'absolute', top: '-20%', right: '-6%', width: 620, height: 620, borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,78,35,0.14) 0%, transparent 62%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'relative', maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr auto', gap: 40, alignItems: 'center' }} className="about-hero">
+          <div>
+            <Reveal>
+              <p className="eyebrow" style={{ marginBottom: 24, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)' }} />
+                About the studio
               </p>
-            </div>
-            <div style={{ paddingTop: 80 }}>
-              <Image
-                src="/about.png"
-                alt="Sunstate Devworks"
-                width={700}
-                height={700}
-                style={{ objectFit: 'contain', opacity: 0.9 }}
-              />
-            </div>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(44px, 7vw, 96px)', lineHeight: 0.93, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 28, maxWidth: 640 }}>
+                Built different.<br /><span className="serif-em" style={{ color: 'var(--accent)' }}>On purpose.</span>
+              </h1>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.7vw, 20px)', lineHeight: 1.6, color: 'var(--muted)', maxWidth: 560 }}>
+                Sunstate DevWorks is a boutique design and engineering studio in Gilbert, Arizona. We design and build custom digital products: websites, mobile apps, brands and AI tools for businesses that need serious digital infrastructure.
+              </p>
+            </Reveal>
           </div>
+          <Reveal delay={0.1} className="about-img">
+            <Image src="/about.png" alt="Sunstate DevWorks" width={520} height={520} style={{ objectFit: 'contain', opacity: 0.95, maxWidth: '100%', height: 'auto' }} />
+          </Reveal>
         </div>
       </section>
 
       {/* Story */}
-      <section style={{ padding: '80px 24px', background: 'var(--navy-mid)' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--orange)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 24 }}>The Story</p>
+      <section style={{ padding: 'clamp(72px, 11vh, 130px) clamp(20px, 5vw, 44px)', background: 'var(--paper-2)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+        <div style={{ maxWidth: 820, margin: '0 auto' }}>
+          <Reveal><SectionLabel index="01">The story</SectionLabel></Reveal>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            {[
-              "We started Sunstate Devworks because we were frustrated watching clients get burned by agencies that handed them locked-down WordPress installs, disappearing after the invoice cleared.",
-              "So we flipped the model. Every line of code we write is yours. Every site we host, we built. When something breaks, there's no phone tree — you text us directly.",
-              "We work across web, mobile, branding, and AI. Most studios make you hire three vendors for that. We don't. One relationship, one point of contact, complete accountability.",
-              "We're based in Gilbert, Arizona. Not a co-working space in Scottsdale with a foosball table and six interns — an actual technical studio that ships real products.",
-            ].map((p, i) => (
-              <p key={i} style={{ fontSize: 17, lineHeight: 1.9, color: i === 0 ? 'var(--off-white)' : 'var(--text-muted)', borderLeft: i === 0 ? '3px solid var(--cyan)' : '3px solid transparent', paddingLeft: i === 0 ? 20 : 23 }}>
-                {p}
-              </p>
+            {story.map((p, i) => (
+              <Reveal key={i} delay={i * 0.05}>
+                <p style={{ fontFamily: i === 0 ? 'var(--font-serif)' : 'var(--font-body)', fontStyle: i === 0 ? 'italic' : 'normal', fontSize: i === 0 ? 'clamp(22px, 3vw, 30px)' : 17, lineHeight: i === 0 ? 1.4 : 1.8, color: i === 0 ? 'var(--ink)' : 'var(--muted)', letterSpacing: i === 0 ? '-0.01em' : 0 }}>
+                  {p}
+                </p>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* Values */}
-      <section style={{ padding: '100px 24px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 48 }}>How We Operate</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 2 }}>
+      <section style={{ padding: 'clamp(80px, 11vh, 140px) clamp(20px, 5vw, 44px)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+          <Reveal><SectionLabel index="02">How we operate</SectionLabel></Reveal>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', borderTop: '1px solid var(--line)', borderLeft: '1px solid var(--line)' }}>
             {values.map((v, i) => (
-              <div key={i} className="card-lift" style={{ background: 'var(--navy-mid)', padding: '40px 32px', borderTop: `4px solid ${v.accent}` }}>
-                <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 22, marginBottom: 12, color: 'var(--off-white)' }}>{v.title}</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.7 }}>{v.desc}</p>
-              </div>
+              <Reveal key={v.title} delay={i * 0.06}>
+                <div style={{ padding: 'clamp(30px, 3vw, 42px)', borderRight: '1px solid var(--line)', borderBottom: '1px solid var(--line)', minHeight: 210, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent)', marginBottom: 'clamp(24px, 4vh, 44px)' }}>0{i + 1}</span>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 21, letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: 12 }}>{v.title}</h3>
+                  <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, lineHeight: 1.65, color: 'var(--muted)' }}>{v.desc}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* Stack */}
-      <section style={{ padding: '80px 24px', background: 'var(--navy-mid)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: 'var(--orange)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 48 }}>Tech Stack</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 24 }}>
+      <section style={{ padding: 'clamp(72px, 11vh, 130px) clamp(20px, 5vw, 44px)', background: 'var(--paper-2)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+          <Reveal><SectionLabel index="03">Tech stack</SectionLabel></Reveal>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr))', gap: 'clamp(24px, 3vw, 40px)' }}>
             {stack.map((s, i) => (
-              <div key={i}>
-                <p style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: i % 2 === 0 ? 'var(--cyan)' : 'var(--orange)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>{s.cat}</p>
-                {s.items.map(item => (
-                  <p key={item} style={{ fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: 14, color: 'var(--text-muted)', marginBottom: 6 }}>{item}</p>
-                ))}
-              </div>
+              <Reveal key={s.cat} delay={i * 0.05}>
+                <div>
+                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>{s.cat}</p>
+                  {s.items.map((item) => <p key={item} style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 15, color: 'var(--ink-2)', marginBottom: 8 }}>{item}</p>)}
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section style={{ padding: '100px 24px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(0,212,200,0.015) 20px, rgba(0,212,200,0.015) 40px)' }} />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 64px)', lineHeight: 1, marginBottom: 24 }}>
-            Sound like a fit?<br /><span style={{ color: 'var(--cyan)' }}>Let&apos;s find out.</span>
-          </h2>
-          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/contact" style={{ background: 'var(--orange)', color: 'white', fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 14, padding: '16px 40px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-              Start a Project →
-            </Link>
-            <Link href="/pricing" style={{ border: '1px solid rgba(0,212,200,0.3)', color: 'var(--cyan)', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, padding: '16px 40px', borderRadius: 8, textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-              See Pricing
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CTASection
+        eyebrow="Gilbert, Arizona"
+        title={<>Sound like a fit?<br /><span className="serif-em" style={{ color: 'var(--accent)' }}>Let&apos;s find out.</span></>}
+        blurb="Tell us what you are building. We will send back a plan, a timeline, and a flat price, usually within one business day."
+      />
+
+      <style>{`
+        @media (max-width: 900px) {
+          .about-hero { grid-template-columns: 1fr !important; }
+          .about-img { display: none !important; }
+        }
+      `}</style>
     </>
   )
 }

@@ -81,7 +81,7 @@ export async function POST(req: Request) {
 
   <div style="text-align:center;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06);">
     <p style="margin:0 0 6px;font-size:13px;color:#F0EDE6;font-weight:600;">Reply directly to: <span style="color:#00D4C8;">${email}</span></p>
-    <p style="margin:0;font-size:11px;color:#7A8FA6;">Hit reply in your email client — it goes straight to them.</p>
+    <p style="margin:0;font-size:11px;color:#7A8FA6;">Hit reply in your email client. It goes straight to them.</p>
   </div>
 
 </div>
@@ -93,7 +93,7 @@ export async function POST(req: Request) {
     await resend.emails.send({
       from: 'Nick @ Sunstate DevWorks <contact@sunstatedevworks.com>',
       to: [email],
-      subject: `Got it, ${name.split(' ')[0]} — we'll be in touch soon`,
+      subject: `Got it, ${name.split(' ')[0]}, we'll be in touch soon`,
       html: `
 <!DOCTYPE html>
 <html>
@@ -106,14 +106,14 @@ export async function POST(req: Request) {
     <h1 style="margin:0;font-size:28px;color:#F0EDE6;font-weight:800;letter-spacing:-0.02em;line-height:1.1;">We got your message,<br /><span style="color:#00D4C8;">${name.split(' ')[0]}.</span></h1>
   </div>
 
-  <p style="margin:0 0 20px;font-size:16px;color:#7A8FA6;line-height:1.8;">Thanks for reaching out. We typically respond within a couple of hours during business hours — someone from our team will be in touch shortly to set up a quick discovery call.</p>
+  <p style="margin:0 0 20px;font-size:16px;color:#7A8FA6;line-height:1.8;">Thanks for reaching out. We typically respond within a couple of hours during business hours, and someone from our team will be in touch shortly to set up a quick discovery call.</p>
 
   ${service ? `<div style="background:rgba(244,98,42,0.06);border:1px solid rgba(244,98,42,0.15);border-radius:8px;padding:16px 20px;margin-bottom:24px;"><p style="margin:0;font-size:13px;color:#7A8FA6;font-family:'Courier New',monospace;text-transform:uppercase;letter-spacing:0.08em;">You selected: <span style="color:#F4622A;font-weight:700;">${service}</span></p></div>` : ''}
 
   <p style="margin:0 0 32px;font-size:16px;color:#7A8FA6;line-height:1.8;">In the meantime, feel free to browse our work at <a href="https://sunstatedevworks.com/works" style="color:#00D4C8;">sunstatedevworks.com/works</a>.</p>
 
   <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;">
-    <p style="margin:0;font-size:13px;color:#7A8FA6;line-height:1.7;">— Nick &amp; the Sunstate DevWorks team<br /><span style="color:#00D4C8;">contact@sunstatedevworks.com</span><br /><span style="font-size:11px;font-family:'Courier New',monospace;letter-spacing:0.06em;text-transform:uppercase;">Gilbert, Arizona · Available Now</span></p>
+    <p style="margin:0;font-size:13px;color:#7A8FA6;line-height:1.7;">Nick &amp; the Sunstate DevWorks team<br /><span style="color:#00D4C8;">contact@sunstatedevworks.com</span><br /><span style="font-size:11px;font-family:'Courier New',monospace;letter-spacing:0.06em;text-transform:uppercase;">Gilbert, Arizona · Available Now</span></p>
   </div>
 
 </div>

@@ -1,14 +1,20 @@
 ﻿import './globals.css'
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { Inter_Tight, Instrument_Serif, Inter, JetBrains_Mono } from 'next/font/google'
 import ConditionalLayout from '@/components/ConditionalLayout'
 import StructuredData from '@/components/StructuredData'
+
+const display = Inter_Tight({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'], variable: '--f-display', display: 'swap' })
+const serif = Instrument_Serif({ subsets: ['latin'], weight: ['400'], style: ['normal', 'italic'], variable: '--f-serif', display: 'swap' })
+const body = Inter({ subsets: ['latin'], variable: '--f-body', display: 'swap' })
+const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--f-mono', display: 'swap' })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://sunstatedevworks.com'),
   title: {
-    default: 'Sunstate DevWorks | Custom Web & Mobile Development â€” Phoenix, AZ',
-    template: '%s | Sunstate DevWorks â€” Phoenix Web Design',
+    default: 'Sunstate DevWorks | Custom Web & Mobile Development, Phoenix AZ',
+    template: '%s | Sunstate DevWorks, Phoenix Web Design',
   },
   description: "Phoenix-area custom web design, iOS app development, branding & AI automation. Hand-coded, no templates, 100% code ownership. Serving Gilbert, Scottsdale, Chandler, Mesa, Tempe & all of metro Phoenix.",
   keywords: [
@@ -76,14 +82,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://sunstatedevworks.com',
     siteName: 'Sunstate DevWorks',
-    title: 'Sunstate DevWorks | Custom Web & Mobile Development â€” Phoenix, AZ',
+    title: 'Sunstate DevWorks | Custom Web & Mobile Development, Phoenix AZ',
     description: "Phoenix-area custom web design, iOS apps, branding & AI automation. Hand-coded, no templates, 100% yours. Serving Gilbert, Scottsdale, Chandler, Mesa, Tempe & all of metro Phoenix.",
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Sunstate DevWorks â€” Custom Web & Mobile Development, Phoenix AZ',
+        alt: 'Sunstate DevWorks Custom Web & Mobile Development, Phoenix AZ',
       },
     ],
   },
@@ -97,7 +103,10 @@ export const metadata: Metadata = {
     canonical: 'https://sunstatedevworks.com',
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico' },
+    ],
     apple: '/apple-touch-icon.png',
   },
   verification: {
@@ -107,7 +116,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-      <html lang="en">
+      <html lang="en" className={`${display.variable} ${serif.variable} ${body.variable} ${mono.variable}`}>
       <head>
         <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-18140545756" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">{`
