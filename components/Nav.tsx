@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import SunGlyph from '@/components/SunGlyph'
 
 const PHONE_DISPLAY = '(480) 793-9161'
 const PHONE_TEL = '+14807939161'
@@ -16,7 +17,6 @@ const serviceLinks = [
 const topLinks = [
   { href: '/works', label: 'Work' },
   { href: '/about', label: 'Studio' },
-  { href: '/pricing', label: 'Pricing' },
 ]
 
 const mobileLinks = [
@@ -28,26 +28,8 @@ const mobileLinks = [
   { href: '/services/ai-automation', label: 'AI & Automation', sub: true },
   { href: '/works', label: 'Work' },
   { href: '/about', label: 'Studio' },
-  { href: '/pricing', label: 'Pricing' },
   { href: '/contact', label: 'Contact' },
 ]
-
-/** small sun glyph */
-function SunGlyph({ size = 22 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <circle cx="16" cy="18" r="7.5" fill="var(--accent)" />
-      <path d="M4 18h24" stroke="var(--ink)" strokeWidth="1.4" strokeLinecap="round" />
-      {[...Array(7)].map((_, i) => {
-        const a = Math.PI - (i / 6) * Math.PI
-        const r = (n: number) => Math.round(n * 100) / 100
-        const x1 = r(16 + Math.cos(a) * 10), y1 = r(18 - Math.sin(a) * 10)
-        const x2 = r(16 + Math.cos(a) * 13.5), y2 = r(18 - Math.sin(a) * 13.5)
-        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--ink)" strokeWidth="1.2" strokeLinecap="round" />
-      })}
-    </svg>
-  )
-}
 
 function NavLink({ href, label, active }: { href: string; label: string; active: boolean }) {
   return (
@@ -105,7 +87,7 @@ export default function Nav() {
 
           {/* Wordmark */}
           <Link href="/" className="wm-link" style={{ display: 'flex', alignItems: 'center', gap: 11, textDecoration: 'none', flexShrink: 0 }}>
-            <span className="wm-glyph"><SunGlyph /></span>
+            <span className="wm-glyph"><SunGlyph size={22} /></span>
             <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
               <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, letterSpacing: '-0.02em', color: 'var(--ink)' }}>Sunstate Devworks</span>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--faint)', marginTop: 3 }}>Design & Engineering Studio</span>

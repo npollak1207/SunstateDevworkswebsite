@@ -24,7 +24,7 @@ const story = [
 const values = [
   { title: 'Ownership first', desc: 'We never lock you into proprietary tools. You own 100% of the code, the domain, and every deliverable.' },
   { title: 'No bloat', desc: 'No WordPress, no page builders, no drag-and-drop shortcuts. Just clean, performant, hand-written code.' },
-  { title: 'Radical transparency', desc: 'You see the same numbers we do. Pricing is public, scope is documented, and we say no when we should.' },
+  { title: 'Radical transparency', desc: 'You see the same numbers we do. Pricing is flat-rate and quoted up front, scope is documented, and we say no when we should.' },
   { title: 'Local & accountable', desc: 'Based in Gilbert, Arizona. Not a remote farm or an offshore agency. A real team you can reach directly.' },
 ]
 

@@ -12,7 +12,7 @@ const timelines = ['ASAP', '1 to 2 months', '3+ months', 'Just exploring']
 const STORAGE_KEY = 'sunstate-contact-draft'
 
 const faqs = [
-  { q: 'How much will my project cost?', a: 'Marketing sites typically run $3k to $15k. Web apps and mobile apps start around $15k and scale with scope. We give you a flat-rate price up front, with no hourly billing and no surprises. See our pricing page for full ranges.' },
+  { q: 'How much will my project cost?', a: 'Marketing sites typically run $3k to $15k. Web apps and mobile apps start around $15k and scale with scope. We give you a flat-rate price up front, with no hourly billing and no surprises. Reach out and we will send exact numbers for your scope.' },
   { q: 'How fast can you start?', a: 'Discovery calls are usually booked within 2 to 3 days. If we are a fit, a written proposal lands within a week, and kickoff is typically 1 to 2 weeks after sign-off. Most marketing sites ship in 3 to 5 weeks total.' },
   { q: 'Do I really own the code?', a: 'Yes, 100%. Every line, every asset, every database. You get a full handoff at launch, with no subscriptions, no licensing and no proprietary platforms. If you ever want to take it to another developer, you can.' },
 ]

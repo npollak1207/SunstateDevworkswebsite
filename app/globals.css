@@ -21,7 +21,7 @@
   --ink:      #17140F;   /* near-black warm */
   --ink-2:    #3A352D;   /* secondary heading */
   --muted:    #6E685C;   /* body muted */
-  --faint:    #98917F;   /* captions */
+  --faint:    #726C5C;   /* captions — darkened to clear WCAG AA (4.6:1 on --paper) */
 
   /* Hairlines */
   --line:        rgba(23,20,15,0.12);
@@ -55,7 +55,7 @@
   --navy-mid: #1E1A12;
   --navy-light: #26211a;
   --off-white: #F4F1EA;
-  --text-muted: #98917F;
+  --text-muted: #726C5C;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

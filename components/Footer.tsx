@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import SunGlyph from '@/components/SunGlyph'
 
 const PHONE_DISPLAY = '(480) 793-9161'
 const PHONE_TEL = '+14807939161'
@@ -9,7 +10,6 @@ const columns = [
     links: [
       { href: '/works', label: 'Work' },
       { href: '/about', label: 'About' },
-      { href: '/pricing', label: 'Pricing' },
       { href: '/contact', label: 'Contact' },
     ],
   },
@@ -33,22 +33,6 @@ const columns = [
   },
 ]
 
-function SunGlyph() {
-  return (
-    <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <circle cx="16" cy="18" r="7.5" fill="var(--accent)" />
-      <path d="M4 18h24" stroke="var(--ink)" strokeWidth="1.4" strokeLinecap="round" />
-      {[...Array(7)].map((_, i) => {
-        const a = Math.PI - (i / 6) * Math.PI
-        const r = (n: number) => Math.round(n * 100) / 100
-        const x1 = r(16 + Math.cos(a) * 10), y1 = r(18 - Math.sin(a) * 10)
-        const x2 = r(16 + Math.cos(a) * 13.5), y2 = r(18 - Math.sin(a) * 13.5)
-        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--ink)" strokeWidth="1.2" strokeLinecap="round" />
-      })}
-    </svg>
-  )
-}
-
 export default function Footer() {
   return (
     <footer style={{ background: 'var(--paper)', borderTop: '1px solid var(--line)', padding: 'clamp(64px, 9vh, 96px) clamp(20px, 5vw, 44px) 40px' }}>
@@ -57,7 +41,7 @@ export default function Footer() {
           {/* Brand */}
           <div style={{ gridColumn: 'auto', minWidth: 220 }}>
             <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 11, textDecoration: 'none', marginBottom: 20 }}>
-              <SunGlyph />
+              <SunGlyph size={26} />
               <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
                 <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, letterSpacing: '-0.02em', color: 'var(--ink)' }}>Sunstate Devworks</span>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--faint)', marginTop: 3 }}>Design & Engineering Studio</span>

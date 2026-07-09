@@ -46,6 +46,10 @@ const testimonials = [
   { body: 'We were running five different apps just to keep the business moving. Sunstate built us one platform that does everything. We got back at least 20 hours a week and finally know where our money is going.', name: 'Alex M.', role: 'Owner, Easy Landscape Solutions' },
   { body: 'The site looks better than anything I could have imagined and it actually brings in leads. We went from invisible online to ranking across Scottsdale and Mesa in a few months.', name: 'Billy W.', role: 'Owner, Zona Pest Solutions' },
   { body: 'I wanted something that looked as premium as the work we do on cars. They nailed it. Clean, fast, and it gets compliments before customers even walk in the door.', name: 'Zach H.', role: 'Owner, Cloak Wraps' },
+  { body: 'Our old site did nothing for us. Sunstate rebuilt it from scratch and now it actually looks like the professional operation we are. It loads instantly and customers have a much easier time reaching us.', name: 'Aspen C.', role: 'Owner, Peak Pest Control' },
+  { body: 'They built sites for both of my businesses and nailed the look on each one. Clean, fast, and simple for customers to get in touch. Working with a local team that actually answers made the whole thing painless.', name: 'Cole T.', role: 'Owner, Canyon Cleaning & Canyon Supply Co' },
+  { body: 'Exactly what I wanted, done right the first time. The site is fast, it is mine to keep, and it makes us look far bigger than we are. I could not recommend them more.', name: 'Matt A.', role: 'Owner, DWGS' },
+  { body: 'They understood the vibe we were going for immediately and built something that truly feels like us. Beautiful, fast, and easy for our team to run. Our customers notice the difference the moment they land on it.', name: 'The Mystical Universe', role: 'Team' },
 ]
 
 const cities = [
@@ -67,7 +71,7 @@ const faqs = [
   { q: 'How long does it take to build a website?', a: 'Most marketing sites ship in 3 to 5 weeks. Larger web apps or full redesigns typically run 6 to 10 weeks. You get a fixed timeline in the proposal, with no moving goalposts.' },
   { q: 'Do I own the code when the project is done?', a: '100%. Every line of code, every asset, every database. You get a full handoff, with no subscriptions, no licensing, and no lock-in of any kind.' },
   { q: 'Do you use WordPress or page builders?', a: 'Never. Everything we ship is hand-written in Next.js, SwiftUI, React Native or Laravel. That is why our sites load fast, rank well, and do not break when a plugin updates.' },
-  { q: 'How does pricing work? Do you charge hourly?', a: 'Flat-rate only. You see the full number before we start. No hourly billing, no scope-creep invoices, no surprise charges. See our pricing page for ranges.' },
+  { q: 'How does pricing work? Do you charge hourly?', a: 'Flat-rate only. You see the full number before we start, with no hourly billing, no scope-creep invoices, and no surprise charges. Marketing sites typically run $3k to $15k; apps start around $15k and scale with scope. Reach out and we will send exact numbers for your project.' },
   { q: 'Do you offer maintenance after launch?', a: 'Yes. Optional monthly care plans cover hosting, updates, uptime monitoring and priority support. Or we hand you the keys entirely. Your choice.' },
   { q: 'Are you local to Arizona?', a: 'We are based in Gilbert, AZ and serve the entire Phoenix metro and clients nationwide. Discovery and check-ins happen over video; local clients can meet in person.' },
 ]
@@ -152,9 +156,9 @@ function WorkVisual({ kind }: { kind: string }) {
 
 /* ────────────────────────────── shared bits ────────────────────────────── */
 
-function SectionLabel({ index, children }: { index: string; children: React.ReactNode }) {
+function SectionLabel({ index, children, center = false }: { index: string; children: React.ReactNode; center?: boolean }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 22 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 22, justifyContent: center ? 'center' : 'flex-start' }}>
       <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', color: 'var(--accent)' }}>{index}</span>
       <span style={{ width: 28, height: 1, background: 'var(--line-2)' }} />
       <span className="eyebrow">{children}</span>
@@ -259,6 +263,79 @@ function HorizonRule({ label = '33.35°N · 111.79°W' }: { label?: string }) {
   )
 }
 
+/* Testimonial carousel — native scroll-snap track with prev/next controls.
+   Robust for any card count, touch/drag-friendly, keyboard-scrollable, reduced-motion aware. */
+function tmInitials(name: string) {
+  return name.split(' ').filter(w => !/^(the|and|&)$/i.test(w)).map(w => w[0]).slice(0, 2).join('')
+}
+
+function TestimonialCarousel({ items }: { items: { body: string; name: string; role: string }[] }) {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const reduce = useReducedMotion()
+  const [atStart, setAtStart] = useState(true)
+  const [atEnd, setAtEnd] = useState(false)
+
+  useEffect(() => {
+    const el = trackRef.current
+    if (!el) return
+    const sync = () => {
+      setAtStart(el.scrollLeft <= 4)
+      setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 4)
+    }
+    sync()
+    el.addEventListener('scroll', sync, { passive: true })
+    window.addEventListener('resize', sync)
+    return () => { el.removeEventListener('scroll', sync); window.removeEventListener('resize', sync) }
+  }, [])
+
+  const nudge = (dir: number) => {
+    const el = trackRef.current
+    if (!el) return
+    const card = el.querySelector('[data-tm-card]') as HTMLElement | null
+    const step = card ? card.offsetWidth + 24 : el.clientWidth * 0.85
+    el.scrollBy({ left: dir * step, behavior: reduce ? 'auto' : 'smooth' })
+  }
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <div ref={trackRef} className="tm-track" role="group" aria-label="Client testimonials" tabIndex={0}
+        style={{ display: 'flex', gap: 24, overflowX: 'auto', scrollSnapType: 'x mandatory', paddingBottom: 4, scrollbarWidth: 'none' }}>
+        {items.map((t) => (
+          <figure key={t.name} data-tm-card className="tm-card"
+            style={{ flex: '0 0 auto', scrollSnapAlign: 'start', background: 'var(--card)', border: '1px solid var(--line)', borderRadius: 4, padding: '32px 30px 28px', display: 'flex', flexDirection: 'column' }}>
+            <span style={{ display: 'flex', gap: 3, marginBottom: 18 }}>
+              {[...Array(5)].map((_, j) => <svg key={j} width="15" height="15" viewBox="0 0 24 24" fill="var(--accent)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>)}
+            </span>
+            <blockquote style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(18px, 1.9vw, 22px)', lineHeight: 1.5, color: 'var(--ink)', marginBottom: 24, flex: 1 }}>
+              “{t.body}”
+            </blockquote>
+            <figcaption style={{ display: 'flex', alignItems: 'center', gap: 12, paddingTop: 18, borderTop: '1px solid var(--line)' }}>
+              <span style={{ width: 38, height: 38, borderRadius: '50%', background: 'var(--ink)', color: 'var(--paper)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, flexShrink: 0 }}>{tmInitials(t.name)}</span>
+              <span>
+                <span style={{ display: 'block', fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 14, color: 'var(--ink)' }}>{t.name}</span>
+                <span style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', marginTop: 2 }}>{t.role}</span>
+              </span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+
+      {/* controls */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, marginTop: 28, flexWrap: 'wrap' }}>
+        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--faint)' }}>Swipe or drag to read more →</p>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button type="button" aria-label="Previous testimonial" onClick={() => nudge(-1)} disabled={atStart} className="tm-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+          </button>
+          <button type="button" aria-label="Next testimonial" onClick={() => nudge(1)} disabled={atEnd} className="tm-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ────────────────────────────── page ────────────────────────────── */
 
 export default function HomePage() {
@@ -341,7 +418,10 @@ export default function HomePage() {
 
       {/* ═══════════════════════ TRUST STRIP ═══════════════════════ */}
       <section style={{ borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)', background: 'var(--paper-2)', padding: 'clamp(20px, 3vh, 30px) 0', overflow: 'hidden' }}>
-        <p className="eyebrow" style={{ textAlign: 'center', marginBottom: 'clamp(12px, 1.8vh, 20px)' }}>Trusted to build for</p>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, marginBottom: 'clamp(12px, 1.8vh, 20px)' }}>
+          <p className="eyebrow">Trusted to build for</p>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.06em', color: 'var(--faint)' }}>9 Arizona businesses · 50+ products shipped</p>
+        </div>
         <div style={{ position: 'relative', overflow: 'hidden', maskImage: 'linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)', WebkitMaskImage: 'linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)' }}>
           <div className="marquee-track" style={{ display: 'flex', width: 'max-content' }}>
             {[...clients, ...clients, ...clients, ...clients].map((c, i) => (
@@ -475,9 +555,9 @@ export default function HomePage() {
       {/* ═══════════════════════ APPROACH ═══════════════════════ */}
       <section style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)' }}>
         <div style={{ maxWidth: 1180, margin: '0 auto' }}>
-          <Reveal><SectionLabel index="03">How we work</SectionLabel></Reveal>
+          <Reveal><SectionLabel index="03" center>How we work</SectionLabel></Reveal>
           <Reveal delay={0.05}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(34px, 5.4vw, 72px)', lineHeight: 1.0, letterSpacing: '-0.03em', color: 'var(--ink)', marginBottom: 'clamp(56px, 8vh, 92px)', maxWidth: 720 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(34px, 5.4vw, 72px)', lineHeight: 1.0, letterSpacing: '-0.03em', color: 'var(--ink)', marginBottom: 'clamp(56px, 8vh, 92px)', maxWidth: 720, marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
               A process built for momentum.
             </h2>
           </Reveal>
@@ -496,42 +576,47 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════ DARK MANIFESTO ═══════════════════════ */}
+      {/* ═══════════════════════ DARK MANIFESTO (asymmetric editorial split) ═══════════════════════ */}
       <section className="on-dark" style={{ background: 'var(--ink-bg)', color: 'var(--on-dark)', padding: 'clamp(96px, 14vh, 170px) clamp(20px, 5vw, 44px)', position: 'relative', overflow: 'hidden' }}>
-        <div aria-hidden style={{ position: 'absolute', top: '-30%', left: '50%', transform: 'translateX(-50%)', width: 760, height: 760, borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,78,35,0.16) 0%, transparent 60%)', pointerEvents: 'none' }} />
-        <div className="grid-bg" aria-hidden style={{ position: 'absolute', inset: 0, opacity: 0.4, maskImage: 'radial-gradient(ellipse at 50% 0%, #000, transparent 70%)', WebkitMaskImage: 'radial-gradient(ellipse at 50% 0%, #000, transparent 70%)' }} />
-        <div style={{ position: 'relative', maxWidth: 1180, margin: '0 auto' }}>
-          <Reveal>
-            <p className="eyebrow" style={{ color: 'var(--accent-2)', textAlign: 'center', marginBottom: 26 }}>Why Sunstate</p>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(38px, 6.6vw, 100px)', lineHeight: 0.98, letterSpacing: '-0.035em', textAlign: 'center', marginBottom: 20 }}>
-              No templates. No lock-in.<br /><span className="serif-em" style={{ color: 'var(--accent-2)' }}>No compromises.</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.6vw, 19px)', lineHeight: 1.65, color: 'var(--on-dark-muted)', maxWidth: 560, margin: '0 auto clamp(56px, 8vh, 84px)', textAlign: 'center' }}>
-              Anyone can drag a template into place. We engineer software from the ground up, so it is faster, ranks higher, and belongs to you completely.
-            </p>
-          </Reveal>
+        {/* corner glow (top-right) + grid anchored to the same corner — deliberately off-centre so this
+            dark section reads differently from the centred, bottom-lit closing CTA */}
+        <div aria-hidden style={{ position: 'absolute', top: '-24%', right: '-12%', width: 720, height: 720, borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,78,35,0.16) 0%, transparent 62%)', pointerEvents: 'none' }} />
+        <div className="grid-bg" aria-hidden style={{ position: 'absolute', inset: 0, opacity: 0.4, maskImage: 'radial-gradient(ellipse at 100% 0%, #000, transparent 68%)', WebkitMaskImage: 'radial-gradient(ellipse at 100% 0%, #000, transparent 68%)' }} />
+        <div className="manifesto-grid" style={{ position: 'relative', maxWidth: 1180, margin: '0 auto' }}>
+          {/* left — the statement */}
+          <div>
+            <Reveal>
+              <p className="eyebrow" style={{ color: 'var(--accent-2)', marginBottom: 26 }}>Why Sunstate</p>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(36px, 5.2vw, 76px)', lineHeight: 0.98, letterSpacing: '-0.035em', marginBottom: 24 }}>
+                No templates.<br />No lock-in.<br /><span className="serif-em" style={{ color: 'var(--accent-2)' }}>No compromises.</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.6vw, 19px)', lineHeight: 1.65, color: 'var(--on-dark-muted)', maxWidth: 440, marginBottom: 40 }}>
+                Anyone can drag a template into place. We engineer software from the ground up, so it is faster, ranks higher, and belongs to you completely.
+              </p>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <Magnetic><Link href="/contact" className="btn btn-accent">Start a Project <span className="btn-arrow"><Arrow s={15} /></span></Link></Magnetic>
+            </Reveal>
+          </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 24 }}>
+          {/* right — numbered manifest list (borderless, hairline-separated) */}
+          <div style={{ borderTop: '1px solid var(--ink-line)' }}>
             {pillars.map((p, i) => (
               <Reveal key={p.k} delay={i * 0.08}>
-                <div style={{ border: '1px solid var(--ink-line)', borderRadius: 4, padding: '30px 28px 34px', height: '100%', background: 'rgba(255,255,255,0.015)' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent-2)' }}>0{i + 1}</span>
-                  <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 22, letterSpacing: '-0.02em', color: 'var(--on-dark)', margin: '20px 0 12px' }}>{p.k}</h3>
-                  <p style={{ fontFamily: 'var(--font-body)', fontSize: 14.5, lineHeight: 1.65, color: 'var(--on-dark-muted)' }}>{p.v}</p>
+                <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 'clamp(16px, 3vw, 28px)', padding: 'clamp(24px, 3vw, 32px) 0', borderBottom: '1px solid var(--ink-line)' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent-2)', paddingTop: 4 }}>0{i + 1}</span>
+                  <div>
+                    <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(19px, 2.2vw, 24px)', letterSpacing: '-0.02em', color: 'var(--on-dark)', marginBottom: 10 }}>{p.k}</h3>
+                    <p style={{ fontFamily: 'var(--font-body)', fontSize: 14.5, lineHeight: 1.65, color: 'var(--on-dark-muted)' }}>{p.v}</p>
+                  </div>
                 </div>
               </Reveal>
             ))}
           </div>
-
-          <Reveal delay={0.1}>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 'clamp(48px, 7vh, 72px)' }}>
-              <Magnetic><Link href="/contact" className="btn btn-accent">Start a Project <span className="btn-arrow"><Arrow s={15} /></span></Link></Magnetic>
-            </div>
-          </Reveal>
         </div>
       </section>
 
@@ -540,31 +625,24 @@ export default function HomePage() {
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <Reveal><SectionLabel index="04">Word of mouth</SectionLabel></Reveal>
           <Reveal delay={0.05}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(34px, 5.4vw, 72px)', lineHeight: 1.0, letterSpacing: '-0.03em', color: 'var(--ink)', marginBottom: 56, maxWidth: 760 }}>
-              Clients who would <span className="serif-em">vouch for us.</span>
-            </h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 24, marginBottom: 56 }}>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(34px, 5.4vw, 72px)', lineHeight: 1.0, letterSpacing: '-0.03em', color: 'var(--ink)', maxWidth: 620 }}>
+                Clients who would <span className="serif-em">vouch for us.</span>
+              </h2>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, border: '1px solid var(--line)', borderRadius: 4, padding: '12px 16px', background: 'var(--card)' }}>
+                <span style={{ display: 'flex', gap: 2 }}>
+                  {[...Array(5)].map((_, j) => <svg key={j} width="16" height="16" viewBox="0 0 24 24" fill="var(--accent)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>)}
+                </span>
+                <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
+                  <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 16, color: 'var(--ink)' }}>4.9 average</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--faint)', marginTop: 2 }}>Across every engagement</span>
+                </span>
+              </div>
+            </div>
           </Reveal>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 24 }}>
-            {testimonials.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.08}>
-                <figure style={{ background: 'var(--card)', border: '1px solid var(--line)', borderRadius: 4, padding: '32px 30px 28px', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ display: 'flex', gap: 3, marginBottom: 18 }}>
-                    {[...Array(5)].map((_, j) => <svg key={j} width="15" height="15" viewBox="0 0 24 24" fill="var(--accent)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>)}
-                  </span>
-                  <blockquote style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(18px, 1.9vw, 22px)', lineHeight: 1.5, color: 'var(--ink)', marginBottom: 24, flex: 1 }}>
-                    “{t.body}”
-                  </blockquote>
-                  <figcaption style={{ display: 'flex', alignItems: 'center', gap: 12, paddingTop: 18, borderTop: '1px solid var(--line)' }}>
-                    <span style={{ width: 38, height: 38, borderRadius: '50%', background: 'var(--ink)', color: 'var(--paper)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, flexShrink: 0 }}>{t.name.split(' ').map(w => w[0]).join('')}</span>
-                    <span>
-                      <span style={{ display: 'block', fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 14, color: 'var(--ink)' }}>{t.name}</span>
-                      <span style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', marginTop: 2 }}>{t.role}</span>
-                    </span>
-                  </figcaption>
-                </figure>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={0.1}>
+            <TestimonialCarousel items={testimonials} />
+          </Reveal>
         </div>
       </section>
 
@@ -619,13 +697,13 @@ export default function HomePage() {
               const open = faqOpen === i
               return (
                 <div key={i} style={{ borderBottom: '1px solid var(--line)' }}>
-                  <button onClick={() => setFaqOpen(open ? null : i)} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 20, padding: '24px 4px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}>
+                  <button onClick={() => setFaqOpen(open ? null : i)} aria-expanded={open} aria-controls={`faq-panel-${i}`} id={`faq-trigger-${i}`} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 20, padding: '24px 4px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}>
                     <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 'clamp(17px, 2vw, 21px)', letterSpacing: '-0.01em', color: open ? 'var(--accent-deep)' : 'var(--ink)', transition: 'color 0.25s' }}>{f.q}</span>
-                    <span style={{ flexShrink: 0, width: 28, height: 28, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink)', transition: 'transform 0.3s, background 0.25s, border-color 0.25s', transform: open ? 'rotate(45deg)' : 'none', background: open ? 'var(--accent-soft)' : 'transparent', border: `1px solid ${open ? 'var(--accent-line)' : 'var(--line-2)'}` }}>
+                    <span aria-hidden="true" style={{ flexShrink: 0, width: 28, height: 28, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink)', transition: 'transform 0.3s, background 0.25s, border-color 0.25s', transform: open ? 'rotate(45deg)' : 'none', background: open ? 'var(--accent-soft)' : 'transparent', border: `1px solid ${open ? 'var(--accent-line)' : 'var(--line-2)'}` }}>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12h14" /></svg>
                     </span>
                   </button>
-                  <motion.div initial={false} animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }} style={{ overflow: 'hidden' }}>
+                  <motion.div id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-trigger-${i}`} aria-hidden={!open} initial={false} animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }} style={{ overflow: 'hidden' }}>
                     <p style={{ fontFamily: 'var(--font-body)', fontSize: 15.5, lineHeight: 1.7, color: 'var(--muted)', padding: '0 40px 26px 4px', maxWidth: 700 }}>{f.a}</p>
                   </motion.div>
                 </div>
@@ -719,6 +797,24 @@ export default function HomePage() {
         .timeline-rail { position: absolute; top: 20px; left: 12.5%; right: 12.5%; height: 1px; background: var(--line-2); }
         @media (max-width: 860px) { .timeline { grid-template-columns: repeat(2, 1fr); gap: 48px; } .timeline-rail { display: none; } }
         @media (max-width: 480px) { .timeline { grid-template-columns: 1fr; } }
+        /* Testimonial carousel — scroll-snap track, 3 / 2 / 1 cards per view */
+        .tm-track { -ms-overflow-style: none; }
+        .tm-track::-webkit-scrollbar { display: none; }
+        .tm-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+        .tm-card { width: calc((100% - 48px) / 3); }
+        @media (max-width: 900px) { .tm-card { width: calc((100% - 24px) / 2); } }
+        @media (max-width: 620px) { .tm-card { width: 100%; } }
+        .tm-btn { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line-2); border-radius: 999px; background: var(--card); color: var(--ink); cursor: pointer; transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s; }
+        .tm-btn:hover:not(:disabled) { border-color: var(--ink); transform: translateY(-2px); }
+        .tm-btn:disabled { opacity: 0.32; cursor: not-allowed; }
+        /* Dark manifesto — asymmetric two-column split, collapses to one column */
+        .manifesto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 88px); align-items: start; }
+        @media (max-width: 860px) { .manifesto-grid { grid-template-columns: 1fr; gap: clamp(40px, 6vh, 56px); } }
+        /* Short / landscape viewports (e.g. phones held sideways) — release the forced 100svh
+           and trim padding so the stacked hero never overflows or clips its stats/CTA */
+        @media (max-height: 680px) and (min-width: 601px) {
+          .hero-section { min-height: auto !important; padding-top: clamp(96px, 16vh, 116px) !important; padding-bottom: 40px !important; }
+        }
       `}</style>
     </>
   )

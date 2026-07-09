@@ -1,24 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <radialGradient id="sun" cx="50%" cy="42%" r="62%">
-      <stop offset="0%" stop-color="#FFE1B0"/>
-      <stop offset="42%" stop-color="#FF9A4E"/>
-      <stop offset="78%" stop-color="#F04E23"/>
+    <radialGradient id="sun" cx="50%" cy="34%" r="70%">
+      <stop offset="0%" stop-color="#FFE7BC"/>
+      <stop offset="38%" stop-color="#FF9A4E"/>
+      <stop offset="74%" stop-color="#F04E23"/>
       <stop offset="100%" stop-color="#C2371A"/>
     </radialGradient>
-    <clipPath id="above"><rect x="0" y="0" width="64" height="42.5"/></clipPath>
   </defs>
   <rect width="64" height="64" rx="14" fill="#14110B"/>
-  <!-- rays radiating from the sun's center (32,40) -->
-  <g stroke="#FF7A3D" stroke-width="2.6" stroke-linecap="round">
-    <line x1="32" y1="22" x2="32" y2="14"/>
-    <line x1="19.3" y1="27.3" x2="14.0" y2="22.0"/>
-    <line x1="44.7" y1="27.3" x2="50.0" y2="22.0"/>
-    <line x1="14" y1="40" x2="7" y2="40"/>
-    <line x1="50" y1="40" x2="57" y2="40"/>
+  <!-- rhythmic ray crown, center (32,40), alternating length + weight -->
+  <g stroke="#FF7A3D" stroke-linecap="round">
+    <line x1="15.83" y1="34.75" x2="8.22"  y2="32.28" stroke-width="3"/>
+    <line x1="18.25" y1="30.01" x2="14.20" y2="27.07" stroke-width="2.2"/>
+    <line x1="22.01" y1="26.25" x2="17.31" y2="19.78" stroke-width="3"/>
+    <line x1="26.75" y1="23.83" x2="25.20" y2="19.08" stroke-width="2.2"/>
+    <line x1="32"    y1="23"    x2="32"    y2="15"    stroke-width="3"/>
+    <line x1="37.25" y1="23.83" x2="38.80" y2="19.08" stroke-width="2.2"/>
+    <line x1="41.99" y1="26.25" x2="46.69" y2="19.78" stroke-width="3"/>
+    <line x1="45.75" y1="30.01" x2="49.80" y2="27.07" stroke-width="2.2"/>
+    <line x1="48.17" y1="34.75" x2="55.78" y2="32.28" stroke-width="3"/>
   </g>
-  <!-- rising disc, clipped at the horizon -->
-  <circle cx="32" cy="40" r="14.5" fill="url(#sun)" clip-path="url(#above)"/>
-  <!-- horizon line -->
-  <line x1="8" y1="42.5" x2="56" y2="42.5" stroke="#F04E23" stroke-width="2.6" stroke-linecap="round"/>
+  <!-- rising half-disc resting on the horizon -->
+  <path d="M19 40 A13 13 0 0 1 45 40 Z" fill="url(#sun)"/>
+  <!-- soft rim-light near the crest -->
+  <path d="M24.8 34.95 A8.8 8.8 0 0 1 39.2 34.95" fill="none" stroke="#FFF0D6" stroke-width="1.8" stroke-linecap="round" opacity="0.85"/>
+  <!-- horizon -->
+  <line x1="13" y1="40" x2="51" y2="40" stroke="#F04E23" stroke-width="3" stroke-linecap="round"/>
 </svg>

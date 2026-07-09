@@ -61,7 +61,7 @@ export default function ServicesPage() {
           <Reveal delay={0.15}>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
               <Link href="/contact" className="btn btn-primary">Start a Project <span className="btn-arrow"><Arrow s={15} /></span></Link>
-              <Link href="/pricing" className="btn btn-ghost">See Pricing</Link>
+              <Link href="/works" className="btn btn-ghost">See Our Work</Link>
             </div>
           </Reveal>
         </div>
