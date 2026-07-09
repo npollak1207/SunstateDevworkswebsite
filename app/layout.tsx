@@ -102,13 +102,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://sunstatedevworks.com',
   },
-  icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico' },
-    ],
-    apple: '/apple-touch-icon.png',
-  },
+  // Icons are provided by the App Router file conventions (app/icon.svg,
+  // app/icon.png, app/favicon.ico, app/apple-icon.png). Next appends a content
+  // hash to each generated <link>, so updated art busts the browser cache.
   verification: {
     google: 'is2iqI8ep5uW2w9elE6ctKxK6N-Y2m_mFfcvngJIpQM',
   },

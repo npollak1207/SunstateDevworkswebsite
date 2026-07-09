@@ -267,7 +267,7 @@ export default function HomePage() {
   return (
     <>
       {/* ═══════════════════════ HERO (owns the first screen) ═══════════════════════ */}
-      <section style={{ position: 'relative', minHeight: '100svh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden', paddingTop: 'clamp(120px, 17vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 104px)' }}>
+      <section className="hero-section" style={{ position: 'relative', minHeight: '100svh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden', paddingTop: 'clamp(112px, 17vh, 200px)', paddingBottom: 'clamp(40px, 8vh, 104px)' }}>
         <SunHero horizon="45%" />
         {/* grounding scrim so text stays crisp over the sun */}
         <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 32%, var(--paper) 66%)', zIndex: 1, pointerEvents: 'none' }} />
@@ -275,7 +275,7 @@ export default function HomePage() {
         <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: 1080, margin: '0 auto', padding: '0 clamp(20px, 5vw, 44px)', textAlign: 'center' }}>
           <motion.p
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="eyebrow" style={{ marginBottom: 'clamp(14px, 2.4vh, 26px)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 10, maxWidth: '92vw', background: 'rgba(244,241,234,0.68)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid var(--line)', borderRadius: 999, padding: '8px 16px' }}
+            className="eyebrow hero-eyebrow" style={{ marginBottom: 'clamp(14px, 2.4vh, 26px)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 10, maxWidth: 'calc(100vw - 32px)', background: 'rgba(244,241,234,0.68)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid var(--line)', borderRadius: 999, padding: '8px 16px' }}
           >
             <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', flexShrink: 0 }} />
             Gilbert, Arizona
@@ -283,7 +283,7 @@ export default function HomePage() {
             <LocalClock />
           </motion.p>
 
-          <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(34px, 8.8vw, 120px)', lineHeight: 0.92, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 'clamp(20px, 3vh, 34px)' }}>
+          <h1 className="hero-title" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(37px, 9.4vw, 120px)', lineHeight: 0.92, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 'clamp(20px, 3vh, 34px)' }}>
             <span className="hl-line">
               <motion.span style={{ display: 'block' }} initial={{ y: '112%' }} animate={{ y: 0 }} transition={{ duration: 0.95, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}>
                 The studio behind
@@ -308,7 +308,7 @@ export default function HomePage() {
 
           <motion.div
             initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-            style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 'clamp(22px, 3.6vh, 44px)' }}
+            className="hero-cta" style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 'clamp(22px, 3.6vh, 44px)' }}
           >
             <Magnetic><Link href="/contact" className="btn btn-primary">Start a Project <span className="btn-arrow"><Arrow s={15} /></span></Link></Magnetic>
             <Link href="/works" className="btn btn-ghost">See Our Work</Link>
@@ -316,7 +316,7 @@ export default function HomePage() {
 
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.9, delay: 0.6 }}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(16px, 3vw, 34px)', flexWrap: 'wrap' }}
+            className="hero-stats" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(16px, 3vw, 34px)', flexWrap: 'wrap' }}
           >
             {stats.map((s, i) => (
               <div key={s.l} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(16px, 3vw, 34px)' }}>
@@ -687,6 +687,24 @@ export default function HomePage() {
         }
         /* Hide the scroll cue on shorter viewports so it never collides with the stats row */
         @media (max-height: 860px) { .hero-cue { display: none !important; } }
+        /* ── Mobile hero tuning ── */
+        @media (max-width: 600px) {
+          /* never let the cue fight the stats/CTA for the bottom edge on phones */
+          .hero-cue { display: none !important; }
+          /* full-width, thumb-friendly CTAs stacked in reading order */
+          .hero-cta { flex-direction: column; gap: 12px; }
+          .hero-cta > * { width: 100%; }
+          .hero-cta .btn { width: 100%; justify-content: center; padding: 16px 24px; }
+          /* stats as a tidy 2×2 grid instead of a cramped single-row wrap */
+          .hero-stats { display: grid !important; grid-template-columns: 1fr 1fr; gap: 22px 16px !important; max-width: 340px; margin: 0 auto; }
+          .hero-stats > div { justify-content: center; }
+          /* keep the eyebrow pill from crowding its own edges */
+          .hero-eyebrow { padding: 7px 14px; gap: 8px; }
+        }
+        @media (max-width: 380px) {
+          /* guard the two long words on the narrowest phones */
+          .hero-title { font-size: 34px; }
+        }
         /* Featured work — editorial split */
         .feat-card { display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: stretch; }
         .feat-visual { border-right: 1px solid var(--line); }
