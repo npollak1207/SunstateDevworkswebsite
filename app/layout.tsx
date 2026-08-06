@@ -1,5 +1,5 @@
 ﻿import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import { Inter_Tight, Instrument_Serif, Inter, JetBrains_Mono } from 'next/font/google'
 import ConditionalLayout from '@/components/ConditionalLayout'
@@ -108,6 +108,16 @@ export const metadata: Metadata = {
   verification: {
     google: 'is2iqI8ep5uW2w9elE6ctKxK6N-Y2m_mFfcvngJIpQM',
   },
+}
+
+// viewportFit 'cover' lets the fixed nav paint edge-to-edge behind the notch /
+// status bar on phones instead of being letterboxed below it. The nav adds
+// env(safe-area-inset-top) padding of its own so content stays clear.
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#f4f1ea',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

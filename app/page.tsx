@@ -52,19 +52,15 @@ const testimonials = [
   { body: 'They understood the vibe we were going for immediately and built something that truly feels like us. Beautiful, fast, and easy for our team to run. Our customers notice the difference the moment they land on it.', name: 'The Mystical Universe', role: 'Team' },
 ]
 
-const cities = [
-  { city: 'Gilbert', tag: 'Home Base', href: '/web-design-gilbert', home: true },
-  { city: 'Phoenix', tag: 'Web Design', href: '/web-design-phoenix' },
-  { city: 'Scottsdale', tag: 'Web Design', href: '/web-design-scottsdale' },
-  { city: 'Chandler', tag: 'Web & Apps', href: '/web-design-chandler' },
-  { city: 'Mesa', tag: 'Web Design', href: '/web-design-mesa' },
-  { city: 'Tempe', tag: 'Web & Branding', href: '/web-design-tempe' },
-  { city: 'Peoria', tag: 'Web Design', href: '/web-design-peoria' },
-  { city: 'Glendale', tag: 'Web Design', href: '/web-design-glendale' },
-  { city: 'Queen Creek', tag: 'Web Design', href: '/web-design-queen-creek' },
-  { city: 'Surprise', tag: 'Web Design', href: '/web-design-surprise' },
-  { city: 'Ahwatukee', tag: 'Web & Apps', href: '/web-design-ahwatukee' },
-  { city: 'Paradise Valley', tag: 'Branding', href: '/web-design-paradise-valley' },
+const included = [
+  { title: 'Full code ownership', tag: 'Yours on day one', lead: true },
+  { title: 'Complete handoff', tag: 'Repo, assets, accounts' },
+  { title: 'Fixed-price quote', tag: 'No hourly billing' },
+  { title: 'Fast by default', tag: 'Performance budget' },
+  { title: 'SEO groundwork', tag: 'Schema, meta, sitemaps' },
+  { title: 'Accessible build', tag: 'WCAG AA baseline' },
+  { title: 'Analytics wired up', tag: 'Day-one tracking' },
+  { title: 'Post-launch support', tag: '30 days included' },
 ]
 
 const faqs = [
@@ -73,7 +69,7 @@ const faqs = [
   { q: 'Do you use WordPress or page builders?', a: 'Never. Everything we ship is hand-written in Next.js, SwiftUI, React Native or Laravel. That is why our sites load fast, rank well, and do not break when a plugin updates.' },
   { q: 'How does pricing work? Do you charge hourly?', a: 'Flat-rate only. You see the full number before we start, with no hourly billing, no scope-creep invoices, and no surprise charges. Marketing sites typically run $3k to $15k; apps start around $15k and scale with scope. Reach out and we will send exact numbers for your project.' },
   { q: 'Do you offer maintenance after launch?', a: 'Yes. Optional monthly care plans cover hosting, updates, uptime monitoring and priority support. Or we hand you the keys entirely. Your choice.' },
-  { q: 'Are you local to Arizona?', a: 'We are based in Gilbert, AZ and serve the entire Phoenix metro and clients nationwide. Discovery and check-ins happen over video; local clients can meet in person.' },
+  { q: 'Do you only work with Arizona clients?', a: 'No. We are based in Gilbert, AZ but we work with clients nationwide. Discovery and check-ins happen over video, so we can run a project the same way whether you are down the street or across the country. Local clients are welcome to meet in person.' },
 ]
 
 /* ────────────────────────────── generated work visuals ────────────────────────────── */
@@ -344,7 +340,7 @@ export default function HomePage() {
   return (
     <>
       {/* ═══════════════════════ HERO (owns the first screen) ═══════════════════════ */}
-      <section className="hero-section" style={{ position: 'relative', minHeight: '100svh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden', paddingTop: 'clamp(112px, 17vh, 200px)', paddingBottom: 'clamp(40px, 8vh, 104px)' }}>
+      <section className="hero-section" style={{ position: 'relative', minHeight: '100svh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden', paddingTop: 'calc(clamp(112px, 17vh, 200px) + env(safe-area-inset-top, 0px))', paddingBottom: 'clamp(40px, 8vh, 104px)' }}>
         <SunHero horizon="45%" />
         {/* grounding scrim so text stays crisp over the sun */}
         <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 32%, var(--paper) 66%)', zIndex: 1, pointerEvents: 'none' }} />
@@ -646,37 +642,43 @@ export default function HomePage() {
         </div>
       </section>
 
-      <HorizonRule label="Metro Phoenix · Arizona" />
+      <HorizonRule label="Every project · No exceptions" />
 
-      {/* ═══════════════════════ SERVICE AREAS ═══════════════════════ */}
+      {/* ═══════════════════════ WHAT'S INCLUDED ═══════════════════════ */}
       <section style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)', background: 'var(--paper-2)', borderBottom: '1px solid var(--line)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(340px, 100%), 1fr))', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'start' }}>
           <div>
-            <Reveal><SectionLabel index="05">Service Areas</SectionLabel></Reveal>
+            <Reveal><SectionLabel index="05">What&apos;s Included</SectionLabel></Reveal>
             <Reveal delay={0.05}>
               <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(30px, 4.4vw, 56px)', lineHeight: 1.02, letterSpacing: '-0.03em', color: 'var(--ink)', marginBottom: 22 }}>
-                Built in Gilbert.<br />Serving all of metro Phoenix.
+                No add-ons.<br />No lock-in.
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p style={{ fontFamily: 'var(--font-body)', fontSize: 16, lineHeight: 1.7, color: 'var(--muted)', maxWidth: 420, marginBottom: 16 }}>
-                We are based in Gilbert, right in the heart of the East Valley, and we build for businesses across the entire greater Phoenix area, from Scottsdale to Peoria and Chandler to Queen Creek.
+                Everything on this list ships with every project, at every budget. Nothing here is an upsell, a premium tier, or a line item you find out about later.
               </p>
             </Reveal>
             <Reveal delay={0.15}>
-              <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.04em', color: 'var(--faint)' }}>+ Nationwide remote projects welcome</p>
+              <Link href="/contact" className="btn btn-ghost" style={{ padding: '13px 22px', marginBottom: 16 }}>
+                Get a fixed quote
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              </Link>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.04em', color: 'var(--faint)' }}>+ Optional care plans after the first 30 days</p>
             </Reveal>
           </div>
           <Reveal delay={0.1}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', borderTop: '1px solid var(--line)', borderLeft: '1px solid var(--line)' }}>
-              {cities.map((c) => (
-                <Link key={c.city} href={c.href} className="area-cell" style={{ padding: '18px 16px', borderRight: '1px solid var(--line)', borderBottom: '1px solid var(--line)', textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 5, background: c.home ? 'var(--accent-soft)' : 'transparent', transition: 'background 0.2s' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-                    <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 15, letterSpacing: '-0.01em', color: c.home ? 'var(--accent-deep)' : 'var(--ink)' }}>{c.city}</span>
-                    <svg className="area-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={c.home ? 'var(--accent)' : 'var(--faint)'} strokeWidth="2" style={{ transition: 'transform 0.25s' }}><path d="M7 17L17 7M17 7H8M17 7v9" /></svg>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', borderTop: '1px solid var(--line)', borderLeft: '1px solid var(--line)' }}>
+              {included.map((it) => (
+                <div key={it.title} style={{ padding: '18px 16px', borderRight: '1px solid var(--line)', borderBottom: '1px solid var(--line)', display: 'flex', flexDirection: 'column', gap: 5, background: it.lead ? 'var(--accent-soft)' : 'transparent' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={it.lead ? 'var(--accent)' : 'var(--faint)'} strokeWidth="3" style={{ flexShrink: 0 }}><path d="M20 6L9 17l-5-5" /></svg>
+                    <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 15, letterSpacing: '-0.01em', color: it.lead ? 'var(--accent-deep)' : 'var(--ink)' }}>{it.title}</span>
                   </span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: c.home ? 'var(--accent)' : 'var(--faint)' }}>{c.tag}</span>
-                </Link>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: it.lead ? 'var(--accent)' : 'var(--faint)', paddingLeft: 20 }}>{it.tag}</span>
+                </div>
               ))}
             </div>
           </Reveal>
@@ -751,8 +753,6 @@ export default function HomePage() {
       </section>
 
       <style>{`
-        .area-cell:hover { background: var(--card) !important; }
-        .area-cell:hover .area-arrow { transform: translate(2px, -2px); }
         /* Hero headline mask-reveal — clip desktop, relax on mobile so wrapped lines never get cut */
         .hl-line { display: block; overflow: hidden; padding-bottom: 0.09em; }
         @media (max-width: 600px) { .hl-line { overflow: visible; } }
@@ -813,7 +813,7 @@ export default function HomePage() {
         /* Short / landscape viewports (e.g. phones held sideways) — release the forced 100svh
            and trim padding so the stacked hero never overflows or clips its stats/CTA */
         @media (max-height: 680px) and (min-width: 601px) {
-          .hero-section { min-height: auto !important; padding-top: clamp(96px, 16vh, 116px) !important; padding-bottom: 40px !important; }
+          .hero-section { min-height: auto !important; padding-top: calc(clamp(96px, 16vh, 116px) + env(safe-area-inset-top, 0px)) !important; padding-bottom: 40px !important; }
         }
       `}</style>
     </>

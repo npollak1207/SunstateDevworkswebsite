@@ -82,6 +82,9 @@ export default function Nav() {
         backdropFilter: scrolled ? 'blur(18px) saturate(1.3)' : 'none',
         WebkitBackdropFilter: scrolled ? 'blur(18px) saturate(1.3)' : 'none',
         borderBottom: `1px solid ${scrolled ? 'var(--line)' : 'transparent'}`,
+        // Fill the notch / status-bar strip so the bar reads as flush with the
+        // top of the screen; the inner row is pushed below it.
+        paddingTop: 'env(safe-area-inset-top, 0px)',
       }}>
         <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 clamp(20px, 4vw, 44px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 74 }}>
 
@@ -177,6 +180,8 @@ export default function Nav() {
         background: 'var(--paper)', borderLeft: '1px solid var(--line)', display: 'flex', flexDirection: 'column',
         transform: open ? 'translateX(0)' : 'translateX(100%)', transition: 'transform 0.34s cubic-bezier(0.22,1,0.36,1)',
         boxShadow: '-24px 0 60px rgba(23,20,15,0.16)',
+        paddingTop: 'env(safe-area-inset-top, 0px)',
+        paddingRight: 'env(safe-area-inset-right, 0px)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 22px', borderBottom: '1px solid var(--line)' }}>
           <Link href="/" onClick={() => setOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
@@ -208,7 +213,7 @@ export default function Nav() {
           })}
         </div>
 
-        <div style={{ padding: '16px 14px 26px', borderTop: '1px solid var(--line)' }}>
+        <div style={{ padding: '16px 14px 26px', paddingBottom: 'calc(26px + env(safe-area-inset-bottom, 0px))', borderTop: '1px solid var(--line)' }}>
           <Link href="/contact" onClick={() => setOpen(false)} className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '15px' }}>
             Start a Project
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>

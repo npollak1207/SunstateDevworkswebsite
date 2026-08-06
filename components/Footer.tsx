@@ -22,15 +22,23 @@ const columns = [
       { href: '/services/ai-automation', label: 'AI & Automation' },
     ],
   },
-  {
-    title: 'Service Areas',
-    links: [
-      { href: '/web-design-gilbert', label: 'Gilbert' },
-      { href: '/web-design-scottsdale', label: 'Scottsdale' },
-      { href: '/web-design-chandler', label: 'Chandler' },
-      { href: '/web-design-phoenix', label: 'Phoenix' },
-    ],
-  },
+]
+
+// Full city list lives in its own row so every local landing page keeps a
+// site-wide internal link, rather than only the four that fit in a column.
+const cities = [
+  { href: '/web-design-gilbert', label: 'Gilbert' },
+  { href: '/web-design-phoenix', label: 'Phoenix' },
+  { href: '/web-design-scottsdale', label: 'Scottsdale' },
+  { href: '/web-design-chandler', label: 'Chandler' },
+  { href: '/web-design-mesa', label: 'Mesa' },
+  { href: '/web-design-tempe', label: 'Tempe' },
+  { href: '/web-design-peoria', label: 'Peoria' },
+  { href: '/web-design-glendale', label: 'Glendale' },
+  { href: '/web-design-queen-creek', label: 'Queen Creek' },
+  { href: '/web-design-surprise', label: 'Surprise' },
+  { href: '/web-design-ahwatukee', label: 'Ahwatukee' },
+  { href: '/web-design-paradise-valley', label: 'Paradise Valley' },
 ]
 
 export default function Footer() {
@@ -78,6 +86,21 @@ export default function Footer() {
             </p>
           </div>
         </div>
+
+        {/* City landing pages */}
+        <nav aria-label="Web design by city" style={{ borderTop: '1px solid var(--line)', paddingTop: 24, marginBottom: 26 }}>
+          <p className="eyebrow" style={{ marginBottom: 14, color: 'var(--accent)' }}>Web design by city</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '9px 0' }}>
+            {cities.map((c, i) => (
+              <span key={c.href} style={{ display: 'inline-flex', alignItems: 'center' }}>
+                {i > 0 && <span aria-hidden="true" style={{ color: 'var(--line-2)', fontSize: 11, padding: '0 11px' }}>·</span>}
+                <Link href={c.href} className="ft-link" style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.02em', color: 'var(--muted)', textDecoration: 'none', whiteSpace: 'nowrap' }}>
+                  {c.label}
+                </Link>
+              </span>
+            ))}
+          </div>
+        </nav>
 
         <div style={{ borderTop: '1px solid var(--line)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 14 }}>
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--faint)', letterSpacing: '0.02em' }}>
