@@ -7,19 +7,20 @@ import { Arrow, CTASection } from '@/components/editorial'
 type Metric = { value: string; label: string }
 type Testimonial = { name: string; role: string; body: string; initials: string }
 type Project = {
-  num: string; title: string; cat: string; year: string; url?: string; repo?: string
+  num: string; title: string; cat: string; year: string; url?: string; repo?: string; caseStudy?: string; image?: string
   desc: string; highlight: string; metrics: Metric[]; tech: string[]; tags: string[]
   testimonial?: Testimonial; featured?: boolean
 }
 
 const projects: Project[] = [
   {
-    num: '01', title: 'Liberty Military Housing', cat: 'AI Dashboard', year: '2024',
-    tech: ['Next.js', 'Python', 'OpenAI', 'PostgreSQL'],
-    desc: 'A centralized, AI-driven construction-management platform that turned thousands of data points across military housing renovations into a real-time source of truth.',
-    highlight: 'A natural-language interface: managers ask questions in plain English and the AI returns live data visualizations instantly.',
-    metrics: [{ value: '−60%', label: 'Support tickets' }, { value: '10k+', label: 'Housing units' }, { value: '4 wks', label: 'Build time' }],
-    tags: ['AI', 'Web App'], featured: true,
+    num: '01', title: 'Liberty Military Housing', cat: 'Con Gusto · iOS · Android · AI', year: '2025',
+    tech: ['SwiftUI', 'Kotlin', 'Python / FastAPI', 'AWS'],
+    caseStudy: '/works/con-gusto', image: '/work/con-gusto/dashboard.webp',
+    desc: 'Con Gusto: the construction-management platform that runs day-to-day renovation operations across Liberty Military Housing’s Southern California regions, with native iOS and Android apps for property managers, contractors and field crews.',
+    highlight: 'A natural-language interface: managers ask questions in plain English and get back live data visualizations.',
+    metrics: [{ value: '−60%', label: 'Support tickets' }, { value: '10k+', label: 'Housing units' }, { value: '~350', label: 'Active users' }],
+    tags: ['AI', 'iOS', 'Web App'], featured: true,
   },
   {
     num: '02', title: 'ELS Platform', cat: 'iOS App · Web Dashboard', year: '2024',
@@ -122,6 +123,14 @@ function Stars() {
 }
 
 function ProjectCTA({ p }: { p: Project }) {
+  if (p.caseStudy) return (
+    <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
+      <Link href={p.caseStudy} className="btn btn-primary" style={{ padding: '11px 20px', fontSize: 12 }}>
+        Read the case study <span className="btn-arrow"><Arrow s={13} /></span>
+      </Link>
+      {!p.url && !p.repo && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--faint)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Private platform</span>}
+    </div>
+  )
   if (!p.url && !p.repo) return <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--faint)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Private client · NDA</span>
   return (
     <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
@@ -183,7 +192,12 @@ function FeaturedCard({ p }: { p: Project }) {
           <div style={{ marginTop: 'auto' }}><ProjectCTA p={p} /></div>
         </div>
         <div className="feat-side" style={{ background: 'var(--paper-2)', borderLeft: '1px solid var(--line)', padding: 'clamp(28px, 3.4vw, 46px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          {p.testimonial ? (
+          {p.image ? (
+            <div style={{ maxWidth: 260, width: '100%', margin: '0 auto', borderRadius: 28, padding: 7, background: 'var(--ink)', boxShadow: '0 30px 60px -30px rgba(23,20,15,0.45)' }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={p.image} alt={`${p.title} app screenshot`} width={376} height={812} loading="lazy" style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 22 }} />
+            </div>
+          ) : p.testimonial ? (
             <figure>
               <Stars />
               <blockquote style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(18px, 1.8vw, 22px)', lineHeight: 1.5, color: 'var(--ink)', marginBottom: 18 }}>“{p.testimonial.body}”</blockquote>
