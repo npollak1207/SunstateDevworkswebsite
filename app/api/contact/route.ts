@@ -21,7 +21,7 @@ function isRateLimited(ip: string): boolean {
 export async function POST(req: Request) {
   try {
     const body = await req.json()
-    const { name, email, company, service, budget, message } = body
+    const { name, email, phone, company, service, budget, timeline, message } = body
     const honeypot = body._hp ?? body.website ?? ''
 
     // ── Honeypot: bots fill the hidden field. Pretend success, send nothing. ──
@@ -68,9 +68,11 @@ export async function POST(req: Request) {
     <table style="width:100%;border-collapse:collapse;">
       <tr><td style="padding:7px 0;font-size:10px;color:#7A8FA6;text-transform:uppercase;letter-spacing:0.08em;width:90px;">Name</td><td style="padding:7px 0;font-size:14px;color:#F0EDE6;font-weight:600;">${name}</td></tr>
       <tr><td style="padding:7px 0;font-size:10px;color:#7A8FA6;text-transform:uppercase;letter-spacing:0.08em;">Email</td><td style="padding:7px 0;font-size:14px;color:#00D4C8;">${email}</td></tr>
+      ${phone ? `<tr><td style="padding:7px 0;font-size:10px;color:#7A8FA6;text-transform:uppercase;letter-spacing:0.08em;">Phone</td><td style="padding:7px 0;font-size:14px;color:#F0EDE6;">${phone}</td></tr>` : ''}
       ${company ? `<tr><td style="padding:7px 0;font-size:10px;color:#7A8FA6;text-transform:uppercase;letter-spacing:0.08em;">Company</td><td style="padding:7px 0;font-size:14px;color:#F0EDE6;">${company}</td></tr>` : ''}
       ${service ? `<tr><td style="padding:7px 0;font-size:10px;color:#7A8FA6;text-transform:uppercase;letter-spacing:0.08em;">Service</td><td style="padding:7px 0;font-size:14px;color:#F4622A;font-weight:600;">${service}</td></tr>` : ''}
       ${budget ? `<tr><td style="padding:7px 0;font-size:10px;color:#7A8FA6;text-transform:uppercase;letter-spacing:0.08em;">Budget</td><td style="padding:7px 0;font-size:14px;color:#F0EDE6;">${budget}</td></tr>` : ''}
+      ${timeline ? `<tr><td style="padding:7px 0;font-size:10px;color:#7A8FA6;text-transform:uppercase;letter-spacing:0.08em;">Timeline</td><td style="padding:7px 0;font-size:14px;color:#F0EDE6;">${timeline}</td></tr>` : ''}
     </table>
   </div>
 

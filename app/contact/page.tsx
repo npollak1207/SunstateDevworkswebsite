@@ -27,11 +27,12 @@ const steps = [
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', email: '', company: '', service: '', budget: '', timeline: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', company: '', service: '', budget: '', timeline: '', message: '' })
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [focused, setFocused] = useState('')
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [hydrated, setHydrated] = useState(false)
+  const [showErrors, setShowErrors] = useState(false)
 
   useEffect(() => {
     try {
@@ -50,6 +51,10 @@ export default function ContactPage() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!valid.phone || !form.service || !form.budget || !form.timeline) {
+      setShowErrors(true)
+      return
+    }
     setStatus('submitting')
     try {
       const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
@@ -64,6 +69,8 @@ export default function ContactPage() {
   const valid = {
     name: form.name.trim().length >= 2,
     email: emailRegex.test(form.email.trim()),
+    phone: form.phone.replace(/\D/g, '').length >= 10,
+    company: form.company.trim().length >= 2,
     message: form.message.trim().length >= 20,
   }
 
@@ -82,6 +89,10 @@ export default function ContactPage() {
   })
 
   const labelStyle: React.CSSProperties = { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8, display: 'block' }
+
+  const fieldError = (msg: string) => (
+    <p style={{ marginTop: 8, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--accent-deep)', letterSpacing: '0.03em' }}>{msg}</p>
+  )
 
   const chip = (active: boolean): React.CSSProperties => ({
     fontFamily: 'var(--font-mono)', fontSize: 11, padding: '9px 15px', borderRadius: 2,
@@ -152,30 +163,46 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div>
-                <label style={labelStyle}>Company / Business</label>
-                <input style={inputStyle('company')} placeholder="Acme Inc." value={form.company} onChange={(e) => handle('company', e.target.value)} onFocus={() => setFocused('company')} onBlur={() => setFocused('')} />
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="name-grid">
+                <div>
+                  <label style={labelStyle}>Phone *</label>
+                  <div style={{ position: 'relative' }}>
+                    <input required type="tel" autoComplete="tel" style={inputStyle('phone', true)} placeholder="(480) 555-0123" value={form.phone} onChange={(e) => handle('phone', e.target.value)} onFocus={() => setFocused('phone')} onBlur={() => setFocused('')} />
+                    <CheckMark show={valid.phone} />
+                  </div>
+                  {showErrors && !valid.phone && fieldError('Please enter a valid phone number')}
+                </div>
+                <div>
+                  <label style={labelStyle}>Company / Business *</label>
+                  <div style={{ position: 'relative' }}>
+                    <input required style={inputStyle('company', true)} placeholder="Acme Inc." value={form.company} onChange={(e) => handle('company', e.target.value)} onFocus={() => setFocused('company')} onBlur={() => setFocused('')} />
+                    <CheckMark show={valid.company} />
+                  </div>
+                </div>
               </div>
 
               <div>
-                <label style={labelStyle}>Service needed</label>
+                <label style={labelStyle}>Service needed *</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                   {services.map((s) => <button key={s} type="button" onClick={() => handle('service', s)} style={chip(form.service === s)}>{s}</button>)}
                 </div>
+                {showErrors && !form.service && fieldError('Please pick a service')}
               </div>
 
               <div>
-                <label style={labelStyle}>Estimated budget</label>
+                <label style={labelStyle}>Estimated budget *</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                   {budgets.map((b) => <button key={b} type="button" onClick={() => handle('budget', b)} style={chip(form.budget === b)}>{b}</button>)}
                 </div>
+                {showErrors && !form.budget && fieldError('Please pick a budget range')}
               </div>
 
               <div>
-                <label style={labelStyle}>Timeline</label>
+                <label style={labelStyle}>Timeline *</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                   {timelines.map((t) => <button key={t} type="button" onClick={() => handle('timeline', t)} style={chip(form.timeline === t)}>{t}</button>)}
                 </div>
+                {showErrors && !form.timeline && fieldError('Please pick a timeline')}
               </div>
 
               <div>
