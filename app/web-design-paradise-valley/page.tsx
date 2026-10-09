@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import CityTemplate from '@/components/CityTemplate'
 import { openGraphBase } from '@/lib/metadata'
+import { CITY_CONTENT } from '@/lib/cities'
 
 export const metadata: Metadata = {
   title: 'Web Design Paradise Valley AZ',
@@ -17,16 +18,6 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <CityTemplate
-      city="Paradise Valley"
-      region="The Valley"
-      blurb="Premium branding and web design for Paradise Valley businesses. Sunstate DevWorks builds refined, hand-coded digital work as elevated as the community it serves."
-      reasons={[
-        'Paradise Valley is one of the most affluent communities in Arizona, and its brands deserve digital work to match. We deliver that polish.',
-        'Luxury real estate, resorts and high-end services need sites that feel exclusive and load instantly. Custom code makes that possible.',
-        'We are a local Valley studio offering discreet, direct, in-person collaboration.',
-        'From identity to a flawless website, everything is built in-house and owned entirely by you.',
-      ]}
-    />
+    <CityTemplate content={CITY_CONTENT['paradise-valley']} />
   )
 }

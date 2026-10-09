@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import CityTemplate from '@/components/CityTemplate'
 import { openGraphBase } from '@/lib/metadata'
+import { CITY_CONTENT } from '@/lib/cities'
 
 export const metadata: Metadata = {
   title: 'Web Design Tempe AZ',
@@ -17,16 +18,6 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <CityTemplate
-      city="Tempe"
-      region="East Valley"
-      blurb="Web, branding and app development for Tempe businesses. Sunstate DevWorks builds bold, hand-coded digital work for the home of ASU."
-      reasons={[
-        'Tempe moves fast, powered by ASU and a young, digital-first audience. We build sites and brands that resonate with them.',
-        'From Mill Avenue storefronts to campus startups, we design work that feels current and performs under real traffic.',
-        'We are right next door in Gilbert, so Tempe clients get in-person collaboration and a direct line to the team.',
-        'Branding, web and mobile under one roof means your Tempe business shows up consistent everywhere it matters.',
-      ]}
-    />
+    <CityTemplate content={CITY_CONTENT['tempe']} />
   )
 }

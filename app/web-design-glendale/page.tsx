@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import CityTemplate from '@/components/CityTemplate'
 import { openGraphBase } from '@/lib/metadata'
+import { CITY_CONTENT } from '@/lib/cities'
 
 export const metadata: Metadata = {
   title: 'Web Design Glendale AZ',
@@ -17,16 +18,6 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <CityTemplate
-      city="Glendale"
-      region="West Valley"
-      blurb="Web design and development for Glendale businesses. Sunstate DevWorks builds fast, hand-coded sites, apps and branding for the West Valley."
-      reasons={[
-        'Glendale is home to major sports and entertainment venues, and we build brands ready for that kind of spotlight.',
-        'From Westgate businesses to neighborhood services, we design sites tuned for local search and real conversions.',
-        'We are a Valley studio with direct access and no runaround, so Glendale clients always reach the people doing the work.',
-        'Every site is hand-coded and lightning-fast, which means better rankings and happier Glendale customers.',
-      ]}
-    />
+    <CityTemplate content={CITY_CONTENT['glendale']} />
   )
 }

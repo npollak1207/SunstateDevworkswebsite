@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import CityTemplate from '@/components/CityTemplate'
 import { openGraphBase } from '@/lib/metadata'
+import { CITY_CONTENT } from '@/lib/cities'
 
 export const metadata: Metadata = {
   title: 'Web Design Peoria AZ',
@@ -17,16 +18,6 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <CityTemplate
-      city="Peoria"
-      region="West Valley"
-      blurb="Custom web design and development for Peoria businesses. Sunstate DevWorks brings hand-coded, template-free sites to the West Valley."
-      reasons={[
-        'Peoria is one of the fastest-growing cities in the West Valley, and we help local businesses claim their spot online early.',
-        'We build custom, not cookie-cutter, so your Peoria business does not look like every other site in town.',
-        'Remote-friendly and responsive, we make working with a Valley studio effortless no matter where you are in Peoria.',
-        'From the P83 entertainment district to family services, we build sites that rank and convert.',
-      ]}
-    />
+    <CityTemplate content={CITY_CONTENT['peoria']} />
   )
 }

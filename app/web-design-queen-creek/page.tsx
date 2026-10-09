@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import CityTemplate from '@/components/CityTemplate'
 import { openGraphBase } from '@/lib/metadata'
+import { CITY_CONTENT } from '@/lib/cities'
 
 export const metadata: Metadata = {
   title: 'Web Design Queen Creek AZ',
@@ -17,16 +18,6 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <CityTemplate
-      city="Queen Creek"
-      region="Southeast Valley"
-      blurb="Web design, apps and branding for Queen Creek businesses. Sunstate DevWorks is a neighboring Gilbert studio building custom digital work for the Southeast Valley."
-      reasons={[
-        'Queen Creek is booming, and getting online early with a standout site is a real competitive edge. We make that happen.',
-        'We are just up the road in Gilbert, so Queen Creek clients get a true local partner and easy in-person meetings.',
-        'From agritourism and events to trades and retail, we build sites tuned to how Queen Creek customers actually search.',
-        'Hand-coded, fast and fully owned by you, with no templates and no lock-in.',
-      ]}
-    />
+    <CityTemplate content={CITY_CONTENT['queen-creek']} />
   )
 }

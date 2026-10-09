@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import CityTemplate from '@/components/CityTemplate'
 import { openGraphBase } from '@/lib/metadata'
+import { CITY_CONTENT } from '@/lib/cities'
 
 export const metadata: Metadata = {
   title: 'Web Design Ahwatukee AZ',
@@ -17,16 +18,6 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <CityTemplate
-      city="Ahwatukee"
-      region="Phoenix · South Mountain"
-      blurb="Web design, apps and AI for Ahwatukee businesses. Sunstate DevWorks builds hand-coded digital work for the Foothills community."
-      reasons={[
-        'Ahwatukee is a tight-knit Foothills community, and we build sites that connect with neighbors and local shoppers.',
-        'We are close by in the East Valley, so Ahwatukee clients get local, personal service and direct access to the team.',
-        'From professional services to local retail, we design fast sites tuned to rank in the searches that matter here.',
-        'Hand-coded and template-free, so your Ahwatukee business stands apart from the cookie-cutter competition.',
-      ]}
-    />
+    <CityTemplate content={CITY_CONTENT['ahwatukee']} />
   )
 }
