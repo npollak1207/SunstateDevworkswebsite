@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Reveal from '@/components/Reveal'
 import { Arrow, CTASection, PageHeader, SectionLabel } from '@/components/editorial'
+import { openGraphBase } from '@/lib/metadata'
 
 const PAGE_URL = 'https://sunstatedevworks.com/works/con-gusto'
 
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
   description: 'How Sunstate DevWorks built Con Gusto, the platform that runs day-to-day renovation operations across Liberty Military Housing’s Southern California regions: native iOS and Android apps on a FastAPI and AWS backend.',
   alternates: { canonical: PAGE_URL },
   openGraph: {
+    ...openGraphBase,
     url: PAGE_URL,
     title: 'Con Gusto Case Study | Sunstate DevWorks',
     description: 'Native iOS and Android apps on a FastAPI and AWS backend, used by about 350 people to run renovation operations for 10k+ military housing units.',

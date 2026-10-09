@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import ServiceTemplate from '@/components/ServiceTemplate'
+import { openGraphBase } from '@/lib/metadata'
 
 export const metadata: Metadata = {
   title: 'Branding & Identity',
   description: 'Strategic branding and identity design: logo, color, typography and full brand guidelines. Built to make a small team look like the leader. Gilbert, AZ.',
   alternates: { canonical: 'https://sunstatedevworks.com/services/branding' },
   openGraph: {
+    ...openGraphBase,
     url: 'https://sunstatedevworks.com/services/branding',
     title: 'Branding & Identity | Sunstate DevWorks',
     description: 'Strategic branding and identity design: logo, color, typography and full brand guidelines. Built to make a small team look like the leader.',

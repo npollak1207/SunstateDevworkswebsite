@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import SunHero from '@/components/SunHero'
+import { HomeStructuredData } from '@/components/StructuredData'
 import Reveal, { Stagger, StaggerItem } from '@/components/Reveal'
 
 /* ────────────────────────────── content ────────────────────────────── */
@@ -339,6 +340,7 @@ export default function HomePage() {
 
   return (
     <>
+      <HomeStructuredData faqs={faqs} />
       {/* ═══════════════════════ HERO (owns the first screen) ═══════════════════════ */}
       <section className="hero-section" style={{ position: 'relative', minHeight: '100svh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden', paddingTop: 'calc(clamp(112px, 17vh, 200px) + env(safe-area-inset-top, 0px))', paddingBottom: 'clamp(40px, 8vh, 104px)' }}>
         <SunHero horizon="45%" />

@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import ServiceTemplate from '@/components/ServiceTemplate'
+import { openGraphBase } from '@/lib/metadata'
 
 export const metadata: Metadata = {
   title: 'Web Development',
   description: 'Hand-coded custom websites and web apps on Next.js. No WordPress, no templates. Built to rank and load in under a second. Phoenix and Gilbert, AZ.',
   alternates: { canonical: 'https://sunstatedevworks.com/services/web-development' },
   openGraph: {
+    ...openGraphBase,
     url: 'https://sunstatedevworks.com/services/web-development',
     title: 'Web Development | Sunstate DevWorks',
     description: 'Hand-coded custom websites and web apps on Next.js. No WordPress, no templates. Built to rank and load in under a second.',

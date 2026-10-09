@@ -2,12 +2,14 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Reveal from '@/components/Reveal'
 import { SectionLabel, CTASection } from '@/components/editorial'
+import { openGraphBase } from '@/lib/metadata'
 
 export const metadata: Metadata = {
   title: 'About the Studio',
   description: 'Sunstate DevWorks is a boutique design and engineering studio in Gilbert, Arizona. Custom web, mobile, branding and AI, with 100% code ownership and no lock-in.',
   alternates: { canonical: 'https://sunstatedevworks.com/about' },
   openGraph: {
+    ...openGraphBase,
     url: 'https://sunstatedevworks.com/about',
     title: 'About the Studio | Sunstate DevWorks',
     description: 'A boutique design and engineering studio in Gilbert, Arizona. Custom web, mobile, branding and AI, with 100% code ownership.',

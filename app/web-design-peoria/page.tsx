@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import CityTemplate from '@/components/CityTemplate'
+import { openGraphBase } from '@/lib/metadata'
 
 export const metadata: Metadata = {
   title: 'Web Design Peoria AZ',
@@ -7,6 +8,7 @@ export const metadata: Metadata = {
   keywords: ['web design Peoria AZ', 'web developer Peoria Arizona', 'custom website Peoria AZ', 'West Valley web design', 'small business web design Peoria', 'Peoria web development'],
   alternates: { canonical: 'https://sunstatedevworks.com/web-design-peoria' },
   openGraph: {
+    ...openGraphBase,
     url: 'https://sunstatedevworks.com/web-design-peoria',
     title: 'Web Design Peoria AZ | Sunstate DevWorks',
     description: 'Custom web design in Peoria, AZ. Hand-coded, template-free sites, apps and branding for West Valley businesses. You own everything.',

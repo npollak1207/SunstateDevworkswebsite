@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import ServiceTemplate from '@/components/ServiceTemplate'
+import { openGraphBase } from '@/lib/metadata'
 
 export const metadata: Metadata = {
   title: 'Mobile App Development',
   description: 'Native iOS and Android apps built with SwiftUI and React Native. From MVP to App Store, backend included. Gilbert and Phoenix, AZ.',
   alternates: { canonical: 'https://sunstatedevworks.com/services/mobile-apps' },
   openGraph: {
+    ...openGraphBase,
     url: 'https://sunstatedevworks.com/services/mobile-apps',
     title: 'Mobile App Development | Sunstate DevWorks',
     description: 'Native iOS and Android apps built with SwiftUI and React Native. From MVP to App Store, backend included.',

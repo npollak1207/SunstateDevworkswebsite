@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://sunstatedevworks.com'),
   title: {
     default: 'Sunstate DevWorks | Custom Web & Mobile Development, Phoenix AZ',
-    template: '%s | Sunstate DevWorks, Phoenix Web Design',
+    template: '%s | Sunstate DevWorks',
   },
   description: "Phoenix-area custom web design, iOS app development, branding & AI automation. Hand-coded, no templates, 100% code ownership. Serving Gilbert, Scottsdale, Chandler, Mesa, Tempe & all of metro Phoenix.",
   keywords: [
@@ -84,23 +84,16 @@ export const metadata: Metadata = {
     siteName: 'Sunstate DevWorks',
     title: 'Sunstate DevWorks | Custom Web & Mobile Development, Phoenix AZ',
     description: "Phoenix-area custom web design, iOS apps, branding & AI automation. Hand-coded, no templates, 100% yours. Serving Gilbert, Scottsdale, Chandler, Mesa, Tempe & all of metro Phoenix.",
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Sunstate DevWorks Custom Web & Mobile Development, Phoenix AZ',
-      },
-    ],
+    // Share image comes from app/opengraph-image.tsx.
   },
+  // Title, description and image fall back to each page's Open Graph tags.
   twitter: {
     card: 'summary_large_image',
-    title: 'Sunstate DevWorks | Phoenix Web Design & Mobile Apps',
-    description: 'Phoenix-area dev studio. Custom web, iOS apps, branding, AI automation. Gilbert, Scottsdale, Chandler, Mesa & beyond. You own 100% of the code.',
-    images: ['/og-image.png'],
   },
+  // './' resolves against each page's own path, so a page that forgets to set
+  // a canonical points at itself instead of at the homepage.
   alternates: {
-    canonical: 'https://sunstatedevworks.com',
+    canonical: './',
   },
   // Icons are provided by the App Router file conventions (app/icon.svg,
   // app/icon.png, app/favicon.ico, app/apple-icon.png). Next appends a content

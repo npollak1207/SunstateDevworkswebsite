@@ -10,6 +10,5 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: 'https://sunstatedevworks.com/sitemap.xml',
-    host: 'https://sunstatedevworks.com',
   }
 }

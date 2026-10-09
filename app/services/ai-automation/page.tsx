@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import ServiceTemplate from '@/components/ServiceTemplate'
+import { openGraphBase } from '@/lib/metadata'
 
 export const metadata: Metadata = {
   title: 'AI & Automation',
   description: 'Custom AI integrations and workflow automation: chatbots, document intelligence and pipelines on Claude, OpenAI and Gemini. Gilbert and Phoenix, AZ.',
   alternates: { canonical: 'https://sunstatedevworks.com/services/ai-automation' },
   openGraph: {
+    ...openGraphBase,
     url: 'https://sunstatedevworks.com/services/ai-automation',
     title: 'AI & Automation | Sunstate DevWorks',
     description: 'Custom AI integrations and workflow automation: chatbots, document intelligence and pipelines on Claude, OpenAI and Gemini.',

@@ -2,12 +2,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Reveal from '@/components/Reveal'
 import { Arrow, SectionLabel, CTASection } from '@/components/editorial'
+import { openGraphBase } from '@/lib/metadata'
 
 export const metadata: Metadata = {
   title: 'Services | Web, Mobile, Branding & AI',
   description: 'Full-stack digital services from one Gilbert studio: custom web development, mobile apps, branding and AI automation. Hand-coded, no templates, 100% yours.',
   alternates: { canonical: 'https://sunstatedevworks.com/services' },
   openGraph: {
+    ...openGraphBase,
     url: 'https://sunstatedevworks.com/services',
     title: 'Services | Sunstate DevWorks',
     description: 'Full-stack digital services from one Gilbert studio: web, mobile, branding and AI automation. Hand-coded, no templates, 100% yours.',
