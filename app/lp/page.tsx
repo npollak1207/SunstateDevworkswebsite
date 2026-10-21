@@ -183,14 +183,14 @@ const SERVICES = [
 
 const WHY = [
   { n: '01', accent: 'var(--cyan)', title: 'You own 100%', desc: 'No proprietary platforms, no lock-in. The code is yours on delivery — forever. Take it anywhere.' },
-  { n: '02', accent: 'var(--orange)', title: 'Flat-rate pricing', desc: 'Written scope and price upfront. No hourly surprises. You approve the number before we write a line.' },
+  { n: '02', accent: 'var(--orange)', title: 'Clear scope', desc: 'Written scope and timeline upfront. You approve the plan before we write a line.' },
   { n: '03', accent: 'var(--cyan)', title: 'Built to convert', desc: 'Every site is engineered for speed, SEO and lead capture — not just to look pretty.' },
   { n: '04', accent: 'var(--orange)', title: 'Local Arizona team', desc: 'Real humans in Gilbert, AZ. Direct access — no overseas outsourcing, no call-center queues.' },
 ]
 
 const STEPS = [
   { n: '01', accent: 'var(--cyan)', title: 'Free Quote', desc: 'Tell us what you need. We reply within 2 hours with next steps.' },
-  { n: '02', accent: 'var(--orange)', title: 'Scope & Price', desc: 'A 30-min call, then a written scope with a flat-rate price. You approve before we start.' },
+  { n: '02', accent: 'var(--orange)', title: 'Scope & Plan', desc: 'A 30-min call, then a written scope and timeline. You approve before we start.' },
   { n: '03', accent: 'var(--cyan)', title: 'Design & Build', desc: 'We build in sprints and share progress weekly. You stay in the loop.' },
   { n: '04', accent: 'var(--orange)', title: 'Launch & Own It', desc: 'We handle go-live, then hand you the keys. The code is yours.' },
 ]
@@ -795,7 +795,7 @@ export default function LandingPage() {
           {[0, 1].map(half => (
             <div className="lp-mq-item" key={half} aria-hidden={half === 1}>
               {Array.from({ length: 3 }).flatMap((_, r) =>
-                ['Hand-Coded', 'No Templates', 'You Own It', 'Built To Convert', 'Flat-Rate Pricing', 'Local Arizona', '2-Hour Reply', 'SEO-Ready'].map(t => (
+                ['Hand-Coded', 'No Templates', 'You Own It', 'Built To Convert', 'Written Scope', 'Local Arizona', '2-Hour Reply', 'SEO-Ready'].map(t => (
                   <span key={`${r}-${t}`}>{t}</span>
                 ))
               )}
@@ -1041,8 +1041,7 @@ export default function LandingPage() {
           </div>
           <div className="lp-faq rv">
             {[
-              { q: 'How much does a website cost?', a: 'Every project is flat-rate and quoted up front — you approve the exact price before any work starts, with zero hourly surprises. Most small-business sites are more affordable than you’d expect. Request a free quote and we’ll give you a real number.' },
-              { q: 'How long does it take?', a: 'Most marketing websites launch in about 2–4 weeks. Apps and custom platforms vary with scope. You’ll get a clear timeline alongside your quote.' },
+              { q: 'How long does it take?', a: 'Most marketing websites launch in about 2–4 weeks. Apps and custom platforms vary with scope. You’ll get a clear timeline in writing before we start.' },
               { q: 'Do I really own the code?', a: 'Yes — 100% of it, on delivery. No proprietary platforms, no lock-in, no monthly ransom. Host it with us or take it anywhere you like.' },
               { q: 'What if I already have a website?', a: 'We’ll run a free teardown showing exactly where your current site is losing leads, then only recommend a redesign if it actually makes sense for you.' },
               { q: 'Do you only work with Gilbert businesses?', a: 'No — we’re based in Gilbert but serve all of metro Phoenix (Scottsdale, Chandler, Mesa, Tempe, Peoria and beyond), and we work with clients remotely too.' },
@@ -1061,7 +1060,7 @@ export default function LandingPage() {
         <div className="lp-final-inner rv">
           <div className="lp-kicker" style={{ justifyContent: 'center' }}>Ready When You Are</div>
           <h2 className="lp-h2">Let&apos;s build something <em>that works.</em></h2>
-          <p className="lp-lead" style={{ margin: '16px auto 0' }}>Free quote, reply in 2 hours, and a flat-rate price before we start. The code is yours to keep.</p>
+          <p className="lp-lead" style={{ margin: '16px auto 0' }}>Free consultation, reply in 2 hours, and a written scope before we start. The code is yours to keep.</p>
           <div className="lp-final-ctas">
             <a href="#lp-quote" onClick={scrollToForm} className="lp-btn lp-btn-cyan lp-btn-lg">Get My Free Quote <IconArrow /></a>
             <a href={PHONE_HREF} onClick={onCallClick} className="lp-btn lp-btn-orange lp-btn-lg"><IconPhone /> Call {PHONE_DISPLAY}</a>

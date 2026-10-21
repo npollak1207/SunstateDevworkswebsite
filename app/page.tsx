@@ -32,7 +32,7 @@ const work = [
 
 const processSteps = [
   { num: '01', title: 'Discovery', desc: 'A 30-minute call to learn your business, your goals, and what winning actually looks like for you.' },
-  { num: '02', title: 'Proposal & Scope', desc: 'A written scope, timeline, and flat-rate price. You approve everything before a single line is written.' },
+  { num: '02', title: 'Proposal & Scope', desc: 'A written scope and timeline. You approve everything before a single line is written.' },
   { num: '03', title: 'Design & Build', desc: 'We build in weekly sprints and share progress as we go, so you stay in the loop and never in the weeds.' },
   { num: '04', title: 'Launch & Handoff', desc: 'We handle DNS, SSL and go-live, then hand you the keys, or keep maintaining it. Entirely your call.' },
 ]
@@ -56,7 +56,7 @@ const testimonials = [
 const included = [
   { title: 'Full code ownership', tag: 'Yours on day one', lead: true },
   { title: 'Complete handoff', tag: 'Repo, assets, accounts' },
-  { title: 'Fixed-price quote', tag: 'No hourly billing' },
+  { title: 'Written scope', tag: 'Approved before we build' },
   { title: 'Fast by default', tag: 'Performance budget' },
   { title: 'SEO groundwork', tag: 'Schema, meta, sitemaps' },
   { title: 'Accessible build', tag: 'WCAG AA baseline' },
@@ -68,7 +68,6 @@ const faqs = [
   { q: 'How long does it take to build a website?', a: 'Most marketing sites ship in 3 to 5 weeks. Larger web apps or full redesigns typically run 6 to 10 weeks. You get a fixed timeline in the proposal, with no moving goalposts.' },
   { q: 'Do I own the code when the project is done?', a: '100%. Every line of code, every asset, every database. You get a full handoff, with no subscriptions, no licensing, and no lock-in of any kind.' },
   { q: 'Do you use WordPress or page builders?', a: 'Never. Everything we ship is hand-written in Next.js, SwiftUI, React Native or Laravel. That is why our sites load fast, rank well, and do not break when a plugin updates.' },
-  { q: 'How does pricing work? Do you charge hourly?', a: 'Flat-rate only. You see the full number before we start, with no hourly billing, no scope-creep invoices, and no surprise charges. Marketing sites typically run $3k to $15k; apps start around $15k and scale with scope. Reach out and we will send exact numbers for your project.' },
   { q: 'Do you offer maintenance after launch?', a: 'Yes. Optional monthly care plans cover hosting, updates, uptime monitoring and priority support. Or we hand you the keys entirely. Your choice.' },
   { q: 'Do you only work with Arizona clients?', a: 'No. We are based in Gilbert, AZ but we work with clients nationwide. Discovery and check-ins happen over video, so we can run a project the same way whether you are down the street or across the country. Local clients are welcome to meet in person.' },
 ]
@@ -658,12 +657,12 @@ export default function HomePage() {
             </Reveal>
             <Reveal delay={0.1}>
               <p style={{ fontFamily: 'var(--font-body)', fontSize: 16, lineHeight: 1.7, color: 'var(--muted)', maxWidth: 420, marginBottom: 16 }}>
-                Everything on this list ships with every project, at every budget. Nothing here is an upsell, a premium tier, or a line item you find out about later.
+                Everything on this list ships with every project. Nothing here is an upsell, a premium tier, or a line item you find out about later.
               </p>
             </Reveal>
             <Reveal delay={0.15}>
               <Link href="/contact" className="btn btn-ghost" style={{ padding: '13px 22px', marginBottom: 16 }}>
-                Get a fixed quote
+                Start a project
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
               </Link>
             </Reveal>
@@ -735,7 +734,7 @@ export default function HomePage() {
           </Reveal>
           <Reveal delay={0.1}>
             <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.6vw, 19px)', lineHeight: 1.6, color: 'var(--on-dark-muted)', maxWidth: 520, margin: '0 auto 40px' }}>
-              Tell us what you are building. We will send back a plan, a timeline, and a flat price, usually within one business day.
+              Tell us what you are building. We will send back a plan and a timeline, usually within one business day.
             </p>
           </Reveal>
           <Reveal delay={0.15}>
@@ -747,7 +746,7 @@ export default function HomePage() {
           <Reveal delay={0.2}>
             <div style={{ display: 'flex', gap: 'clamp(18px, 4vw, 40px)', justifyContent: 'center', flexWrap: 'wrap', fontFamily: 'var(--font-mono)', fontSize: 11.5, letterSpacing: '0.04em', color: 'var(--on-dark-muted)' }}>
               <span>◐ ~1 business-day reply</span>
-              <span>◐ Flat-rate quotes</span>
+              <span>◐ Written scope up front</span>
               <span>◐ 100% code ownership</span>
             </div>
           </Reveal>

@@ -26,7 +26,7 @@ const story = [
 const values = [
   { title: 'Ownership first', desc: 'We never lock you into proprietary tools. You own 100% of the code, the domain, and every deliverable.' },
   { title: 'No bloat', desc: 'No WordPress, no page builders, no drag-and-drop shortcuts. Just clean, performant, hand-written code.' },
-  { title: 'Radical transparency', desc: 'You see the same numbers we do. Pricing is flat-rate and quoted up front, scope is documented, and we say no when we should.' },
+  { title: 'Radical transparency', desc: 'No surprises. Scope and timeline are documented up front, progress is visible every week, and we say no when we should.' },
   { title: 'Local & accountable', desc: 'Based in Gilbert, Arizona. Not a remote farm or an offshore agency. A real team you can reach directly.' },
 ]
 
@@ -125,7 +125,7 @@ export default function AboutPage() {
       <CTASection
         eyebrow="Gilbert, Arizona"
         title={<>Sound like a fit?<br /><span className="serif-em" style={{ color: 'var(--accent)' }}>Let&apos;s find out.</span></>}
-        blurb="Tell us what you are building. We will send back a plan, a timeline, and a flat price, usually within one business day."
+        blurb="Tell us what you are building. We will send back a plan and a timeline, usually within one business day."
       />
 
       <style>{`

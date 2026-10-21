@@ -26,13 +26,13 @@ const services = [
 const whyUs = [
   { label: 'One studio, four capabilities', desc: 'No vendor juggling. Web, mobile, brand and AI all come from the same team that owns the outcome.' },
   { label: 'You own everything', desc: '100% of the code, files and domains are handed to you on delivery. No proprietary platforms, no lock-in.' },
-  { label: 'Flat-rate pricing', desc: 'A written scope and a written price. No hourly surprises. You approve the full number before we start.' },
+  { label: 'Clear scope up front', desc: 'A written scope and timeline before any work starts. You approve the plan, then we build it.' },
   { label: 'Local to Gilbert, AZ', desc: 'A real, local team. No call centers, no ticket queues. You can text us directly and reach a human.' },
 ]
 
 const process = [
   { num: '01', title: 'Discovery Call', desc: 'Thirty minutes to learn your business, your goals, and what winning actually looks like for you.' },
-  { num: '02', title: 'Proposal & Scope', desc: 'A written scope, timeline and flat-rate price. You approve everything before we touch a single file.' },
+  { num: '02', title: 'Proposal & Scope', desc: 'A written scope and timeline. You approve everything before we touch a single file.' },
   { num: '03', title: 'Build & Update', desc: 'Sprint-based delivery with weekly progress check-ins. You stay in the loop without being in the weeds.' },
   { num: '04', title: 'Launch & Handoff', desc: 'DNS, SSL and go-live handled, then the keys are yours. Or we keep maintaining it. Your call.' },
 ]

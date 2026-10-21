@@ -95,7 +95,7 @@ export function PageHeader({
 export function CTASection({
   eyebrow = 'Booking new projects · Gilbert, AZ',
   title,
-  blurb = 'Tell us what you are building. We will send back a plan, a timeline, and a flat price, usually within one business day.',
+  blurb = 'Tell us what you are building. We will send back a plan and a timeline, usually within one business day.',
 }: {
   eyebrow?: string
   title?: React.ReactNode
@@ -128,7 +128,7 @@ export function CTASection({
         <Reveal delay={0.2}>
           <div style={{ display: 'flex', gap: 'clamp(18px, 4vw, 40px)', justifyContent: 'center', flexWrap: 'wrap', fontFamily: 'var(--font-mono)', fontSize: 11.5, letterSpacing: '0.04em', color: 'var(--faint)' }}>
             <span>◐ ~1 business-day reply</span>
-            <span>◐ Flat-rate quotes</span>
+            <span>◐ Written scope up front</span>
             <span>◐ 100% code ownership</span>
           </div>
         </Reveal>

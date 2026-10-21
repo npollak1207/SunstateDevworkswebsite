@@ -316,7 +316,7 @@ export default function ConGustoCaseStudy() {
       <CTASection
         eyebrow="Have an operations problem like this?"
         title={<>Let&apos;s build your<br /><span className="serif-em" style={{ color: 'var(--accent)' }}>system of record.</span></>}
-        blurb="Tell us how the work gets done today. We will send back a plan, a timeline and a flat price."
+        blurb="Tell us how the work gets done today. We will send back a plan and a timeline."
       />
 
       <style>{`

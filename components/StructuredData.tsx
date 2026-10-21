@@ -18,7 +18,6 @@
         description: 'Custom web design, iOS & Android app development, branding, and AI automation agency based in Gilbert, Arizona. Serving Phoenix, Scottsdale, Chandler, Mesa, Tempe, and all of the greater Phoenix metro area.',
         telephone: '(480) 793-9161',
         email: 'contact@sunstatedevworks.com',
-        priceRange: '$$',
         currenciesAccepted: 'USD',
         paymentAccepted: 'Cash, Credit Card, Bank Transfer',
         address: {

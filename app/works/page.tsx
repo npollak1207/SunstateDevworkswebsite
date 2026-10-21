@@ -366,7 +366,7 @@ export default function WorksPage() {
       <CTASection
         eyebrow="Your project is next"
         title={<>Your project<br /><span className="serif-em" style={{ color: 'var(--accent)' }}>goes here.</span></>}
-        blurb="One call. We scope it, price it flat, and build it right."
+        blurb="One call. We scope it, plan it, and build it right."
       />
 
       <style>{`
