@@ -221,7 +221,7 @@ export default function Nav() {
           <a href={`tel:${PHONE_TEL}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 12, fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--muted)', textDecoration: 'none', letterSpacing: '0.02em' }}>{PHONE_DISPLAY}</a>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 14 }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)' }} />
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--faint)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Gilbert, AZ · Booking now</p>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--faint)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Mesa, AZ · Booking now</p>
           </div>
         </div>
       </div>

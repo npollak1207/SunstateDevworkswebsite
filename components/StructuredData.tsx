@@ -15,22 +15,17 @@
           height: 100,
         },
         image: 'https://sunstatedevworks.com/opengraph-image',
-        description: 'Custom web design, iOS & Android app development, branding, and AI automation agency based in Gilbert, Arizona. Serving Phoenix, Scottsdale, Chandler, Mesa, Tempe, and all of the greater Phoenix metro area.',
+        description: 'Custom web design, iOS & Android app development, branding, and AI automation agency based in Mesa, Arizona. Serving Gilbert, Phoenix, Scottsdale, Chandler, Tempe, and all of the greater Phoenix metro area.',
         telephone: '(480) 793-9161',
         email: 'contact@sunstatedevworks.com',
         currenciesAccepted: 'USD',
         paymentAccepted: 'Cash, Credit Card, Bank Transfer',
         address: {
           '@type': 'PostalAddress',
-          addressLocality: 'Gilbert',
+          addressLocality: 'Mesa',
           addressRegion: 'AZ',
-          postalCode: '85296',
+          postalCode: '85212',
           addressCountry: 'US',
-        },
-        geo: {
-          '@type': 'GeoCoordinates',
-          latitude: 33.3528,
-          longitude: -111.789,
         },
         openingHoursSpecification: [
           {

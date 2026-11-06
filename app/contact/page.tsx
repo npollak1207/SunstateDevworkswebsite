@@ -267,7 +267,7 @@ export default function ContactPage() {
                 <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)' }} />
                 <p className="eyebrow">Currently available</p>
               </div>
-              <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, color: 'var(--ink)', marginBottom: 6 }}>Gilbert, Arizona</p>
+              <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, color: 'var(--ink)', marginBottom: 6 }}>Mesa, Arizona</p>
               <p style={{ fontFamily: 'var(--font-body)', color: 'var(--muted)', fontSize: 13.5, lineHeight: 1.7 }}>
                 Serving clients locally and nationwide. Remote-first, with optional in-person meetings across the greater Phoenix area.
               </p>

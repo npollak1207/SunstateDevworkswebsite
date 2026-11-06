@@ -80,7 +80,7 @@ export default function Footer() {
           <div>
             <p className="eyebrow" style={{ marginBottom: 18, color: 'var(--accent)' }}>Get in touch</p>
             <a href={`tel:${PHONE_TEL}`} className="ft-link" style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: 14, color: 'var(--ink)', textDecoration: 'none', marginBottom: 11 }}>{PHONE_DISPLAY}</a>
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: 14.5, color: 'var(--muted)', marginBottom: 11 }}>Gilbert, Arizona</p>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 14.5, color: 'var(--muted)', marginBottom: 11 }}>Mesa, Arizona · Serving the Valley</p>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--faint)', display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 6 }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)' }} /> Booking now
             </p>
