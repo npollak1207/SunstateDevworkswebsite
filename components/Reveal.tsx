@@ -1,22 +1,40 @@
 'use client'
-import { motion, useReducedMotion } from 'motion/react'
-import type { ReactNode } from 'react'
-
-const EASE = [0.22, 1, 0.36, 1] as const
+import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react'
 
 type Dir = 'up' | 'down' | 'left' | 'right' | 'none'
 
-const offset: Record<Dir, { x?: number; y?: number }> = {
-  up: { y: 32 },
-  down: { y: -32 },
-  left: { x: 40 },
-  right: { x: -40 },
-  none: {},
+const OFFSET: Record<Dir, [string, string]> = {
+  up: ['0px', '32px'],
+  down: ['0px', '-32px'],
+  left: ['40px', '0px'],
+  right: ['-40px', '0px'],
+  none: ['0px', '0px'],
+}
+
+// One IntersectionObserver per threshold, shared by every <Reveal> on the page.
+const observers = new Map<number, IntersectionObserver>()
+
+function observe(el: Element, amount: number) {
+  let io = observers.get(amount)
+  if (!io) {
+    io = new IntersectionObserver((entries, obs) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue
+        e.target.setAttribute('data-shown', '')
+        obs.unobserve(e.target)
+      }
+    }, { threshold: amount })
+    observers.set(amount, io)
+  }
+  io.observe(el)
+  return io
 }
 
 /**
- * In-view reveal. Animates once when scrolled into view.
- * Respects prefers-reduced-motion.
+ * Fades content up once it scrolls into view. The motion itself is CSS (.rv in
+ * globals.css); this only flips data-shown, so the bundle stays tiny.
+ * `now` plays the entrance on first paint instead (for above-the-fold content),
+ * with no JS at all. Reduced motion is handled by the global CSS rule.
  */
 export default function Reveal({
   children,
@@ -25,6 +43,7 @@ export default function Reveal({
   delay = 0,
   duration = 0.75,
   amount = 0.25,
+  now = false,
   className,
   style,
 }: {
@@ -34,80 +53,28 @@ export default function Reveal({
   delay?: number
   duration?: number
   amount?: number
+  now?: boolean
   className?: string
-  style?: React.CSSProperties
+  style?: CSSProperties
 }) {
-  const reduce = useReducedMotion()
-  const MotionTag = motion[as] as typeof motion.div
-  const from = reduce ? {} : offset[dir]
+  const ref = useRef<HTMLDivElement>(null)
 
-  return (
-    <MotionTag
-      className={className}
-      style={style}
-      initial={{ opacity: 0, ...from }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, amount }}
-      transition={{ duration: reduce ? 0.01 : duration, delay, ease: EASE }}
-    >
-      {children}
-    </MotionTag>
-  )
-}
+  useEffect(() => {
+    const el = ref.current
+    if (now || !el) return
+    if (typeof IntersectionObserver === 'undefined') { el.setAttribute('data-shown', ''); return }
+    const io = observe(el, amount)
+    return () => io.unobserve(el)
+  }, [now, amount])
 
-/**
- * Staggered container — children with StaggerItem animate in sequence.
- */
-export function Stagger({
-  children,
-  className,
-  style,
-  gap = 0.08,
-  amount = 0.2,
-}: {
-  children: ReactNode
-  className?: string
-  style?: React.CSSProperties
-  gap?: number
-  amount?: number
-}) {
-  return (
-    <motion.div
-      className={className}
-      style={style}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount }}
-      variants={{ show: { transition: { staggerChildren: gap } } }}
-    >
-      {children}
-    </motion.div>
-  )
-}
+  const [x, y] = OFFSET[dir]
+  const vars = { '--rv-x': x, '--rv-y': y, '--rv-d': `${delay}s`, '--rv-t': `${duration}s` } as CSSProperties
+  const base = now ? 'rv-now' : 'rv'
 
-export function StaggerItem({
-  children,
-  dir = 'up',
-  className,
-  style,
-}: {
-  children: ReactNode
-  dir?: Dir
-  className?: string
-  style?: React.CSSProperties
-}) {
-  const reduce = useReducedMotion()
-  const from = reduce ? {} : offset[dir]
+  const Tag = as as 'div'
   return (
-    <motion.div
-      className={className}
-      style={style}
-      variants={{
-        hidden: { opacity: 0, ...from },
-        show: { opacity: 1, x: 0, y: 0, transition: { duration: reduce ? 0.01 : 0.7, ease: EASE } },
-      }}
-    >
+    <Tag ref={ref} className={className ? `${base} ${className}` : base} style={{ ...vars, ...style }}>
       {children}
-    </motion.div>
+    </Tag>
   )
 }

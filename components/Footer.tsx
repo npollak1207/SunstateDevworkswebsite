@@ -43,7 +43,7 @@ const cities = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: 'var(--paper)', borderTop: '1px solid var(--line)', padding: 'clamp(64px, 9vh, 96px) clamp(20px, 5vw, 44px) 40px' }}>
+    <footer className="cv" style={{ background: 'var(--paper)', borderTop: '1px solid var(--line)', padding: 'clamp(64px, 9vh, 96px) clamp(20px, 5vw, 44px) 40px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))', gap: 48, marginBottom: 'clamp(48px, 8vh, 80px)' }}>
           {/* Brand */}
@@ -67,7 +67,7 @@ export default function Footer() {
           {/* Link columns */}
           {columns.map((col) => (
             <div key={col.title}>
-              <p className="eyebrow" style={{ marginBottom: 18, color: 'var(--accent)' }}>{col.title}</p>
+              <p className="eyebrow" style={{ marginBottom: 18, color: 'var(--accent-deep)' }}>{col.title}</p>
               {col.links.map((l) => (
                 <Link key={l.href} href={l.href} className="ft-link" style={{ display: 'block', fontFamily: 'var(--font-body)', fontSize: 14.5, color: 'var(--muted)', textDecoration: 'none', marginBottom: 11, width: 'fit-content' }}>
                   {l.label}
@@ -78,7 +78,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <p className="eyebrow" style={{ marginBottom: 18, color: 'var(--accent)' }}>Get in touch</p>
+            <p className="eyebrow" style={{ marginBottom: 18, color: 'var(--accent-deep)' }}>Get in touch</p>
             <a href={`tel:${PHONE_TEL}`} className="ft-link" style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: 14, color: 'var(--ink)', textDecoration: 'none', marginBottom: 11 }}>{PHONE_DISPLAY}</a>
             <p style={{ fontFamily: 'var(--font-body)', fontSize: 14.5, color: 'var(--muted)', marginBottom: 11 }}>Mesa, Arizona · Serving the Valley</p>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--faint)', display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 6 }}>
@@ -89,7 +89,7 @@ export default function Footer() {
 
         {/* City landing pages */}
         <nav aria-label="Web design by city" style={{ borderTop: '1px solid var(--line)', paddingTop: 24, marginBottom: 26 }}>
-          <p className="eyebrow" style={{ marginBottom: 14, color: 'var(--accent)' }}>Web design by city</p>
+          <p className="eyebrow" style={{ marginBottom: 14, color: 'var(--accent-deep)' }}>Web design by city</p>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '9px 0' }}>
             {cities.map((c, i) => (
               <span key={c.href} style={{ display: 'inline-flex', alignItems: 'center' }}>

@@ -1,6 +1,3 @@
-'use client'
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { useRef } from 'react'
 
 /**
  * Signature "Sunstate" motif — a precision-engineered sun RISING over a horizon.
@@ -11,10 +8,10 @@ import { useRef } from 'react'
  * translateY, so it lands at the same spot on every screen. The viewBox extends
  * well above y=0 so the rays fade out instead of being clipped into a hard box.
  *
- * Subtle scroll parallax + mount rise; respects reduced motion.
+ * Subtle scroll parallax + mount rise; respects reduced motion. All motion is
+ * CSS (.sun-* in globals.css): no JS, so it paints with the first frame and
+ * never waits on hydration.
  */
-
-const EASE = [0.22, 1, 0.36, 1] as const
 
 // Round trig-derived coords to a fixed precision so SSR (Node) and client (browser)
 // stringify identically — Math.sin/cos can differ in the last ULP across engines,
@@ -58,24 +55,12 @@ const EMBERS = [
 ]
 
 export default function SunHero({ horizon = '45%' }: { horizon?: string }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const reduce = useReducedMotion()
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 80])
-  const rise = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -44])
-  const fade = useTransform(scrollYProgress, [0, 0.85], [1, 0.32])
-
   const rays = Array.from({ length: 56 })
 
   return (
-    <div ref={ref} aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-      <motion.div style={{ position: 'absolute', inset: 0, y, opacity: fade }}>
-        <motion.div
-          style={{ position: 'absolute', inset: 0 }}
-          initial={{ y: reduce ? 0 : 36, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1.4, ease: EASE }}
-        >
+    <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+      <div className="sun-parallax" style={{ position: 'absolute', inset: 0 }}>
+        <div className="sun-mount" style={{ position: 'absolute', inset: 0 }}>
           <svg
             viewBox="0 -320 1200 780"
             preserveAspectRatio="xMidYMid meet"
@@ -161,12 +146,12 @@ export default function SunHero({ horizon = '45%' }: { horizon?: string }) {
             <g clipPath="url(#aboveHorizon)">
               {/* atmosphere — radial washes only (they fade before the SVG edges, so no hard box) */}
               <ellipse cx="600" cy="300" rx="680" ry="440" fill="url(#skyWash)" />
-              <motion.circle cx="600" cy="300" r="330" fill="rgba(255,146,78,0.20)" filter="url(#bloomWide)" style={{ y: rise }} />
+              <circle cx="600" cy="300" r="330" fill="rgba(255,146,78,0.20)" filter="url(#bloomWide)" className="sun-rise" />
               <circle cx="600" cy="300" r="470" fill="url(#burstHaze)" className="sun-atmo" />
-              <motion.circle cx="600" cy="300" r="185" fill="rgba(255,124,64,0.5)" filter="url(#bloom)" style={{ y: rise }} className="sun-shimmer" />
+              <g className="sun-rise"><circle cx="600" cy="300" r="185" fill="rgba(255,124,64,0.5)" filter="url(#bloom)" className="sun-shimmer" /></g>
 
               {/* god-ray beams — soft volumetric wedges, drifting slowly */}
-              <g className="sun-godrays" style={{ transformOrigin: '600px 300px', animation: reduce ? 'none' : 'slowSpin 240s linear infinite reverse' }} filter="url(#beamBlur)">
+              <g className="sun-godrays" filter="url(#beamBlur)">
                 {BEAMS.map((deg, i) => {
                   const a = (deg * Math.PI) / 180
                   const w = 0.085, R = 560
@@ -177,7 +162,7 @@ export default function SunHero({ horizon = '45%' }: { horizon?: string }) {
               </g>
 
               {/* sunburst — rotation on inner group, parallax on outer */}
-              <motion.g style={{ y: rise }}>
+              <g className="sun-rise">
                 <g className="sun-rays" style={{ transformOrigin: '600px 300px' }} opacity="0.5">
                   {rays.map((_, i) => {
                     const a = (i / rays.length) * Math.PI * 2
@@ -192,7 +177,7 @@ export default function SunHero({ horizon = '45%' }: { horizon?: string }) {
                     )
                   })}
                 </g>
-              </motion.g>
+              </g>
 
               {/* technical orbit rings */}
               {[236, 300, 372].map((r, i) => (
@@ -200,11 +185,11 @@ export default function SunHero({ horizon = '45%' }: { horizon?: string }) {
               ))}
 
               {/* hot halo behind the disc + hot smear along the horizon */}
-              <motion.circle cx="600" cy="300" r="210" fill="rgba(255,224,176,0.45)" filter="url(#bloomTight)" style={{ y: rise }} />
+              <circle cx="600" cy="300" r="210" fill="rgba(255,224,176,0.45)" filter="url(#bloomTight)" className="sun-rise" />
               <ellipse cx="600" cy="300" rx="300" ry="20" fill="rgba(255,240,206,0.55)" filter="url(#bloomTight)" />
 
               {/* the rising disc — feathered edge so it melts into the sky */}
-              <motion.g style={{ y: rise }}>
+              <g className="sun-rise">
                 <circle cx="600" cy="300" r="178" fill="url(#sunDisc)" filter="url(#discFeather)" />
                 <circle cx="600" cy="300" r="185" fill="url(#core)" clipPath="url(#sunClip)" />
 
@@ -223,12 +208,12 @@ export default function SunHero({ horizon = '45%' }: { horizon?: string }) {
                 <path d="M 430 300 A 170 170 0 0 1 770 300" fill="none" stroke="url(#rim)" strokeWidth="2" clipPath="url(#sunClip)" opacity="0.7" />
 
                 {/* orbiting node with a faint radial guide */}
-                <g style={{ transformOrigin: '600px 300px', animation: reduce ? 'none' : 'slowSpin 30s linear infinite' }}>
+                <g className="sun-orbit">
                   <line x1="600" y1="300" x2="600" y2="34" stroke="rgba(23,20,15,0.10)" strokeWidth="1" />
                   <circle cx="600" cy="34" r="4.5" fill="#17140F" />
                   <circle cx="600" cy="34" r="9" fill="none" stroke="rgba(23,20,15,0.36)" strokeWidth="1" />
                 </g>
-              </motion.g>
+              </g>
 
               {/* rising embers — glowing motes drifting up from the horizon (in front of the disc) */}
               {EMBERS.map((e, i) => (
@@ -249,8 +234,8 @@ export default function SunHero({ horizon = '45%' }: { horizon?: string }) {
             })}
             <text x="600" y="332" textAnchor="middle" fill="rgba(23,20,15,0.38)" style={{ font: '10px var(--font-mono, monospace)', letterSpacing: '0.14em' }}>33.35°N · 111.79°W · GILBERT, AZ</text>
           </svg>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </div>
   )
 }

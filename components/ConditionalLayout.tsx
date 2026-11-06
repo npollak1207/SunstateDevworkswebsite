@@ -9,7 +9,7 @@ export default function ConditionalLayout({ children }: { children: React.ReactN
   return (
     <>
       {!isLp && <Nav />}
-      {children}
+      <main id="main">{children}</main>
       {!isLp && <Footer />}
     </>
   )

@@ -1,7 +1,6 @@
 'use client'
 import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
-import { motion, useReducedMotion } from 'motion/react'
 import SunHero from '@/components/SunHero'
 import { HomeStructuredData } from '@/components/StructuredData'
 import Reveal from '@/components/Reveal'
@@ -77,7 +76,7 @@ const faqs = [
 function SectionLabel({ index, children, center = false }: { index: string; children: React.ReactNode; center?: boolean }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 22, justifyContent: center ? 'center' : 'flex-start' }}>
-      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', color: 'var(--accent)' }}>{index}</span>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', color: 'var(--accent-deep)' }}>{index}</span>
       <span style={{ width: 28, height: 1, background: 'var(--line-2)' }} />
       <span className="eyebrow">{children}</span>
     </div>
@@ -88,14 +87,15 @@ const Arrow = ({ s = 16 }: { s?: number }) => (
   <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
 )
 
+const prefersReducedMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
 /* Count-up numeral. Parses a leading symbol + number + trailing unit
    (e.g. "<1.2s", "4.9★", "50+") and animates the numeric part on mount. */
 function CountUp({ value, delay = 0 }: { value: string; delay?: number }) {
-  const reduce = useReducedMotion()
   const m = value.match(/^(\D*)([\d.]+)(.*)$/)
-  const [display, setDisplay] = useState(reduce || !m ? value : `${m[1]}0${m[3]}`)
+  const [display, setDisplay] = useState(!m ? value : `${m[1]}0${m[3]}`)
   useEffect(() => {
-    if (!m || reduce) { setDisplay(value); return }
+    if (!m || prefersReducedMotion()) { setDisplay(value); return }
     const prefix = m[1], target = parseFloat(m[2]), suffix = m[3]
     const decimals = m[2].includes('.') ? m[2].split('.')[1].length : 0
     let raf = 0, startT = 0
@@ -116,24 +116,22 @@ function CountUp({ value, delay = 0 }: { value: string; delay?: number }) {
   return <>{display}</>
 }
 
-/* Magnetic wrapper — child drifts slightly toward the cursor. No-op under reduced motion. */
+/* Magnetic wrapper — child drifts slightly toward the cursor. No-op under reduced motion.
+   Writes the transform straight to the DOM so mouse moves never re-render React. */
 function Magnetic({ children, strength = 0.28 }: { children: React.ReactNode; strength?: number }) {
   const ref = useRef<HTMLSpanElement>(null)
-  const reduce = useReducedMotion()
-  const [t, setT] = useState({ x: 0, y: 0 })
-  if (reduce) return <>{children}</>
   const onMove = (e: React.MouseEvent) => {
     const el = ref.current
-    if (!el) return
+    if (!el || prefersReducedMotion()) return
     const r = el.getBoundingClientRect()
-    setT({ x: (e.clientX - (r.left + r.width / 2)) * strength, y: (e.clientY - (r.top + r.height / 2)) * strength })
+    el.style.transform = `translate(${(e.clientX - (r.left + r.width / 2)) * strength}px, ${(e.clientY - (r.top + r.height / 2)) * strength}px)`
   }
   return (
     <span
       ref={ref}
       onMouseMove={onMove}
-      onMouseLeave={() => setT({ x: 0, y: 0 })}
-      style={{ display: 'inline-flex', transform: `translate(${t.x}px, ${t.y}px)`, transition: 'transform 0.4s cubic-bezier(0.22,1,0.36,1)' }}
+      onMouseLeave={() => { if (ref.current) ref.current.style.transform = '' }}
+      style={{ display: 'inline-flex', transition: 'transform 0.4s cubic-bezier(0.22,1,0.36,1)' }}
     >
       {children}
     </span>
@@ -182,7 +180,6 @@ function tmInitials(name: string) {
 
 function TestimonialCarousel({ items }: { items: { body: string; name: string; role: string }[] }) {
   const trackRef = useRef<HTMLDivElement>(null)
-  const reduce = useReducedMotion()
   const [atStart, setAtStart] = useState(true)
   const [atEnd, setAtEnd] = useState(false)
 
@@ -204,7 +201,7 @@ function TestimonialCarousel({ items }: { items: { body: string; name: string; r
     if (!el) return
     const card = el.querySelector('[data-tm-card]') as HTMLElement | null
     const step = card ? card.offsetWidth + 24 : el.clientWidth * 0.85
-    el.scrollBy({ left: dir * step, behavior: reduce ? 'auto' : 'smooth' })
+    el.scrollBy({ left: dir * step, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
   }
 
   return (
@@ -247,11 +244,37 @@ function TestimonialCarousel({ items }: { items: { body: string; name: string; r
   )
 }
 
+/* FAQ accordion. Owns its open state so toggling never re-renders the page.
+   The panel animates height with the grid-rows trick (.faq-panel) — no JS animation. */
+function Faq({ items }: { items: { q: string; a: string }[] }) {
+  const [openIdx, setOpenIdx] = useState<number | null>(0)
+  return (
+    <div style={{ borderTop: '1px solid var(--line)' }}>
+      {items.map((f, i) => {
+        const open = openIdx === i
+        return (
+          <div key={i} style={{ borderBottom: '1px solid var(--line)' }}>
+            <button onClick={() => setOpenIdx(open ? null : i)} aria-expanded={open} aria-controls={`faq-panel-${i}`} id={`faq-trigger-${i}`} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 20, padding: '24px 4px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}>
+              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 'clamp(17px, 2vw, 21px)', letterSpacing: '-0.01em', color: open ? 'var(--accent-deep)' : 'var(--ink)', transition: 'color 0.25s' }}>{f.q}</span>
+              <span aria-hidden="true" style={{ flexShrink: 0, width: 28, height: 28, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink)', transition: 'transform 0.3s, background 0.25s, border-color 0.25s', transform: open ? 'rotate(45deg)' : 'none', background: open ? 'var(--accent-soft)' : 'transparent', border: `1px solid ${open ? 'var(--accent-line)' : 'var(--line-2)'}` }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12h14" /></svg>
+              </span>
+            </button>
+            <div id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-trigger-${i}`} aria-hidden={!open} className="faq-panel" data-open={open}>
+              <div style={{ overflow: 'hidden' }}>
+                <p style={{ fontFamily: 'var(--font-body)', fontSize: 15.5, lineHeight: 1.7, color: 'var(--muted)', padding: '0 40px 26px 4px', maxWidth: 700 }}>{f.a}</p>
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 /* ────────────────────────────── page ────────────────────────────── */
 
 export default function HomePage() {
-  const [faqOpen, setFaqOpen] = useState<number | null>(0)
-
   return (
     <>
       <HomeStructuredData faqs={faqs} />
@@ -264,9 +287,8 @@ export default function HomePage() {
         <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: 1080, margin: '0 auto', padding: '0 clamp(20px, 5vw, 44px)', textAlign: 'center' }}>
           {/* The pill carries the page's H1 so the heading names the service and
               location; the display headline below is the brand line. */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="eyebrow hero-eyebrow" style={{ marginBottom: 'clamp(14px, 2.4vh, 26px)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 10, maxWidth: 'calc(100vw - 32px)', background: 'rgba(244,241,234,0.68)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid var(--line)', borderRadius: 999, padding: '8px 16px' }}
+          <div
+            className="eyebrow hero-eyebrow in-rise" style={{ '--in-y': '12px', '--in-t': '0.7s', marginBottom: 'clamp(14px, 2.4vh, 26px)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 10, maxWidth: 'calc(100vw - 32px)', background: 'rgba(244,241,234,0.68)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid var(--line)', borderRadius: 999, padding: '8px 16px' } as React.CSSProperties}
           >
             <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', flexShrink: 0 }} />
             <h1 style={{ font: 'inherit', letterSpacing: 'inherit', color: 'inherit', display: 'inline-flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center', gap: 10 }}>
@@ -274,42 +296,41 @@ export default function HomePage() {
               <span className="hide-mobile">· Web Design &amp; Development Studio</span>
             </h1>
             <LocalClock />
-          </motion.div>
+          </div>
 
           <p className="hero-title" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(37px, 9.4vw, 120px)', lineHeight: 0.92, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 'clamp(20px, 3vh, 34px)' }}>
             <span className="hl-line">
-              <motion.span style={{ display: 'block' }} initial={{ y: '112%' }} animate={{ y: 0 }} transition={{ duration: 0.95, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}>
+              <span className="in-line" style={{ '--in-d': '0.1s' } as React.CSSProperties}>
                 The studio behind
-              </motion.span>
+              </span>
             </span>
             <span className="hl-line">
-              <motion.span style={{ display: 'block' }} initial={{ y: '112%' }} animate={{ y: 0 }} transition={{ duration: 0.95, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}>
+              <span className="in-line" style={{ '--in-d': '0.22s' } as React.CSSProperties}>
                 brands that <span style={{ position: 'relative', display: 'inline-block' }}>
                   <span className="serif-em" style={{ color: 'var(--accent)' }}>outshine.</span>
-                  <motion.span aria-hidden="true" style={{ position: 'absolute', left: 0, right: '0.16em', bottom: '0.05em', height: 3, borderRadius: 2, background: 'var(--accent)', transformOrigin: 'left center' }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.7, delay: 1.1, ease: [0.22, 1, 0.36, 1] }} />
+                  <span aria-hidden="true" className="in-underline" style={{ position: 'absolute', left: 0, right: '0.16em', bottom: '0.05em', height: 3, borderRadius: 2, background: 'var(--accent)' }} />
                 </span>
-              </motion.span>
+              </span>
             </span>
           </p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.9vw, 20px)', lineHeight: 1.55, color: 'var(--muted)', maxWidth: 640, margin: '0 auto clamp(24px, 3.4vh, 40px)' }}
+          {/* Slides in but is never transparent: this is the page's LCP element, so it
+              must be visible on the very first frame. */}
+          <p
+            className="in-slide" style={{ '--in-d': '0.3s', fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.9vw, 20px)', lineHeight: 1.55, color: 'var(--muted)', maxWidth: 640, margin: '0 auto clamp(24px, 3.4vh, 40px)' } as React.CSSProperties}
           >
             We design and engineer custom websites, apps, and brands for companies that refuse to blend in. Every pixel hand-built. Every line of code <span style={{ color: 'var(--ink)', fontWeight: 500 }}>yours to keep.</span>
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-            className="hero-cta" style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 'clamp(22px, 3.6vh, 44px)' }}
+          <div
+            className="hero-cta in-rise" style={{ '--in-d': '0.42s', display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 'clamp(22px, 3.6vh, 44px)' } as React.CSSProperties}
           >
             <Magnetic><Link href="/contact" className="btn btn-primary">Start a Project <span className="btn-arrow"><Arrow s={15} /></span></Link></Magnetic>
             <Link href="/works" className="btn btn-ghost">See Our Work</Link>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.9, delay: 0.6 }}
-            className="hero-stats" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(16px, 3vw, 34px)', flexWrap: 'wrap' }}
+          <div
+            className="hero-stats in-rise" style={{ '--in-y': '0px', '--in-t': '0.9s', '--in-d': '0.6s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(16px, 3vw, 34px)', flexWrap: 'wrap' } as React.CSSProperties}
           >
             {stats.map((s, i) => (
               <div key={s.l} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(16px, 3vw, 34px)' }}>
@@ -320,7 +341,7 @@ export default function HomePage() {
                 </span>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
 
         {/* scroll cue — hides on short viewports (see media query below) */}
@@ -343,7 +364,7 @@ export default function HomePage() {
             {[...clients, ...clients, ...clients, ...clients].map((c, i) => (
               <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 46, paddingRight: 46 }}>
                 <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 'clamp(18px, 2.4vw, 26px)', letterSpacing: '-0.02em', color: 'var(--ink-2)', whiteSpace: 'nowrap' }}>{c}</span>
-                <span style={{ color: 'var(--accent)', fontSize: 12 }}>✦</span>
+                <span aria-hidden="true" style={{ color: 'var(--accent-deep)', fontSize: 12 }}>✦</span>
               </span>
             ))}
           </div>
@@ -351,7 +372,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════ CAPABILITIES ═══════════════════════ */}
-      <section style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)', background: 'linear-gradient(90deg, rgba(23,20,15,0.045) 1px, transparent 1px) 0 0 / 88px 100%' }}>
+      <section className="cv" style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)', background: 'linear-gradient(90deg, rgba(23,20,15,0.045) 1px, transparent 1px) 0 0 / 88px 100%' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <Reveal><SectionLabel index="01">Capabilities</SectionLabel></Reveal>
           <Reveal delay={0.05}>
@@ -369,7 +390,7 @@ export default function HomePage() {
             {capabilities.map((c, i) => (
               <Reveal key={c.num} delay={i * 0.06}>
                 <Link href={c.href} className="idx-row" style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: 'clamp(18px, 4vw, 60px)', alignItems: 'center', padding: 'clamp(26px, 3.4vw, 40px) 0', borderBottom: '1px solid var(--line)', textDecoration: 'none' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--accent)', letterSpacing: '0.05em' }}>{c.num}</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--accent-deep)', letterSpacing: '0.05em' }}>{c.num}</span>
                   <span style={{ minWidth: 0 }}>
                     <span className="idx-title" style={{ display: 'block', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(24px, 3.6vw, 44px)', letterSpacing: '-0.025em', color: 'var(--ink)', marginBottom: 8, transition: 'color 0.3s' }}>{c.title}</span>
                     <span style={{ display: 'block', fontFamily: 'var(--font-body)', fontSize: 15, lineHeight: 1.6, color: 'var(--muted)', maxWidth: 560, marginBottom: 14 }}>{c.desc}</span>
@@ -388,7 +409,7 @@ export default function HomePage() {
       <HorizonRule label="33.35°N · 111.79°W" />
 
       {/* ═══════════════════════ SELECTED WORK ═══════════════════════ */}
-      <section style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)', background: 'var(--paper-2)', borderBottom: '1px solid var(--line)' }}>
+      <section className="cv" style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)', background: 'var(--paper-2)', borderBottom: '1px solid var(--line)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <Reveal><SectionLabel index="02">Selected Work</SectionLabel></Reveal>
           <Reveal delay={0.05}>
@@ -414,7 +435,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════ APPROACH ═══════════════════════ */}
-      <section style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)' }}>
+      <section className="cv" style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)' }}>
         <div style={{ maxWidth: 1180, margin: '0 auto' }}>
           <Reveal><SectionLabel index="03" center>How we work</SectionLabel></Reveal>
           <Reveal delay={0.05}>
@@ -427,7 +448,7 @@ export default function HomePage() {
             {processSteps.map((s, i) => (
               <Reveal key={s.num} delay={i * 0.08}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                  <span style={{ position: 'relative', width: 40, height: 40, borderRadius: '50%', background: 'var(--paper)', border: '1px solid var(--line-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent)', marginBottom: 26 }}>{s.num}</span>
+                  <span style={{ position: 'relative', width: 40, height: 40, borderRadius: '50%', background: 'var(--paper)', border: '1px solid var(--line-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent-deep)', marginBottom: 26 }}>{s.num}</span>
                   <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 21, letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: 12 }}>{s.title}</h3>
                   <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, lineHeight: 1.6, color: 'var(--muted)', maxWidth: 250 }}>{s.desc}</p>
                 </div>
@@ -438,7 +459,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════ DARK MANIFESTO (asymmetric editorial split) ═══════════════════════ */}
-      <section className="on-dark" style={{ background: 'var(--ink-bg)', color: 'var(--on-dark)', padding: 'clamp(96px, 14vh, 170px) clamp(20px, 5vw, 44px)', position: 'relative', overflow: 'hidden' }}>
+      <section className="on-dark cv" style={{ background: 'var(--ink-bg)', color: 'var(--on-dark)', padding: 'clamp(96px, 14vh, 170px) clamp(20px, 5vw, 44px)', position: 'relative', overflow: 'hidden' }}>
         {/* corner glow (top-right) + grid anchored to the same corner — deliberately off-centre so this
             dark section reads differently from the centred, bottom-lit closing CTA */}
         <div aria-hidden style={{ position: 'absolute', top: '-24%', right: '-12%', width: 720, height: 720, borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,78,35,0.16) 0%, transparent 62%)', pointerEvents: 'none' }} />
@@ -482,7 +503,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════ TESTIMONIALS ═══════════════════════ */}
-      <section style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)', background: 'linear-gradient(90deg, rgba(23,20,15,0.045) 1px, transparent 1px) 0 0 / 88px 100%' }}>
+      <section className="cv" style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)', background: 'linear-gradient(90deg, rgba(23,20,15,0.045) 1px, transparent 1px) 0 0 / 88px 100%' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <Reveal><SectionLabel index="04">Word of mouth</SectionLabel></Reveal>
           <Reveal delay={0.05}>
@@ -510,7 +531,7 @@ export default function HomePage() {
       <HorizonRule label="Every project · No exceptions" />
 
       {/* ═══════════════════════ WHAT'S INCLUDED ═══════════════════════ */}
-      <section style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)', background: 'var(--paper-2)', borderBottom: '1px solid var(--line)' }}>
+      <section className="cv" style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)', background: 'var(--paper-2)', borderBottom: '1px solid var(--line)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(340px, 100%), 1fr))', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'start' }}>
           <div>
             <Reveal><SectionLabel index="05">What&apos;s Included</SectionLabel></Reveal>
@@ -542,7 +563,7 @@ export default function HomePage() {
                     <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={it.lead ? 'var(--accent)' : 'var(--faint)'} strokeWidth="3" style={{ flexShrink: 0 }}><path d="M20 6L9 17l-5-5" /></svg>
                     <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 15, letterSpacing: '-0.01em', color: it.lead ? 'var(--accent-deep)' : 'var(--ink)' }}>{it.title}</span>
                   </span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: it.lead ? 'var(--accent)' : 'var(--faint)', paddingLeft: 20 }}>{it.tag}</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: it.lead ? 'var(--accent-deep)' : 'var(--faint)', paddingLeft: 20 }}>{it.tag}</span>
                 </div>
               ))}
             </div>
@@ -551,7 +572,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════ FAQ ═══════════════════════ */}
-      <section style={{ padding: 'clamp(72px, 10vh, 130px) clamp(20px, 5vw, 44px)' }}>
+      <section className="cv" style={{ padding: 'clamp(72px, 10vh, 130px) clamp(20px, 5vw, 44px)' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <Reveal><SectionLabel index="06">Questions</SectionLabel></Reveal>
           <Reveal delay={0.05}>
@@ -559,29 +580,12 @@ export default function HomePage() {
               Frequently asked.
             </h2>
           </Reveal>
-          <div style={{ borderTop: '1px solid var(--line)' }}>
-            {faqs.map((f, i) => {
-              const open = faqOpen === i
-              return (
-                <div key={i} style={{ borderBottom: '1px solid var(--line)' }}>
-                  <button onClick={() => setFaqOpen(open ? null : i)} aria-expanded={open} aria-controls={`faq-panel-${i}`} id={`faq-trigger-${i}`} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 20, padding: '24px 4px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}>
-                    <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 'clamp(17px, 2vw, 21px)', letterSpacing: '-0.01em', color: open ? 'var(--accent-deep)' : 'var(--ink)', transition: 'color 0.25s' }}>{f.q}</span>
-                    <span aria-hidden="true" style={{ flexShrink: 0, width: 28, height: 28, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink)', transition: 'transform 0.3s, background 0.25s, border-color 0.25s', transform: open ? 'rotate(45deg)' : 'none', background: open ? 'var(--accent-soft)' : 'transparent', border: `1px solid ${open ? 'var(--accent-line)' : 'var(--line-2)'}` }}>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12h14" /></svg>
-                    </span>
-                  </button>
-                  <motion.div id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-trigger-${i}`} aria-hidden={!open} initial={false} animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }} style={{ overflow: 'hidden' }}>
-                    <p style={{ fontFamily: 'var(--font-body)', fontSize: 15.5, lineHeight: 1.7, color: 'var(--muted)', padding: '0 40px 26px 4px', maxWidth: 700 }}>{f.a}</p>
-                  </motion.div>
-                </div>
-              )
-            })}
-          </div>
+          <Faq items={faqs} />
         </div>
       </section>
 
       {/* ═══════════════════════ CLOSING CTA ═══════════════════════ */}
-      <section className="on-dark" style={{ padding: 'clamp(100px, 15vh, 190px) clamp(20px, 5vw, 44px)', position: 'relative', overflow: 'hidden', textAlign: 'center', background: 'var(--ink-bg)', color: 'var(--on-dark)', borderTop: '1px solid var(--ink-line)' }}>
+      <section className="on-dark cv" style={{ padding: 'clamp(100px, 15vh, 190px) clamp(20px, 5vw, 44px)', position: 'relative', overflow: 'hidden', textAlign: 'center', background: 'var(--ink-bg)', color: 'var(--on-dark)', borderTop: '1px solid var(--ink-line)' }}>
         <div aria-hidden style={{ position: 'absolute', bottom: '-42%', left: '50%', transform: 'translateX(-50%)', width: 940, height: 940, borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,78,35,0.20) 0%, transparent 60%)', pointerEvents: 'none' }} />
         <div className="grid-bg" aria-hidden style={{ position: 'absolute', inset: 0, opacity: 0.35, maskImage: 'radial-gradient(ellipse at 50% 100%, #000, transparent 68%)', WebkitMaskImage: 'radial-gradient(ellipse at 50% 100%, #000, transparent 68%)' }} />
         <div style={{ position: 'relative', maxWidth: 900, margin: '0 auto' }}>
@@ -648,6 +652,9 @@ export default function HomePage() {
           /* guard the two long words on the narrowest phones */
           .hero-title { font-size: 34px; }
         }
+        /* FAQ panel — height animates via grid rows, no JS measuring */
+        .faq-panel { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 0.35s cubic-bezier(0.22,1,0.36,1), opacity 0.35s cubic-bezier(0.22,1,0.36,1); }
+        .faq-panel[data-open="true"] { grid-template-rows: 1fr; opacity: 1; }
         /* Approach timeline */
         .timeline { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(28px, 3vw, 48px); }
         .timeline-rail { position: absolute; top: 20px; left: 12.5%; right: 12.5%; height: 1px; background: var(--line-2); }
