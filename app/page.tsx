@@ -4,7 +4,9 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import SunHero from '@/components/SunHero'
 import { HomeStructuredData } from '@/components/StructuredData'
-import Reveal, { Stagger, StaggerItem } from '@/components/Reveal'
+import Reveal from '@/components/Reveal'
+import ProjectCard, { ProjectCardStyles } from '@/components/work/ProjectCard'
+import { getProject, type Project } from '@/lib/projects'
 
 /* ────────────────────────────── content ────────────────────────────── */
 
@@ -15,6 +17,9 @@ const stats = [
   { n: '100%', l: 'Code ownership' },
 ]
 
+// Featured on the homepage, in the same card format as /works.
+const HOME_WORK = ['con-gusto', 'els-business-app', 'cloak-wraps'].map((slug) => getProject(slug)).filter((p): p is Project => !!p)
+
 const clients = ['Liberty Military Housing', 'Easy Landscape Solutions', 'Cloak Wraps', 'Zona Pest Solutions', 'Peak Pest Control', 'Canyon Cleaning Solutions', 'The Mystical Universe', 'DWGS', 'Canyon Supply Co']
 
 const capabilities = [
@@ -24,11 +29,6 @@ const capabilities = [
   { num: '04', title: 'AI & Automation', desc: 'Custom AI, chatbots and workflow automation that multiply your output without growing your headcount.', tags: ['Claude', 'OpenAI', 'n8n'], href: '/services/ai-automation' },
 ]
 
-const work = [
-  { num: '01', cat: 'iOS · Android · Web', title: 'Liberty Military Housing', stat: '−60% support tickets', desc: 'Con Gusto: native iOS and Android apps, a web dashboard and an AWS backend running renovation operations across 10k+ housing units.', tags: ['SwiftUI', 'Kotlin', 'FastAPI'], href: '/works/con-gusto', kind: 'dashboard', external: false },
-  { num: '02', cat: 'iOS App · AI', title: 'ELS Business App', stat: '20 hrs saved / week', desc: 'One native app for Easy Landscape Solutions: leads, estimates, e-signatures, scheduling, texting and an AI assistant.', tags: ['SwiftUI', 'Supabase', 'Gemini'], href: '/works/els-business-app', kind: 'app', external: false },
-  { num: '03', cat: 'Web · Automation', title: 'Cloak Wraps', stat: '5.0★ from 31 reviews', desc: "A cinematic website for Tempe's premier vehicle-wrap and PPF studio, with every quote request answered automatically.", tags: ['GSAP', 'Supabase', 'Twilio'], href: '/works/cloak-wraps', kind: 'brand', external: false },
-]
 
 const processSteps = [
   { num: '01', title: 'Discovery', desc: 'A 30-minute call to learn your business, your goals, and what winning actually looks like for you.' },
@@ -71,84 +71,6 @@ const faqs = [
   { q: 'Do you offer maintenance after launch?', a: 'Yes. Optional monthly care plans cover hosting, updates, uptime monitoring and priority support. Or we hand you the keys entirely. Your choice.' },
   { q: 'Do you only work with Arizona clients?', a: 'No. We are based in Gilbert, AZ but we work with clients nationwide. Discovery and check-ins happen over video, so we can run a project the same way whether you are down the street or across the country. Local clients are welcome to meet in person.' },
 ]
-
-/* ────────────────────────────── generated work visuals ────────────────────────────── */
-
-function WorkVisual({ kind }: { kind: string }) {
-  const shell: React.CSSProperties = { position: 'relative', aspectRatio: '16 / 11', background: 'var(--paper-2)', borderBottom: '1px solid var(--line)', overflow: 'hidden' }
-
-  if (kind === 'dashboard') {
-    const bars = [46, 62, 40, 78, 55, 70, 88, 60]
-    return (
-      <div style={shell}>
-        <div style={{ position: 'absolute', inset: 0, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>AI Dashboard · Live</span>
-            <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: 'var(--accent-deep)' }}>−60%</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 5, flex: 1, marginBottom: 12 }}>
-            {bars.map((h, i) => <div key={i} style={{ flex: 1, height: `${h}%`, background: i === 6 ? 'var(--accent)' : 'var(--paper-3)', borderRadius: '2px 2px 0 0' }} />)}
-          </div>
-          <div style={{ display: 'flex', gap: 14 }}>
-            {['Units', 'Open', 'Resolved'].map((l, i) => (
-              <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: i === 0 ? 'var(--accent)' : 'var(--line-strong)' }} />
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--faint)' }}>{l}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  if (kind === 'app') {
-    return (
-      <div style={shell}>
-        <div style={{ position: 'absolute', inset: 0, padding: 20, display: 'flex', gap: 14 }}>
-          <div style={{ width: '32%', background: 'var(--ink)', borderRadius: 12, padding: 10, display: 'flex', flexDirection: 'column', gap: 7 }}>
-            <div style={{ height: 3, width: '50%', margin: '0 auto', borderRadius: 2, background: 'rgba(255,255,255,0.25)' }} />
-            <div style={{ background: 'var(--accent)', borderRadius: 6, padding: '10px 0', textAlign: 'center' }}>
-              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 13, color: '#fff' }}>$24.5k</span>
-            </div>
-            <div style={{ height: 10, borderRadius: 3, background: 'rgba(255,255,255,0.10)' }} />
-            <div style={{ height: 10, borderRadius: 3, background: 'rgba(255,255,255,0.10)' }} />
-            <div style={{ height: 6, borderRadius: 3, background: 'rgba(255,122,61,0.5)' }} />
-          </div>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 9, paddingTop: 4 }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)' }}>ELS Business · iOS</span>
-            {['Scheduling', 'Invoicing', 'P&L Tracking'].map((l) => (
-              <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-                <span style={{ width: 20, height: 20, borderRadius: 5, background: 'var(--accent-soft)', border: '1px solid var(--accent-line)', flexShrink: 0 }} />
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--ink-2)' }}>{l}</span>
-              </div>
-            ))}
-            <span style={{ marginTop: 'auto', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 12, color: 'var(--accent-deep)' }}>20 hrs / week saved</span>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // brand
-  return (
-    <div style={shell}>
-      <div style={{ position: 'absolute', inset: 0, padding: 22, display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', gap: 6, marginBottom: 16 }}>
-          {['#14110B', '#2A2620', 'var(--accent)', 'var(--paper-3)'].map((c, i) => <span key={i} style={{ width: 26, height: 26, borderRadius: 5, background: c, border: '1px solid var(--line)' }} />)}
-          <span style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--faint)', alignSelf: 'center' }}>Brand System</span>
-        </div>
-        <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 42, letterSpacing: '-0.04em', lineHeight: 1, color: 'var(--ink)', marginBottom: 14 }}>CLOAK</div>
-        <div style={{ display: 'flex', gap: 6, marginTop: 'auto' }}>
-          <div style={{ background: 'var(--accent)', borderRadius: 4, padding: '8px 16px' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#fff' }}>Get Quote</span>
-          </div>
-          <div style={{ flex: 1, borderRadius: 4, border: '1px solid var(--line-2)' }} />
-        </div>
-      </div>
-    </div>
-  )
-}
 
 /* ────────────────────────────── shared bits ────────────────────────────── */
 
@@ -216,13 +138,6 @@ function Magnetic({ children, strength = 0.28 }: { children: React.ReactNode; st
       {children}
     </span>
   )
-}
-
-/* Wraps a work item in the correct link (external vs internal). */
-function WorkLink({ p, children }: { p: { href: string; external: boolean }; children: React.ReactNode }) {
-  return p.external
-    ? <a href={p.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block', height: '100%' }}>{children}</a>
-    : <Link href={p.href} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>{children}</Link>
 }
 
 /* Live Gilbert, AZ local time (MST, no DST) — a small "active studio" signal.
@@ -487,69 +402,14 @@ export default function HomePage() {
             </div>
           </Reveal>
 
-          <div style={{ display: 'grid', gap: 24 }}>
-            {/* Featured project — full-width, editorial split */}
-            <Reveal>
-              <WorkLink p={work[0]}>
-                <div className="lift feat-card" style={{ background: 'var(--card)', border: '1px solid var(--line)', borderRadius: 4, overflow: 'hidden' }}>
-                  <div className="feat-visual"><WorkVisual kind={work[0].kind} /></div>
-                  <div style={{ padding: 'clamp(28px, 3.4vw, 48px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 }}>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>{work[0].cat}</span>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent)', border: '1px solid var(--accent-line)', borderRadius: 2, padding: '4px 9px' }}>Featured</span>
-                    </div>
-                    <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(28px, 3.4vw, 40px)', letterSpacing: '-0.025em', color: 'var(--ink)', marginBottom: 14 }}>{work[0].title}</h3>
-                    <p style={{ fontFamily: 'var(--font-body)', fontSize: 15.5, lineHeight: 1.65, color: 'var(--muted)', marginBottom: 22, maxWidth: 480 }}>{work[0].desc}</p>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, alignSelf: 'flex-start', background: 'var(--accent-soft)', border: '1px solid var(--accent-line)', borderRadius: 2, padding: '7px 12px', marginBottom: 24 }}>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--accent-deep)" strokeWidth="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></svg>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent-deep)', letterSpacing: '0.02em' }}>{work[0].stat}</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 18, borderTop: '1px solid var(--line)' }}>
-                      <span style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                        {work[0].tags.map(t => <span key={t} style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--faint)' }}>{t}</span>)}
-                      </span>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--accent)' }}>
-                        {work[0].external ? 'Visit' : 'View'} <Arrow s={13} />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </WorkLink>
-            </Reveal>
-
-            {/* Supporting projects */}
-            <Stagger style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(340px, 100%), 1fr))', gap: 24 }}>
-              {work.slice(1).map((p) => (
-                <StaggerItem key={p.num} style={{ height: '100%' }}>
-                  <WorkLink p={p}>
-                    <div className="lift" style={{ background: 'var(--card)', border: '1px solid var(--line)', borderRadius: 4, overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                      <WorkVisual kind={p.kind} />
-                      <div style={{ padding: '24px 24px 26px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-                          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>{p.cat}</span>
-                          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--faint)' }}>{p.num} / 03</span>
-                        </div>
-                        <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 25, letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: 10 }}>{p.title}</h3>
-                        <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, lineHeight: 1.6, color: 'var(--muted)', marginBottom: 18 }}>{p.desc}</p>
-                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, alignSelf: 'flex-start', background: 'var(--accent-soft)', border: '1px solid var(--accent-line)', borderRadius: 2, padding: '6px 11px', marginBottom: 20 }}>
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-deep)" strokeWidth="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></svg>
-                          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--accent-deep)', letterSpacing: '0.02em' }}>{p.stat}</span>
-                        </div>
-                        <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, borderTop: '1px solid var(--line)' }}>
-                          <span style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                            {p.tags.map(t => <span key={t} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--faint)' }}>{t}</span>)}
-                          </span>
-                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--accent)' }}>
-                            {p.external ? 'Visit' : 'View'} <Arrow s={13} />
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </WorkLink>
-                </StaggerItem>
-              ))}
-            </Stagger>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+            {HOME_WORK.map((p, i) => (
+              <Reveal key={p.slug} delay={0.04}>
+                <ProjectCard p={p} flip={i % 2 === 1} as="h3" />
+              </Reveal>
+            ))}
           </div>
+          <ProjectCardStyles />
         </div>
       </section>
 
@@ -787,15 +647,6 @@ export default function HomePage() {
         @media (max-width: 380px) {
           /* guard the two long words on the narrowest phones */
           .hero-title { font-size: 34px; }
-        }
-        /* Featured work — editorial split */
-        .feat-card { display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: stretch; }
-        .feat-visual { border-right: 1px solid var(--line); }
-        .feat-card .feat-visual > div { height: 100%; aspect-ratio: auto; min-height: 340px; }
-        @media (max-width: 900px) {
-          .feat-card { grid-template-columns: 1fr; }
-          .feat-visual { border-right: none; border-bottom: 1px solid var(--line); }
-          .feat-card .feat-visual > div { aspect-ratio: 16 / 11; min-height: 0; }
         }
         /* Approach timeline */
         .timeline { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(28px, 3vw, 48px); }
