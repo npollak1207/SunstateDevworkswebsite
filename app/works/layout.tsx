@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { openGraphBase } from '@/lib/metadata'
 
 export const metadata: Metadata = {
-  title: 'Our Work | Web, App & Branding Projects',
-  description: 'Selected projects from Sunstate DevWorks: native iOS and Android apps, custom websites, branding and SEO for Arizona businesses and beyond. See the results.',
+  title: 'Phoenix Web Design & App Projects',
+  description: 'Web design, app and branding projects from Sunstate DevWorks for Phoenix, Gilbert, Tempe and Scottsdale businesses and beyond. See the work and the results.',
   alternates: { canonical: 'https://sunstatedevworks.com/works' },
   openGraph: {
     ...openGraphBase,

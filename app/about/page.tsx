@@ -5,7 +5,7 @@ import { SectionLabel, CTASection } from '@/components/editorial'
 import { openGraphBase } from '@/lib/metadata'
 
 export const metadata: Metadata = {
-  title: 'About the Studio',
+  title: 'About Our Gilbert, AZ Web Design Studio',
   description: 'Sunstate DevWorks is a boutique design and engineering studio in Gilbert, Arizona. Custom web, mobile, branding and AI, with 100% code ownership and no lock-in.',
   alternates: { canonical: 'https://sunstatedevworks.com/about' },
   openGraph: {

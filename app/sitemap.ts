@@ -1,4 +1,5 @@
 ﻿import { MetadataRoute } from 'next'
+import { PROJECTS } from '@/lib/projects'
 
 const BASE = 'https://sunstatedevworks.com'
 
@@ -41,11 +42,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
-    {
-      url: `${BASE}/works/con-gusto`,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
+    // One case study per project (Con Gusto included).
+    ...PROJECTS.map((p) => ({
+      url: `${BASE}/works/${p.slug}`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.75,
+    })),
     {
       url: `${BASE}/about`,
       changeFrequency: 'monthly',

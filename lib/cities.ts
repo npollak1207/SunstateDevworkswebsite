@@ -2,7 +2,7 @@
 // intro, neighborhoods, industries and FAQ so the pages aren't near-duplicates
 // of one another; CityTemplate renders whatever is here.
 
-export type ProjectKey = 'zona' | 'cloak' | 'easyLandscape' | 'elsApp' | 'conGusto'
+export type ProjectKey = 'zona' | 'cloak' | 'easyLandscape' | 'elsApp' | 'conGusto' | 'canyonSupply' | 'mystical' | 'dwgs'
 
 export type LocalProject = {
   title: string
@@ -19,33 +19,33 @@ export const LOCAL_PROJECTS: Record<ProjectKey, LocalProject> = {
     title: 'Zona Pest Solutions',
     location: 'Scottsdale & Mesa',
     kind: 'Website · Local SEO',
-    desc: 'A fast custom site and local SEO build for a pest-control company serving Scottsdale and Mesa, wired into their FieldRoutes customer portal and built around recurring monthly plans.',
-    href: 'https://www.zonapestsolutions.com',
-    external: true,
+    desc: 'A fast hand-coded site and local SEO build for a pest-control company serving Scottsdale and Mesa: 15 service-area pages, 21 pest guides and a quiz that recommends a plan.',
+    href: '/works/zona-pest-solutions',
+    external: false,
   },
   cloak: {
     title: 'Cloak Wraps',
     location: 'Tempe',
     kind: 'Website · Branding',
     desc: 'A full rebrand and premium site for a Tempe vehicle-wrap and PPF studio: cinematic hero video, animated service pages, a custom quote flow and a dedicated EV page.',
-    href: 'https://www.cloakwraps.com',
-    external: true,
+    href: '/works/cloak-wraps',
+    external: false,
   },
   easyLandscape: {
     title: 'Easy Landscape Solutions',
     location: 'Gilbert',
     kind: 'Website · Branding',
-    desc: 'A rebrand and custom site for a Gilbert hardscape and turf company, with a hand-built before-and-after slider and a consultation form that accepts yard photos.',
-    href: 'https://www.easylandscapesolutions.com',
-    external: true,
+    desc: 'A custom site for a Gilbert hardscape and turf company, with a 51-project portfolio, eight city pages and a quote form that accepts yard photos.',
+    href: '/works/easy-landscape-solutions',
+    external: false,
   },
   elsApp: {
     title: 'ELS Business App',
     location: 'Gilbert',
-    kind: 'iOS App · Web Dashboard',
-    desc: 'One iOS app and web dashboard that replaced five separate tools for scheduling, invoicing, CRM and live per-job profit tracking. The owner says it saves about 20 hours a week.',
-    href: 'https://apps.apple.com/us/app/easy-ls-business-app/id6755699624',
-    external: true,
+    kind: 'iOS App · AI',
+    desc: 'One native iOS app that replaced five separate apps for leads, estimates, e-signatures, scheduling and texting. The owner says it saves about 20 hours a week.',
+    href: '/works/els-business-app',
+    external: false,
   },
   conGusto: {
     title: 'Con Gusto',
@@ -53,6 +53,30 @@ export const LOCAL_PROJECTS: Record<ProjectKey, LocalProject> = {
     kind: 'iOS · Android · AI',
     desc: 'Native iOS and Android apps on a FastAPI and AWS backend that run renovation operations for Liberty Military Housing, used by about 350 people across 10k+ housing units.',
     href: '/works/con-gusto',
+    external: false,
+  },
+  canyonSupply: {
+    title: 'Canyon Supply Co',
+    location: 'Phoenix',
+    kind: 'E-Commerce · SEO',
+    desc: 'A full storefront for a Phoenix cleaning-equipment supplier: product catalog, inventory, Stripe checkout, a blog and an admin dashboard, structured for local search.',
+    href: '/works/canyon-supply-co',
+    external: false,
+  },
+  mystical: {
+    title: 'The Mystical Universe',
+    location: 'Web + iOS',
+    kind: 'Web App · iOS App',
+    desc: 'A Next.js web app and native SwiftUI iOS app on one shared backend, with a title hub, community servers with voice and video, and scheduled watch parties.',
+    href: '/works/mystical-universe',
+    external: false,
+  },
+  dwgs: {
+    title: 'DWGS',
+    location: 'Nationwide',
+    kind: 'Website · Branding',
+    desc: 'A rugged brand system and marketing site for a renovation contractor serving military housing and multifamily portfolios, built to win over property managers.',
+    href: '/works/dwgs',
     external: false,
   },
 }

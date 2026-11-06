@@ -25,9 +25,9 @@ const capabilities = [
 ]
 
 const work = [
-  { num: '01', cat: 'AI Dashboard', title: 'Liberty Military Housing', stat: '−60% support tickets', desc: 'An AI construction-management platform running natural-language queries across thousands of housing units in real time.', tags: ['Next.js', 'Python', 'OpenAI'], href: '/works', kind: 'dashboard', external: false },
-  { num: '02', cat: 'iOS App · Web Dashboard', title: 'ELS Platform', stat: '20 hrs saved / week', desc: 'A business-in-a-box for Easy Landscape Solutions. Scheduling, invoicing, CRM and live P&L in one native app.', tags: ['SwiftUI', 'Firebase', 'Stripe'], href: 'https://apps.apple.com/us/app/easy-ls-business-app/id6755699624', kind: 'app', external: true },
-  { num: '03', cat: 'Web · Branding', title: 'Cloak Wraps', stat: "Tempe's #1 wrap studio", desc: "A full rebrand and cinematic website for Tempe's premier vehicle-wrap and PPF studio.", tags: ['Next.js', 'Brand', 'Motion'], href: 'https://www.cloakwraps.com', kind: 'brand', external: true },
+  { num: '01', cat: 'iOS · Android · Web', title: 'Liberty Military Housing', stat: '−60% support tickets', desc: 'Con Gusto: native iOS and Android apps, a web dashboard and an AWS backend running renovation operations across 10k+ housing units.', tags: ['SwiftUI', 'Kotlin', 'FastAPI'], href: '/works/con-gusto', kind: 'dashboard', external: false },
+  { num: '02', cat: 'iOS App · AI', title: 'ELS Business App', stat: '20 hrs saved / week', desc: 'One native app for Easy Landscape Solutions: leads, estimates, e-signatures, scheduling, texting and an AI assistant.', tags: ['SwiftUI', 'Supabase', 'Gemini'], href: '/works/els-business-app', kind: 'app', external: false },
+  { num: '03', cat: 'Web · Automation', title: 'Cloak Wraps', stat: '5.0★ from 31 reviews', desc: "A cinematic website for Tempe's premier vehicle-wrap and PPF studio, with every quote request answered automatically.", tags: ['GSAP', 'Supabase', 'Twilio'], href: '/works/cloak-wraps', kind: 'brand', external: false },
 ]
 
 const processSteps = [
@@ -347,17 +347,21 @@ export default function HomePage() {
         <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 32%, var(--paper) 66%)', zIndex: 1, pointerEvents: 'none' }} />
 
         <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: 1080, margin: '0 auto', padding: '0 clamp(20px, 5vw, 44px)', textAlign: 'center' }}>
-          <motion.p
+          {/* The pill carries the page's H1 so the heading names the service and
+              location; the display headline below is the brand line. */}
+          <motion.div
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="eyebrow hero-eyebrow" style={{ marginBottom: 'clamp(14px, 2.4vh, 26px)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 10, maxWidth: 'calc(100vw - 32px)', background: 'rgba(244,241,234,0.68)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid var(--line)', borderRadius: 999, padding: '8px 16px' }}
           >
             <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', flexShrink: 0 }} />
-            Gilbert, Arizona
-            <span className="hide-mobile">· Design &amp; Engineering Studio</span>
+            <h1 style={{ font: 'inherit', letterSpacing: 'inherit', color: 'inherit', display: 'inline-flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center', gap: 10 }}>
+              Gilbert, Arizona{" "}
+              <span className="hide-mobile">· Web Design &amp; Development Studio</span>
+            </h1>
             <LocalClock />
-          </motion.p>
+          </motion.div>
 
-          <h1 className="hero-title" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(37px, 9.4vw, 120px)', lineHeight: 0.92, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 'clamp(20px, 3vh, 34px)' }}>
+          <p className="hero-title" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(37px, 9.4vw, 120px)', lineHeight: 0.92, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 'clamp(20px, 3vh, 34px)' }}>
             <span className="hl-line">
               <motion.span style={{ display: 'block' }} initial={{ y: '112%' }} animate={{ y: 0 }} transition={{ duration: 0.95, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}>
                 The studio behind
@@ -371,7 +375,7 @@ export default function HomePage() {
                 </span>
               </motion.span>
             </span>
-          </h1>
+          </p>
 
           <motion.p
             initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}

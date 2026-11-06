@@ -4,12 +4,15 @@ import Link from 'next/link'
 import Reveal from '@/components/Reveal'
 import { Arrow, CTASection, PageHeader, SectionLabel } from '@/components/editorial'
 import { openGraphBase } from '@/lib/metadata'
+import ProjectLinks from '@/components/work/ProjectLinks'
+import { BrowserFrame, PhoneFrame } from '@/components/work/Frames'
+import { caseStudyHref, getProject, nextProject } from '@/lib/projects'
 
 const PAGE_URL = 'https://sunstatedevworks.com/works/con-gusto'
 
 export const metadata: Metadata = {
   title: 'Con Gusto Case Study: Construction Management for Liberty Military Housing',
-  description: 'How Sunstate DevWorks built Con Gusto, the platform that runs day-to-day renovation operations across Liberty Military Housing’s Southern California regions: native iOS and Android apps on a FastAPI and AWS backend.',
+  description: 'How Sunstate DevWorks built Con Gusto, the platform that runs day-to-day renovation operations across Liberty Military Housing’s Southern California regions: native iOS and Android apps, a web dashboard and a FastAPI backend on AWS.',
   alternates: { canonical: PAGE_URL },
   openGraph: {
     ...openGraphBase,
@@ -28,7 +31,7 @@ const stats = [
 ]
 
 const roles = [
-  { t: 'Property managers', d: 'Portfolio command center, approvals, open invoices, at-risk properties, and plain-English questions answered with live charts.' },
+  { t: 'Property managers', d: 'Portfolio command center with approvals, open invoices, financials and at-risk properties, on the phone and in the web dashboard.' },
   { t: 'Contractors', d: 'Job assignments, quotes and estimates, change orders, messaging, and a clear view of what is scheduled and what is late.' },
   { t: 'Field crews', d: 'Today’s jobs, progress tracking, photo documentation from the site, and offline access when the signal drops.' },
 ]
@@ -47,16 +50,16 @@ const screens: { src: string; title: string; caption: string }[] = [
 ]
 
 const built = [
-  { t: 'Native mobile, both platforms', d: 'A SwiftUI app for iOS and a Kotlin / Jetpack Compose app for Android, with job timelines, scheduling, photo uploads and offline caching.' },
-  { t: 'Estimates that close', d: 'An estimate builder that generates branded PDFs and sends clients an approval link, so sign-off happens without a phone call.' },
-  { t: 'Ask it in plain English', d: 'A natural-language query interface: managers type a question and get back a live data visualization.' },
-  { t: 'No more retyping POs', d: 'A PDF import pipeline (pdfplumber table extraction with a heuristic fallback) that turns vendor purchase-order exports into scheduled jobs.' },
+  { t: 'Native mobile, both platforms', d: 'A SwiftUI app on the App Store and a Kotlin / Jetpack Compose app on Google Play, with scheduling, job chat, photo documentation and an estimate builder that works offline.' },
+  { t: 'A web command center', d: 'A React dashboard with separate views for property managers, contractors and employees: jobs, a drag-to-reschedule calendar, financials, invoices and messaging.' },
+  { t: 'Estimates, drafted by AI', d: 'Good / Better / Best options, deposits, branded PDFs and a client approval link, plus AI drafts that turn photos and notes into priced line items.' },
+  { t: 'No more retyping POs', d: 'A PDF import pipeline (pdfplumber table extraction with a heuristic fallback) that turns VendorCafe purchase-order exports into jobs, de-duplicated by PO number.' },
 ]
 
 const quality = [
-  { k: '280+', t: 'Automated tests', d: 'pytest unit and integration tests on the API, gating every merge.' },
+  { k: '400+', t: 'Automated tests', d: 'pytest unit and integration tests on the Con Gusto API, gating every merge.' },
   { k: 'CI', t: 'Typed and linted', d: 'ruff and mypy checks run in GitHub Actions alongside the test suite.' },
-  { k: '2', t: 'Isolated environments', d: 'Separate staging and production. Every release is verified on staging first.' },
+  { k: '2', t: 'Isolated environments', d: 'Separate staging and production, with a smoke test against the live API before every deploy.' },
   { k: 'PR', t: 'Reviewed changes', d: 'Every change ships through a feature branch and a reviewed pull request.' },
 ]
 
@@ -104,6 +107,9 @@ function Lane({ label, nodes, dark }: { label: string; nodes: { title: string; s
   )
 }
 
+const project = getProject('con-gusto')!
+const next = nextProject('con-gusto')
+
 export default function ConGustoCaseStudy() {
   return (
     <>
@@ -114,6 +120,13 @@ export default function ConGustoCaseStudy() {
         sub="The construction management platform that runs day-to-day renovation operations across Liberty Military Housing’s Southern California regions, for property managers, contractors and field crews."
         ctas={false}
       />
+
+      {/* Store + site links */}
+      <section style={{ padding: '0 clamp(20px, 5vw, 44px) clamp(36px, 5vh, 56px)', marginTop: 'calc(-1 * clamp(24px, 4vh, 56px))' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+          <ProjectLinks links={project.links} />
+        </div>
+      </section>
 
       {/* Stats */}
       <section style={{ padding: '0 clamp(20px, 5vw, 44px) clamp(48px, 7vh, 80px)' }}>
@@ -162,7 +175,7 @@ export default function ConGustoCaseStudy() {
                 'Interviewed, hired and onboarded a team of 6 developers, and manage them directly.',
                 'Run the team’s process: specs and tickets, sprint planning, and review of every pull request.',
                 'Own the backend and release process, from GitHub Actions through staging to production.',
-                'Technical point of contact for Liberty Military Housing stakeholders, 14 months and ongoing.',
+                'Technical point of contact for Liberty Military Housing stakeholders, 15 months and ongoing.',
               ].map((t) => (
                 <li key={t} style={{ display: 'flex', gap: 12, fontFamily: 'var(--font-body)', fontSize: 15.5, lineHeight: 1.65, color: 'var(--ink-2)' }}>
                   <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', marginTop: 10, flexShrink: 0 }} />
@@ -239,15 +252,15 @@ export default function ConGustoCaseStudy() {
               Serverless on AWS, <span className="serif-em" style={{ color: 'var(--accent-2)' }}>typed end to&nbsp;end.</span>
             </h2>
             <p style={{ fontFamily: 'var(--font-body)', fontSize: 16.5, lineHeight: 1.7, color: 'var(--on-dark-muted)', maxWidth: 680, marginBottom: 48 }}>
-              A Python FastAPI service packaged as a container image and run on AWS Lambda, behind Cognito authentication, with DynamoDB for data, S3 for job photos and documents, and SES for email.
+              A Python FastAPI service packaged as a container image and run on AWS Lambda, behind Cognito authentication, with DynamoDB for data, S3 for job photos and documents, and SendGrid for email.
             </p>
           </Reveal>
           <Reveal delay={0.05}>
             <Lane dark label="Request path" nodes={[
-              { title: 'iOS & Android apps', sub: 'SwiftUI · Kotlin / Compose' },
+              { title: 'iOS, Android & web', sub: 'SwiftUI · Kotlin · React' },
               { title: 'Amazon Cognito', sub: 'Auth · role-based access' },
               { title: 'FastAPI on Lambda', sub: 'Python · container image' },
-              { title: 'DynamoDB · S3 · SES', sub: 'Data · media · email' },
+              { title: 'DynamoDB · S3 · SendGrid', sub: 'Data · media · email' },
             ]} />
             <Lane dark label="Delivery pipeline" nodes={[
               { title: 'GitHub Actions', sub: 'pytest · ruff · mypy' },
@@ -291,7 +304,7 @@ export default function ConGustoCaseStudy() {
               The system of record for <span className="serif-em" style={{ color: 'var(--accent)' }}>Southern California.</span>
             </h2>
             <p style={{ fontFamily: 'var(--font-body)', color: 'var(--muted)', fontSize: 16, lineHeight: 1.75, marginBottom: 32 }}>
-              Con Gusto now runs day-to-day renovation operations across Liberty Military Housing’s Southern California regions. About 350 active users rely on it, dozens of work orders and jobs move through it every week, and the work continues 14 months in.
+              Con Gusto now runs day-to-day renovation operations across Liberty Military Housing’s Southern California regions. About 350 active users rely on it, dozens of work orders and jobs move through it every week, and the work continues 15 months in.
             </p>
             <Link href="/works" className="btn btn-ghost">See more work <span className="btn-arrow"><Arrow s={15} /></span></Link>
           </Reveal>
@@ -301,7 +314,7 @@ export default function ConGustoCaseStudy() {
                 { n: '−60%', l: 'Internal support tickets' },
                 { n: '10k+', l: 'Housing units managed' },
                 { n: '~350', l: 'Active users' },
-                { n: '14 mo', l: 'Ongoing engagement' },
+                { n: '15 mo', l: 'Ongoing engagement' },
               ].map((r) => (
                 <div key={r.l} style={{ padding: 'clamp(22px, 3vw, 34px)', borderRight: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
                   <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(32px, 4vw, 52px)', color: 'var(--ink)', lineHeight: 1, marginBottom: 10, letterSpacing: '-0.03em' }}>{r.n}</div>
@@ -313,6 +326,44 @@ export default function ConGustoCaseStudy() {
         </div>
       </section>
 
+      {/* Public site */}
+      <section style={{ padding: 'clamp(72px, 11vh, 130px) clamp(20px, 5vw, 44px)', background: 'var(--paper-2)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+        <div className="cg-two" style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '0.8fr 1.2fr', gap: 'clamp(40px, 6vw, 96px)', alignItems: 'center' }}>
+          <Reveal>
+            <SectionLabel index="07">The public site</SectionLabel>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(32px, 4.4vw, 56px)', lineHeight: 1, letterSpacing: '-0.03em', color: 'var(--ink)', marginBottom: 20 }}>
+              The front door <span className="serif-em" style={{ color: 'var(--accent)' }}>for operators.</span>
+            </h2>
+            <p style={{ fontFamily: 'var(--font-body)', color: 'var(--muted)', fontSize: 16, lineHeight: 1.75, marginBottom: 28 }}>
+              congustoapp.com explains the platform to property operators, contractors and field teams, and points them to the iOS and Android apps and the web dashboard.
+            </p>
+            <a href="https://www.congustoapp.com" target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Visit congustoapp.com <span className="btn-arrow"><Arrow s={15} /></span></a>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <div style={{ position: 'relative', paddingRight: '10%', paddingBottom: '6%' }}>
+              <BrowserFrame src="/work/con-gusto/site-desktop.webp" alt="Con Gusto marketing website on desktop" url="https://www.congustoapp.com" sizes="(max-width: 860px) 92vw, 700px" />
+              <div style={{ position: 'absolute', right: 0, bottom: 0, width: '24%' }}>
+                <PhoneFrame src="/work/con-gusto/site-mobile.webp" alt="Con Gusto marketing website on mobile" sizes="180px" />
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Next project */}
+      <section style={{ padding: 'clamp(56px, 8vh, 90px) clamp(20px, 5vw, 44px)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+          <Link href={caseStudyHref(next)} className="cs-next" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, padding: 'clamp(26px, 3.4vw, 40px) 0', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)', textDecoration: 'none' }}>
+            <span>
+              <span className="eyebrow" style={{ display: 'block', marginBottom: 10 }}>Next case study</span>
+              <span className="cs-next-title" style={{ display: 'block', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(28px, 4.4vw, 56px)', letterSpacing: '-0.03em', color: 'var(--ink)', lineHeight: 1, transition: 'color 0.3s' }}>{next.title}</span>
+              <span style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--faint)', letterSpacing: '0.06em', textTransform: 'uppercase', marginTop: 10 }}>{next.cat}</span>
+            </span>
+            <span className="cs-next-arrow" style={{ color: 'var(--accent)', transition: 'transform 0.3s', display: 'inline-flex' }}><Arrow s={34} /></span>
+          </Link>
+        </div>
+      </section>
+
       <CTASection
         eyebrow="Have an operations problem like this?"
         title={<>Let&apos;s build your<br /><span className="serif-em" style={{ color: 'var(--accent)' }}>system of record.</span></>}
@@ -320,6 +371,8 @@ export default function ConGustoCaseStudy() {
       />
 
       <style>{`
+        .cs-next:hover .cs-next-title { color: var(--accent-deep) !important; }
+        .cs-next:hover .cs-next-arrow { transform: translateX(6px); }
         @media (max-width: 1024px) {
           .cg-gallery { grid-template-columns: repeat(3, 1fr) !important; }
           .cg-built { grid-template-columns: repeat(2, 1fr) !important; }

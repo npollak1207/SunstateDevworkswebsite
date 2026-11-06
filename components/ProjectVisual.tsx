@@ -149,7 +149,7 @@ export default function ProjectVisual({ num, accent, variant = 'compact' }: { nu
       <div style={shell}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: variant === 'featured' ? 14 : 8 }}>
           <span style={{ fontFamily: 'Space Mono, monospace', fontSize: labelSize, color: ac, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Before / After</span>
-          <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: variant === 'featured' ? 13 : 9, color: ac }}>67+ ★ reviews</span>
+          <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: variant === 'featured' ? 13 : 9, color: ac }}>97 ★ reviews</span>
         </div>
         <div style={{ position: 'relative', height: variant === 'featured' ? 140 : 56, borderRadius: 6, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}>
           {/* Before — dirt/grass tones */}
@@ -341,7 +341,7 @@ export default function ProjectVisual({ num, accent, variant = 'compact' }: { nu
           ))}
         </div>
         {variant === 'featured' && (
-          <div style={{ marginTop: 14, fontFamily: 'Space Mono, monospace', fontSize: 9, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.04em' }}>Authorized Dealer · Phoenix, AZ · 20+ years</div>
+          <div style={{ marginTop: 14, fontFamily: 'Space Mono, monospace', fontSize: 9, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.04em' }}>Authorized Dealer · Phoenix, AZ · 5+ years</div>
         )}
       </div>
     )
