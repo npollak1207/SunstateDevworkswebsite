@@ -7,7 +7,10 @@ import type { Project, Shot } from './projects'
 const img = (slug: string, name: string) => `/work/${slug}/${name}.webp`
 const desk = (slug: string, name: string, title: string, caption: string): Shot => ({ src: img(slug, name), title, caption, device: 'desktop' })
 const mob = (slug: string, name: string, title: string, caption: string): Shot => ({ src: img(slug, name), title, caption, device: 'mobile' })
-const web = (slug: string, url: string) => ({ kind: 'web' as const, desktop: img(slug, 'home-desktop'), mobile: img(slug, 'home-mobile'), url })
+// Hero captures were re-shot with video playing for these; the new names bust image caches.
+const V2 = new Set(['zona-pest-solutions', 'easy-landscape-solutions', 'cloak-wraps'])
+const hero = (slug: string, d: 'desktop' | 'mobile') => img(slug, `home-${d}${V2.has(slug) ? '-v2' : ''}`)
+const web = (slug: string, url: string) => ({ kind: 'web' as const, desktop: hero(slug, 'desktop'), mobile: hero(slug, 'mobile'), url })
 
 export const PROJECTS: Project[] = [
   // ─────────────────────────────────────────────────────────── Con Gusto
@@ -187,7 +190,7 @@ export const PROJECTS: Project[] = [
         desk('cloak-wraps', 'shield', 'Paint protection film', 'The PPF service page, with film thickness and warranty up front.'),
         desk('cloak-wraps', 'media', 'Portfolio', 'A gallery fed from their Instagram, so new builds appear without a site update.'),
         desk('cloak-wraps', 'city', 'City pages', 'Local landing pages for Mesa, Chandler, Gilbert, Phoenix, Scottsdale and Tempe.'),
-        mob('cloak-wraps', 'home-mobile', 'Home', 'The video hero on a phone.'),
+        mob('cloak-wraps', 'home-mobile-v2', 'Home', 'The video hero on a phone.'),
         mob('cloak-wraps', 'ev-mobile', 'EV studio', 'Built for the Valley’s EV owners.'),
         mob('cloak-wraps', 'shield-mobile', 'PPF', 'Service details that read cleanly on mobile.'),
       ],
@@ -369,7 +372,7 @@ export const PROJECTS: Project[] = [
         desk('zona-pest-solutions', 'quiz', '60-second quiz', 'A few questions, then the right plan for the home.'),
         desk('zona-pest-solutions', 'scorpions', 'Pest guide', 'Scorpion control in Scottsdale, one of 21 pest pages.'),
         desk('zona-pest-solutions', 'areas', 'Service areas', 'The hub for 15 neighborhood and city pages.'),
-        mob('zona-pest-solutions', 'home-mobile', 'Home', 'Call or get an estimate in one tap.'),
+        mob('zona-pest-solutions', 'home-mobile-v2', 'Home', 'Call or get an estimate in one tap.'),
         mob('zona-pest-solutions', 'quiz-mobile', 'Quiz', 'Built to finish on a phone.'),
         mob('zona-pest-solutions', 'scorpions-mobile', 'Scorpions', 'Local pest content on mobile.'),
       ],
@@ -421,7 +424,7 @@ export const PROJECTS: Project[] = [
         desk('easy-landscape-solutions', 'works', 'Selected works', 'The filterable portfolio of 51 projects.'),
         desk('easy-landscape-solutions', 'shade', 'Shade structures', 'A service page built around Arizona heat.'),
         desk('easy-landscape-solutions', 'gilbert', 'City page', 'Gilbert, their home base, one of eight city pages.'),
-        mob('easy-landscape-solutions', 'home-mobile', 'Home', 'Sculpted living, on a phone.'),
+        mob('easy-landscape-solutions', 'home-mobile-v2', 'Home', 'Sculpted living, on a phone.'),
         mob('easy-landscape-solutions', 'works-mobile', 'Works', 'Browse projects by collection.'),
         mob('easy-landscape-solutions', 'gilbert-mobile', 'Gilbert', 'Local proof, license and ZIP codes.'),
       ],
