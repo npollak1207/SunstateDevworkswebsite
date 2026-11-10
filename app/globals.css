@@ -29,7 +29,7 @@
   --line-strong: rgba(23,20,15,0.30);
 
   /* Accent — Sunstate sunset */
-  --accent:      #F04E23;
+  --accent:      #F04B1F;   /* a hair darker than the original #F04E23 so large accent text clears 3:1 on --paper-2 */
   --accent-2:    #FF7A3D;
   --accent-deep: #B8341A;   /* use for small accent TEXT on light surfaces (4.9:1+); --accent is for fills */
   --accent-soft: rgba(240,78,35,0.10);
@@ -50,7 +50,7 @@
 
   /* ---- Legacy aliases (older pages still reference these) ---- */
   --cyan: #C2371A;              /* remap old cyan -> deep accent so old pages stay coherent */
-  --orange: #F04E23;
+  --orange: #F04B1F;
   --navy: #14110B;
   --navy-mid: #1E1A12;
   --navy-light: #26211a;
@@ -126,6 +126,8 @@ body::after {
 .rv[data-shown] { opacity: 1; transform: none; }
 .rv-now { animation: rvIn var(--rv-t, 0.75s) cubic-bezier(0.22,1,0.36,1) var(--rv-d, 0s) both; }
 @keyframes rvIn { from { opacity: 0; transform: translate(var(--rv-x, 0px), var(--rv-y, 32px)); } }
+.rv-now-slide { animation: rvSlide var(--rv-t, 0.75s) cubic-bezier(0.22,1,0.36,1) var(--rv-d, 0s) both; }
+@keyframes rvSlide { from { transform: translate(var(--rv-x, 0px), var(--rv-y, 32px)); } }
 
 /* ── Hero entrance — pure CSS so the first screen paints without waiting on JS ── */
 .in-rise { animation: inRise var(--in-t, 0.8s) cubic-bezier(0.22,1,0.36,1) var(--in-d, 0s) both; }
@@ -183,8 +185,8 @@ body::after {
 .btn-primary:hover .btn-arrow { transform: translateX(4px); }
 .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-2); }
 .btn-ghost:hover { border-color: var(--ink); transform: translateY(-2px); }
-.btn-accent { background: var(--accent); color: #fff; border: 1px solid var(--accent); }
-.btn-accent:hover { background: var(--accent-deep); border-color: var(--accent-deep); transform: translateY(-2px); box-shadow: 0 14px 40px rgba(240,78,35,0.3); }
+.btn-accent { background: var(--accent-deep); color: #fff; border: 1px solid var(--accent-deep); }   /* white on --accent is only 3.7:1 */
+.btn-accent:hover { background: #9E2C15; border-color: #9E2C15; transform: translateY(-2px); box-shadow: 0 14px 40px rgba(240,78,35,0.3); }
 .on-dark .btn-primary { background: var(--paper); color: var(--ink); border-color: var(--paper); }
 .on-dark .btn-ghost { color: var(--on-dark); border-color: var(--ink-line); }
 .on-dark .btn-ghost:hover { border-color: var(--on-dark); }

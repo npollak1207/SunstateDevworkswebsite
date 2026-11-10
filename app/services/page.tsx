@@ -77,23 +77,23 @@ export default function ServicesPage() {
         <div className="grid-bg" aria-hidden style={{ position: 'absolute', inset: 0, opacity: 0.5, maskImage: 'radial-gradient(ellipse at 72% 0%, #000, transparent 72%)', WebkitMaskImage: 'radial-gradient(ellipse at 72% 0%, #000, transparent 72%)' }} />
         <div aria-hidden style={{ position: 'absolute', top: '-24%', right: '-8%', width: 620, height: 620, borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,78,35,0.14) 0%, transparent 62%)', pointerEvents: 'none' }} />
         <div style={{ position: 'relative', maxWidth: 1280, margin: '0 auto' }}>
-          <Reveal>
+          <Reveal now>
             <p className="eyebrow" style={{ marginBottom: 24, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)' }} />
               What we do
             </p>
           </Reveal>
-          <Reveal delay={0.05}>
+          <Reveal now fade={false} delay={0.05}>
             <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(42px, 7vw, 100px)', lineHeight: 0.93, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 28, maxWidth: 960 }}>
               Full-stack capabilities.<br /><span className="serif-em" style={{ color: 'var(--accent)' }}>One studio.</span>
             </h1>
           </Reveal>
-          <Reveal delay={0.1}>
+          <Reveal now fade={false} delay={0.1}>
             <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.7vw, 20px)', lineHeight: 1.6, color: 'var(--muted)', maxWidth: 620, marginBottom: 40 }}>
               We handle everything in-house: web, mobile, brand and AI. One team, one relationship, complete accountability from the first call to long after launch.
             </p>
           </Reveal>
-          <Reveal delay={0.15}>
+          <Reveal now delay={0.15}>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
               <Link href="/contact" className="btn btn-primary">Start a Project <span className="btn-arrow"><Arrow s={15} /></span></Link>
               <Link href="/works" className="btn btn-ghost">See Our Work</Link>
@@ -131,7 +131,7 @@ export default function ServicesPage() {
             {services.map((s, i) => (
               <Reveal key={s.num} delay={i * 0.06}>
                 <Link href={s.href} className="idx-row" style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: 'clamp(18px, 4vw, 60px)', alignItems: 'center', padding: 'clamp(26px, 3.4vw, 40px) 0', borderBottom: '1px solid var(--line)', textDecoration: 'none' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--accent)', letterSpacing: '0.05em' }}>{s.num}</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--accent-deep)', letterSpacing: '0.05em' }}>{s.num}</span>
                   <span style={{ minWidth: 0 }}>
                     <span className="idx-title" style={{ display: 'block', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(24px, 3.6vw, 44px)', letterSpacing: '-0.025em', color: 'var(--ink)', marginBottom: 8, transition: 'color 0.3s' }}>{s.title}</span>
                     <span style={{ display: 'block', fontFamily: 'var(--font-body)', fontSize: 15, lineHeight: 1.6, color: 'var(--muted)', maxWidth: 620, marginBottom: 14 }}>{s.desc}</span>
@@ -160,7 +160,7 @@ export default function ServicesPage() {
             {whyUs.map((w, i) => (
               <Reveal key={w.label} delay={i * 0.06}>
                 <div style={{ padding: 'clamp(28px, 3vw, 38px)', borderRight: '1px solid var(--line)', borderBottom: '1px solid var(--line)', minHeight: 200, display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent)', marginBottom: 'clamp(24px, 4vh, 44px)' }}>0{i + 1}</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent-deep)', marginBottom: 'clamp(24px, 4vh, 44px)' }}>0{i + 1}</span>
                   <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 19, letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: 10 }}>{w.label}</h3>
                   <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, lineHeight: 1.6, color: 'var(--muted)' }}>{w.desc}</p>
                 </div>
@@ -188,7 +188,7 @@ export default function ServicesPage() {
             {process.map((p, i) => (
               <Reveal key={p.num} delay={i * 0.07}>
                 <div style={{ padding: 'clamp(28px, 3vw, 40px)', borderRight: '1px solid var(--line)', borderBottom: '1px solid var(--line)', minHeight: 220, display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent)', marginBottom: 'clamp(24px, 4vh, 48px)' }}>{p.num}</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent-deep)', marginBottom: 'clamp(24px, 4vh, 48px)' }}>{p.num}</span>
                   <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 20, letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: 12 }}>{p.title}</h3>
                   <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, lineHeight: 1.6, color: 'var(--muted)' }}>{p.desc}</p>
                 </div>

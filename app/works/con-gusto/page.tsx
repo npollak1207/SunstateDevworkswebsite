@@ -143,9 +143,9 @@ export default function ConGustoCaseStudy() {
       {/* Hero phones */}
       <section style={{ padding: '0 clamp(20px, 5vw, 44px) clamp(72px, 11vh, 130px)' }}>
         <div className="cg-hero-phones" style={{ maxWidth: 1080, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'clamp(16px, 3vw, 40px)', alignItems: 'end' }}>
-          <Reveal delay={0.05}><div style={{ transform: 'translateY(28px)' }}><Phone src="jobs" alt="Con Gusto jobs workspace" priority /></div></Reveal>
-          <Reveal delay={0}><Phone src="dashboard" alt="Con Gusto dashboard" priority /></Reveal>
-          <Reveal delay={0.1}><div style={{ transform: 'translateY(28px)' }}><Phone src="project-overview" alt="Con Gusto project overview" priority /></div></Reveal>
+          <Reveal now fade={false} delay={0.05}><div style={{ transform: 'translateY(28px)' }}><Phone src="jobs" alt="Con Gusto jobs workspace" priority /></div></Reveal>
+          <Reveal now fade={false} delay={0}><Phone src="dashboard" alt="Con Gusto dashboard" priority /></Reveal>
+          <Reveal now fade={false} delay={0.1}><div style={{ transform: 'translateY(28px)' }}><Phone src="project-overview" alt="Con Gusto project overview" priority /></div></Reveal>
         </div>
       </section>
 
@@ -193,7 +193,7 @@ export default function ConGustoCaseStudy() {
           {roles.map((r, i) => (
             <Reveal key={r.t} delay={i * 0.06}>
               <div style={{ background: 'var(--card)', border: '1px solid var(--line)', borderRadius: 6, padding: '26px 26px 28px', height: '100%' }}>
-                <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--accent)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Built for</p>
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--accent-deep)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Built for</p>
                 <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 22, letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: 10 }}>{r.t}</h3>
                 <p style={{ fontFamily: 'var(--font-body)', fontSize: 14.5, lineHeight: 1.65, color: 'var(--muted)' }}>{r.d}</p>
               </div>

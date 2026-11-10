@@ -60,28 +60,28 @@ export default function CaseStudyPage({ project: p }: { project: Project & { stu
         <div className="grid-bg" aria-hidden style={{ position: 'absolute', inset: 0, opacity: 0.5, maskImage: 'radial-gradient(ellipse at 70% 0%, #000, transparent 72%)', WebkitMaskImage: 'radial-gradient(ellipse at 70% 0%, #000, transparent 72%)' }} />
         <div aria-hidden style={{ position: 'absolute', top: '-24%', right: '-8%', width: 620, height: 620, borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,78,35,0.14) 0%, transparent 62%)', pointerEvents: 'none' }} />
         <div style={{ position: 'relative', maxWidth: 1280, margin: '0 auto' }}>
-          <Reveal>
+          <Reveal now>
             <nav aria-label="Breadcrumb" style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 26, flexWrap: 'wrap' }}>
               <Link href="/works" className="u-link" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)' }}>Work</Link>
               <span style={{ color: 'var(--faint)', fontSize: 11 }}>/</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--accent)' }}>{p.title}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--accent-deep)' }}>{p.title}</span>
             </nav>
           </Reveal>
-          <Reveal delay={0.05}>
+          <Reveal now delay={0.05}>
             <p className="eyebrow" style={{ marginBottom: 24, display: 'inline-flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)' }} />
               Case study · {p.client} · {p.location} · {p.year}
             </p>
           </Reveal>
-          <Reveal delay={0.1}>
+          <Reveal now fade={false} delay={0.1}>
             <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(40px, 6.4vw, 88px)', lineHeight: 0.95, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 28, maxWidth: 1000 }}>
               {s.headline[0]} <span className="serif-em" style={{ color: 'var(--accent)' }}>{s.headline[1]}</span>
             </h1>
           </Reveal>
-          <Reveal delay={0.15}>
+          <Reveal now fade={false} delay={0.15}>
             <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.7vw, 20px)', lineHeight: 1.6, color: 'var(--muted)', maxWidth: 660, marginBottom: 34 }}>{s.sub}</p>
           </Reveal>
-          <Reveal delay={0.2}>
+          <Reveal now delay={0.2}>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
               <ProjectLinks links={p.links} status={p.status} />
             </div>
@@ -111,7 +111,7 @@ export default function CaseStudyPage({ project: p }: { project: Project & { stu
 
       {/* Hero render */}
       <section style={{ padding: '0 clamp(20px, 5vw, 44px) clamp(72px, 11vh, 130px)' }}>
-        <Reveal>
+        <Reveal now fade={false}>
           <div style={{ maxWidth: p.render.kind === 'app' || p.render.kind === 'diagram' ? 1000 : 1180, margin: '0 auto' }}>
             <ProjectRender project={p} size="hero" priority />
           </div>

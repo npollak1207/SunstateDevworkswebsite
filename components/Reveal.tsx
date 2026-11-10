@@ -34,7 +34,9 @@ function observe(el: Element, amount: number) {
  * Fades content up once it scrolls into view. The motion itself is CSS (.rv in
  * globals.css); this only flips data-shown, so the bundle stays tiny.
  * `now` plays the entrance on first paint instead (for above-the-fold content),
- * with no JS at all. Reduced motion is handled by the global CSS rule.
+ * with no JS at all. `fade={false}` slides without ever being transparent: use
+ * it on a page's main heading / intro so the LCP element paints on frame one.
+ * Reduced motion is handled by the global CSS rule.
  */
 export default function Reveal({
   children,
@@ -44,6 +46,7 @@ export default function Reveal({
   duration = 0.75,
   amount = 0.25,
   now = false,
+  fade = true,
   className,
   style,
 }: {
@@ -54,6 +57,7 @@ export default function Reveal({
   duration?: number
   amount?: number
   now?: boolean
+  fade?: boolean
   className?: string
   style?: CSSProperties
 }) {
@@ -69,7 +73,7 @@ export default function Reveal({
 
   const [x, y] = OFFSET[dir]
   const vars = { '--rv-x': x, '--rv-y': y, '--rv-d': `${delay}s`, '--rv-t': `${duration}s` } as CSSProperties
-  const base = now ? 'rv-now' : 'rv'
+  const base = now ? (fade ? 'rv-now' : 'rv-now-slide') : 'rv'
 
   const Tag = as as 'div'
   return (

@@ -48,24 +48,24 @@ export default function AboutPage() {
         <div aria-hidden style={{ position: 'absolute', top: '-20%', right: '-6%', width: 620, height: 620, borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,78,35,0.14) 0%, transparent 62%)', pointerEvents: 'none' }} />
         <div style={{ position: 'relative', maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr auto', gap: 40, alignItems: 'center' }} className="about-hero">
           <div>
-            <Reveal>
+            <Reveal now>
               <p className="eyebrow" style={{ marginBottom: 24, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)' }} />
                 About the studio
               </p>
             </Reveal>
-            <Reveal delay={0.05}>
+            <Reveal now fade={false} delay={0.05}>
               <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(44px, 7vw, 96px)', lineHeight: 0.93, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 28, maxWidth: 640 }}>
                 Built different.<br /><span className="serif-em" style={{ color: 'var(--accent)' }}>On purpose.</span>
               </h1>
             </Reveal>
-            <Reveal delay={0.1}>
+            <Reveal now fade={false} delay={0.1}>
               <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.7vw, 20px)', lineHeight: 1.6, color: 'var(--muted)', maxWidth: 560 }}>
                 Sunstate DevWorks is a boutique design and engineering studio in Mesa, Arizona. We design and build custom digital products: websites, mobile apps, brands and AI tools for businesses that need serious digital infrastructure.
               </p>
             </Reveal>
           </div>
-          <Reveal delay={0.1} className="about-img">
+          <Reveal now fade={false} delay={0.1} className="about-img">
             <Image src="/about.png" alt="Sunstate DevWorks" width={520} height={520} style={{ objectFit: 'contain', opacity: 0.95, maxWidth: '100%', height: 'auto' }} />
           </Reveal>
         </div>
@@ -95,8 +95,8 @@ export default function AboutPage() {
             {values.map((v, i) => (
               <Reveal key={v.title} delay={i * 0.06}>
                 <div style={{ padding: 'clamp(30px, 3vw, 42px)', borderRight: '1px solid var(--line)', borderBottom: '1px solid var(--line)', minHeight: 210, display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent)', marginBottom: 'clamp(24px, 4vh, 44px)' }}>0{i + 1}</span>
-                  <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 21, letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: 12 }}>{v.title}</h3>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent-deep)', marginBottom: 'clamp(24px, 4vh, 44px)' }}>0{i + 1}</span>
+                  <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 21, letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: 12 }}>{v.title}</h2>
                   <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, lineHeight: 1.65, color: 'var(--muted)' }}>{v.desc}</p>
                 </div>
               </Reveal>
@@ -113,7 +113,7 @@ export default function AboutPage() {
             {stack.map((s, i) => (
               <Reveal key={s.cat} delay={i * 0.05}>
                 <div>
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>{s.cat}</p>
+                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--accent-deep)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>{s.cat}</p>
                   {s.items.map((item) => <p key={item} style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 15, color: 'var(--ink-2)', marginBottom: 8 }}>{item}</p>)}
                 </div>
               </Reveal>

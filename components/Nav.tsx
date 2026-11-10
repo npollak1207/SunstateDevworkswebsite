@@ -130,7 +130,7 @@ export default function Nav() {
                         textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 14,
                         padding: '13px 14px', borderRadius: 3, background: act ? 'var(--accent-soft)' : 'transparent',
                       }}>
-                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--accent)', letterSpacing: '0.05em', paddingTop: 2 }}>{s.num}</span>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--accent-deep)', letterSpacing: '0.05em', paddingTop: 2 }}>{s.num}</span>
                         <span style={{ flex: 1, minWidth: 0 }}>
                           <span style={{ display: 'block', fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 14.5, color: 'var(--ink)' }}>{s.label}</span>
                           <span style={{ display: 'block', fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>{s.desc}</span>

@@ -56,28 +56,28 @@ export default function CityTemplate({ content }: { content: CityContent }) {
         <div className="grid-bg" aria-hidden style={{ position: 'absolute', inset: 0, opacity: 0.5, maskImage: 'radial-gradient(ellipse at 72% 0%, #000, transparent 72%)', WebkitMaskImage: 'radial-gradient(ellipse at 72% 0%, #000, transparent 72%)' }} />
         <div aria-hidden style={{ position: 'absolute', top: '-24%', right: '-8%', width: 620, height: 620, borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,78,35,0.14) 0%, transparent 62%)', pointerEvents: 'none' }} />
         <div style={{ position: 'relative', maxWidth: 1280, margin: '0 auto' }}>
-          <Reveal>
+          <Reveal now>
             <nav style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 26 }}>
               <Link href="/" className="u-link" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)' }}>Home</Link>
               <span style={{ color: 'var(--faint)', fontSize: 11 }}>/</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--accent)' }}>Web Design {city}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--accent-deep)' }}>Web Design {city}</span>
             </nav>
           </Reveal>
-          <Reveal delay={0.05}>
+          <Reveal now delay={0.05}>
             <p className="eyebrow" style={{ marginBottom: 24, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)' }} />
               {city}, Arizona · {region}
             </p>
           </Reveal>
-          <Reveal delay={0.1}>
+          <Reveal now fade={false} delay={0.1}>
             <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(40px, 6.6vw, 92px)', lineHeight: 0.95, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 28, maxWidth: 900 }}>
               {city} web design<br />&amp; <span className="serif-em" style={{ color: 'var(--accent)' }}>development.</span>
             </h1>
           </Reveal>
-          <Reveal delay={0.15}>
+          <Reveal now fade={false} delay={0.15}>
             <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.7vw, 20px)', lineHeight: 1.6, color: 'var(--muted)', maxWidth: 620, marginBottom: 40 }}>{blurb}</p>
           </Reveal>
-          <Reveal delay={0.2}>
+          <Reveal now delay={0.2}>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
               <Link href="/contact" className="btn btn-primary">Start a Project <span className="btn-arrow"><Arrow s={15} /></span></Link>
               <Link href="/services" className="btn btn-ghost">Our Services</Link>
@@ -128,7 +128,7 @@ export default function CityTemplate({ content }: { content: CityContent }) {
             {services.map((s, i) => (
               <Reveal key={s.num} delay={i * 0.06}>
                 <Link href={s.href} className="idx-row" style={{ display: 'flex', flexDirection: 'column', padding: 'clamp(26px, 3vw, 38px)', borderRight: '1px solid var(--line)', borderBottom: '1px solid var(--line)', minHeight: 220, textDecoration: 'none', height: '100%' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent)', marginBottom: 'clamp(24px, 4vh, 44px)' }}>{s.num}</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent-deep)', marginBottom: 'clamp(24px, 4vh, 44px)' }}>{s.num}</span>
                   <h3 className="idx-title" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 22, letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: 12, transition: 'color 0.3s' }}>{s.title}</h3>
                   <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, lineHeight: 1.6, color: 'var(--muted)' }}>{s.desc}</p>
                 </Link>
@@ -178,7 +178,7 @@ export default function CityTemplate({ content }: { content: CityContent }) {
               const inner = (
                 <>
                   <span style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--faint)', marginBottom: 22 }}>
-                    <span style={{ color: 'var(--accent)' }}>{p.location}</span>
+                    <span style={{ color: 'var(--accent-deep)' }}>{p.location}</span>
                     <span>{p.kind}</span>
                   </span>
                   <h3 className="idx-title" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(22px, 2.4vw, 28px)', letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: 12, transition: 'color 0.3s' }}>{p.title}</h3>
@@ -218,7 +218,7 @@ export default function CityTemplate({ content }: { content: CityContent }) {
             {reasons.map((reason, i) => (
               <Reveal key={i} delay={i * 0.06}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 16, padding: '22px 0', borderBottom: '1px solid var(--line)', alignItems: 'start' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent)', paddingTop: 3 }}>0{i + 1}</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent-deep)', paddingTop: 3 }}>0{i + 1}</span>
                   <p style={{ fontFamily: 'var(--font-body)', fontSize: 15.5, lineHeight: 1.65, color: 'var(--ink-2)' }}>{reason}</p>
                 </div>
               </Reveal>

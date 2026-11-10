@@ -28,7 +28,7 @@ export function Arrow({ s = 16 }: { s?: number }) {
 export function SectionLabel({ index, children }: { index?: string; children: React.ReactNode }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 22 }}>
-      {index && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', color: 'var(--accent)' }}>{index}</span>}
+      {index && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', color: 'var(--accent-deep)' }}>{index}</span>}
       <span style={{ width: 28, height: 1, background: 'var(--line-2)' }} />
       <span className="eyebrow">{children}</span>
     </div>
@@ -51,35 +51,35 @@ export function PageHeader({
       <div aria-hidden style={{ position: 'absolute', top: '-24%', right: '-8%', width: 620, height: 620, borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,78,35,0.14) 0%, transparent 62%)', pointerEvents: 'none' }} />
       <div style={{ position: 'relative', maxWidth: 1280, margin: '0 auto' }}>
         {breadcrumb && (
-          <Reveal>
+          <Reveal now>
             <nav style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 26, flexWrap: 'wrap' }}>
               {breadcrumb.map((b, i) => (
                 <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
                   {i > 0 && <span style={{ color: 'var(--faint)', fontSize: 11 }}>/</span>}
                   {b.href
                     ? <Link href={b.href} className="u-link" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)' }}>{b.label}</Link>
-                    : <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--accent)' }}>{b.label}</span>}
+                    : <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--accent-deep)' }}>{b.label}</span>}
                 </span>
               ))}
             </nav>
           </Reveal>
         )}
-        <Reveal delay={0.05}>
+        <Reveal now delay={0.05}>
           <p className="eyebrow" style={{ marginBottom: 24, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)' }} />
             {eyebrow}
           </p>
         </Reveal>
-        <Reveal delay={0.1}>
+        <Reveal now fade={false} delay={0.1}>
           <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(40px, 6.6vw, 92px)', lineHeight: 0.95, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 28, maxWidth: 960 }}>
             {title}
           </h1>
         </Reveal>
-        <Reveal delay={0.15}>
+        <Reveal now fade={false} delay={0.15}>
           <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.7vw, 20px)', lineHeight: 1.6, color: 'var(--muted)', maxWidth: 620, marginBottom: ctas ? 40 : 0 }}>{sub}</p>
         </Reveal>
         {ctas && (
-          <Reveal delay={0.2}>
+          <Reveal now delay={0.2}>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
               <Link href="/contact" className="btn btn-primary">Start a Project <span className="btn-arrow"><Arrow s={15} /></span></Link>
               <Link href="/works" className="btn btn-ghost">See Our Work</Link>
