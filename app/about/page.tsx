@@ -5,14 +5,14 @@ import { SectionLabel, CTASection } from '@/components/editorial'
 import { openGraphBase } from '@/lib/metadata'
 
 export const metadata: Metadata = {
-  title: 'About Our Gilbert, AZ Web Design Studio',
-  description: 'Sunstate DevWorks is a boutique design and engineering studio in Gilbert, Arizona. Custom web, mobile, branding and AI, with 100% code ownership and no lock-in.',
+  title: 'About Our Mesa, AZ Web Design Studio',
+  description: 'Sunstate DevWorks is a boutique design and engineering studio in Mesa, Arizona. Custom web, mobile, branding and AI, with 100% code ownership and no lock-in.',
   alternates: { canonical: 'https://sunstatedevworks.com/about' },
   openGraph: {
     ...openGraphBase,
     url: 'https://sunstatedevworks.com/about',
     title: 'About the Studio | Sunstate DevWorks',
-    description: 'A boutique design and engineering studio in Gilbert, Arizona. Custom web, mobile, branding and AI, with 100% code ownership.',
+    description: 'A boutique design and engineering studio in Mesa, Arizona. Custom web, mobile, branding and AI, with 100% code ownership.',
   },
 }
 
@@ -20,14 +20,14 @@ const story = [
   'We started Sunstate DevWorks because we were tired of watching clients get burned by agencies that handed them locked-down WordPress installs and disappeared the moment the invoice cleared.',
   'So we flipped the model. Every line of code we write is yours. Every site we host, we built. When something breaks, there is no phone tree; you text us directly.',
   'We work across web, mobile, branding and AI. Most studios make you hire three vendors for that. We do not. One relationship, one point of contact, complete accountability.',
-  'We are based in Gilbert, Arizona. Not a co-working space with a foosball table and six interns, but an actual technical studio that ships real products.',
+  'We are based in Mesa, Arizona. Not a co-working space with a foosball table and six interns, but an actual technical studio that ships real products.',
 ]
 
 const values = [
   { title: 'Ownership first', desc: 'We never lock you into proprietary tools. You own 100% of the code, the domain, and every deliverable.' },
   { title: 'No bloat', desc: 'No WordPress, no page builders, no drag-and-drop shortcuts. Just clean, performant, hand-written code.' },
   { title: 'Radical transparency', desc: 'No surprises. Scope and timeline are documented up front, progress is visible every week, and we say no when we should.' },
-  { title: 'Local & accountable', desc: 'Based in Gilbert, Arizona. Not a remote farm or an offshore agency. A real team you can reach directly.' },
+  { title: 'Local & accountable', desc: 'Based in Mesa, Arizona. Not a remote farm or an offshore agency. A real team you can reach directly.' },
 ]
 
 const stack = [
@@ -61,7 +61,7 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={0.1}>
               <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.7vw, 20px)', lineHeight: 1.6, color: 'var(--muted)', maxWidth: 560 }}>
-                Sunstate DevWorks is a boutique design and engineering studio in Gilbert, Arizona. We design and build custom digital products: websites, mobile apps, brands and AI tools for businesses that need serious digital infrastructure.
+                Sunstate DevWorks is a boutique design and engineering studio in Mesa, Arizona. We design and build custom digital products: websites, mobile apps, brands and AI tools for businesses that need serious digital infrastructure.
               </p>
             </Reveal>
           </div>
@@ -123,7 +123,7 @@ export default function AboutPage() {
       </section>
 
       <CTASection
-        eyebrow="Gilbert, Arizona"
+        eyebrow="Mesa, Arizona"
         title={<>Sound like a fit?<br /><span className="serif-em" style={{ color: 'var(--accent)' }}>Let&apos;s find out.</span></>}
         blurb="Tell us what you are building. We will send back a plan and a timeline, usually within one business day."
       />

@@ -104,7 +104,7 @@ export async function POST(req: Request) {
 <div style="max-width:560px;margin:0 auto;padding:48px 24px;">
 
   <div style="border-bottom:1px solid rgba(0,212,200,0.15);padding-bottom:24px;margin-bottom:32px;">
-    <p style="margin:0 0 8px;font-size:11px;color:#00D4C8;letter-spacing:0.12em;text-transform:uppercase;font-family:'Courier New',monospace;">Sunstate DevWorks · Gilbert, AZ</p>
+    <p style="margin:0 0 8px;font-size:11px;color:#00D4C8;letter-spacing:0.12em;text-transform:uppercase;font-family:'Courier New',monospace;">Sunstate DevWorks · Mesa, AZ</p>
     <h1 style="margin:0;font-size:28px;color:#F0EDE6;font-weight:800;letter-spacing:-0.02em;line-height:1.1;">We got your message,<br /><span style="color:#00D4C8;">${name.split(' ')[0]}.</span></h1>
   </div>
 
@@ -115,7 +115,7 @@ export async function POST(req: Request) {
   <p style="margin:0 0 32px;font-size:16px;color:#7A8FA6;line-height:1.8;">In the meantime, feel free to browse our work at <a href="https://sunstatedevworks.com/works" style="color:#00D4C8;">sunstatedevworks.com/works</a>.</p>
 
   <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;">
-    <p style="margin:0;font-size:13px;color:#7A8FA6;line-height:1.7;">Nick &amp; the Sunstate DevWorks team<br /><span style="color:#00D4C8;">contact@sunstatedevworks.com</span><br /><span style="font-size:11px;font-family:'Courier New',monospace;letter-spacing:0.06em;text-transform:uppercase;">Gilbert, Arizona · Available Now</span></p>
+    <p style="margin:0;font-size:13px;color:#7A8FA6;line-height:1.7;">Nick &amp; the Sunstate DevWorks team<br /><span style="color:#00D4C8;">contact@sunstatedevworks.com</span><br /><span style="font-size:11px;font-family:'Courier New',monospace;letter-spacing:0.06em;text-transform:uppercase;">Mesa, Arizona · Available Now</span></p>
   </div>
 
 </div>

@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 // Default social share image for every page that doesn't define its own.
-export const alt = 'Sunstate DevWorks: custom web, mobile apps, branding and AI from Gilbert, Arizona'
+export const alt = 'Sunstate DevWorks: custom web, mobile apps, branding and AI from Mesa, Arizona'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -37,7 +37,7 @@ export default function OpengraphImage() {
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 24, color: '#726C5C' }}>
-          <div>Gilbert · Phoenix · Scottsdale · Chandler · Mesa · Tempe</div>
+          <div>Mesa · Gilbert · Phoenix · Scottsdale · Chandler · Tempe</div>
           <div style={{ color: '#F04E23' }}>sunstatedevworks.com</div>
         </div>
       </div>

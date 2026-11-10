@@ -185,7 +185,7 @@ const WHY = [
   { n: '01', accent: 'var(--cyan)', title: 'You own 100%', desc: 'No proprietary platforms, no lock-in. The code is yours on delivery — forever. Take it anywhere.' },
   { n: '02', accent: 'var(--orange)', title: 'Clear scope', desc: 'Written scope and timeline upfront. You approve the plan before we write a line.' },
   { n: '03', accent: 'var(--cyan)', title: 'Built to convert', desc: 'Every site is engineered for speed, SEO and lead capture — not just to look pretty.' },
-  { n: '04', accent: 'var(--orange)', title: 'Local Arizona team', desc: 'Real humans in Gilbert, AZ. Direct access — no overseas outsourcing, no call-center queues.' },
+  { n: '04', accent: 'var(--orange)', title: 'Local Arizona team', desc: 'Real humans in Mesa, AZ. Direct access — no overseas outsourcing, no call-center queues.' },
 ]
 
 const STEPS = [
@@ -661,7 +661,7 @@ export default function LandingPage() {
       <header id="lp-head">
         <div className="lp-logo">
           SUNSTATE<em>.</em>DEVWORKS
-          <small>Gilbert, AZ · Custom Web · Apps · AI</small>
+          <small>Mesa, AZ · Custom Web · Apps · AI</small>
         </div>
         <div className="lp-head-r">
           <a href={PHONE_HREF} onClick={onCallClick} className="lp-head-tel"><IconPhone /> {PHONE_DISPLAY}</a>
@@ -1044,7 +1044,7 @@ export default function LandingPage() {
               { q: 'How long does it take?', a: 'Most marketing websites launch in about 2–4 weeks. Apps and custom platforms vary with scope. You’ll get a clear timeline in writing before we start.' },
               { q: 'Do I really own the code?', a: 'Yes — 100% of it, on delivery. No proprietary platforms, no lock-in, no monthly ransom. Host it with us or take it anywhere you like.' },
               { q: 'What if I already have a website?', a: 'We’ll run a free teardown showing exactly where your current site is losing leads, then only recommend a redesign if it actually makes sense for you.' },
-              { q: 'Do you only work with Gilbert businesses?', a: 'No — we’re based in Gilbert but serve all of metro Phoenix (Scottsdale, Chandler, Mesa, Tempe, Peoria and beyond), and we work with clients remotely too.' },
+              { q: 'Do you only work with Mesa businesses?', a: 'No — we’re based in Mesa but serve all of metro Phoenix (Gilbert, Scottsdale, Chandler, Tempe, Peoria and beyond), and we work with clients remotely too.' },
             ].map((f, i) => (
               <details className="lp-faq-item" key={i}>
                 <summary>{f.q}<span className="lp-faq-icon" aria-hidden="true">+</span></summary>
@@ -1074,7 +1074,7 @@ export default function LandingPage() {
           <span className="lp-footer-tag"><span className="lp-footer-tag-dot" />Official Landing Page</span>
           <span>A Sunstate Devworks campaign page — see everything we do at <a href="https://www.sunstatedevworks.com" target="_blank" rel="noopener noreferrer" className="lp-footer-site">sunstatedevworks.com</a></span>
         </div>
-        <span className="lp-footer-copy">© 2026 Sunstate DevWorks · Gilbert, AZ · All rights reserved</span>
+        <span className="lp-footer-copy">© 2026 Sunstate DevWorks · Mesa, AZ · All rights reserved</span>
         <span style={{ display: 'flex', gap: 18, flexWrap: 'wrap', justifyContent: 'center' }}>
           <a href="/privacy">Privacy Policy</a>
           <a href={`mailto:${EMAIL}`}>{EMAIL}</a>

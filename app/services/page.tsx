@@ -6,13 +6,13 @@ import { openGraphBase } from '@/lib/metadata'
 
 export const metadata: Metadata = {
   title: 'Services | Web, Mobile, Branding & AI',
-  description: 'Full-stack digital services from one Gilbert studio: custom web development, mobile apps, branding and AI automation. Hand-coded, no templates, 100% yours.',
+  description: 'Full-stack digital services from one Mesa studio: custom web development, mobile apps, branding and AI automation. Hand-coded, no templates, 100% yours.',
   alternates: { canonical: 'https://sunstatedevworks.com/services' },
   openGraph: {
     ...openGraphBase,
     url: 'https://sunstatedevworks.com/services',
     title: 'Services | Sunstate DevWorks',
-    description: 'Full-stack digital services from one Gilbert studio: web, mobile, branding and AI automation. Hand-coded, no templates, 100% yours.',
+    description: 'Full-stack digital services from one Mesa studio: web, mobile, branding and AI automation. Hand-coded, no templates, 100% yours.',
   },
 }
 
@@ -27,7 +27,7 @@ const whyUs = [
   { label: 'One studio, four capabilities', desc: 'No vendor juggling. Web, mobile, brand and AI all come from the same team that owns the outcome.' },
   { label: 'You own everything', desc: '100% of the code, files and domains are handed to you on delivery. No proprietary platforms, no lock-in.' },
   { label: 'Clear scope up front', desc: 'A written scope and timeline before any work starts. You approve the plan, then we build it.' },
-  { label: 'Local to Gilbert, AZ', desc: 'A real, local team. No call centers, no ticket queues. You can text us directly and reach a human.' },
+  { label: 'Local to Mesa, AZ', desc: 'A real, local team. No call centers, no ticket queues. You can text us directly and reach a human.' },
 ]
 
 const process = [
@@ -41,7 +41,7 @@ const SITE = 'https://sunstatedevworks.com'
 
 const intro = [
   'Most digital projects touch more than one discipline. A new website needs a brand that holds up, a mobile app needs a backend and a marketing site, and an AI tool only pays off when it plugs into the systems you already run. Splitting that work across three or four vendors means handoffs, finger-pointing and nobody owning the result.',
-  'Sunstate DevWorks puts design, code, mobile and AI under one roof in Gilbert, Arizona. The same team that designs your brand builds your site, ships your app and wires in the automation, so everything shares one design system, one codebase strategy and one point of contact. When the project is done, you own 100% of the code, files and accounts.',
+  'Sunstate DevWorks puts design, code, mobile and AI under one roof in Mesa, Arizona. The same team that designs your brand builds your site, ships your app and wires in the automation, so everything shares one design system, one codebase strategy and one point of contact. When the project is done, you own 100% of the code, files and accounts.',
 ]
 
 const faqs = [
@@ -205,7 +205,7 @@ export default function ServicesPage() {
             <Reveal><SectionLabel index="05">Where we work</SectionLabel></Reveal>
             <Reveal delay={0.05}>
               <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(28px, 4.2vw, 52px)', lineHeight: 1.03, letterSpacing: '-0.03em', color: 'var(--ink)', marginBottom: 20 }}>
-                Based in Gilbert. <span className="serif-em">Serving the Valley.</span>
+                Based in Mesa. <span className="serif-em">Serving the Valley.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.1}>

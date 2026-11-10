@@ -4,11 +4,11 @@ import Reveal from './Reveal'
 /* Shared "Engineering Studio" building blocks used across all pages. */
 
 export const CITIES: { name: string; slug: string; tag: string }[] = [
-  { name: 'Gilbert', slug: 'web-design-gilbert', tag: 'Home Base' },
+  { name: 'Mesa', slug: 'web-design-mesa', tag: 'Home Base' },
   { name: 'Phoenix', slug: 'web-design-phoenix', tag: 'Web Design' },
   { name: 'Scottsdale', slug: 'web-design-scottsdale', tag: 'Web Design' },
   { name: 'Chandler', slug: 'web-design-chandler', tag: 'Web & Apps' },
-  { name: 'Mesa', slug: 'web-design-mesa', tag: 'Web Design' },
+  { name: 'Gilbert', slug: 'web-design-gilbert', tag: 'Web Design' },
   { name: 'Tempe', slug: 'web-design-tempe', tag: 'Web & Branding' },
   { name: 'Peoria', slug: 'web-design-peoria', tag: 'Web Design' },
   { name: 'Glendale', slug: 'web-design-glendale', tag: 'Web Design' },
@@ -93,7 +93,7 @@ export function PageHeader({
 
 /** Closing call-to-action used at the bottom of most pages. */
 export function CTASection({
-  eyebrow = 'Booking new projects · Gilbert, AZ',
+  eyebrow = 'Booking new projects · Mesa, AZ',
   title,
   blurb = 'Tell us what you are building. We will send back a plan and a timeline, usually within one business day.',
 }: {

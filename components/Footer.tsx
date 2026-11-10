@@ -56,7 +56,7 @@ export default function Footer() {
               </span>
             </Link>
             <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, lineHeight: 1.7, color: 'var(--muted)', maxWidth: 260, marginBottom: 22 }}>
-              Custom digital products, engineered from scratch in Gilbert, Arizona. You own 100% of everything we build.
+              Custom digital products, engineered from scratch in Mesa, Arizona. You own 100% of everything we build.
             </p>
             <Link href="/contact" className="btn btn-primary" style={{ padding: '13px 22px' }}>
               Start a Project

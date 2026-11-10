@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import ServiceTemplate from '@/components/ServiceTemplate'
 import { openGraphBase } from '@/lib/metadata'
 
-const description = 'iOS and Android app development in Phoenix and Gilbert, AZ. Native SwiftUI and React Native apps with the backend included, from MVP to App Store launch.'
+const description = 'iOS and Android app development in Phoenix and Mesa, AZ. Native SwiftUI and React Native apps with the backend included, from MVP to App Store launch.'
 
 export const metadata: Metadata = {
   title: 'Mobile App Development in Phoenix, AZ',
@@ -61,7 +61,7 @@ export default function Page() {
           { q: 'Do you handle App Store submission?', a: 'Yes. We manage the full submission process for the App Store and Google Play, including the review back-and-forth.' },
           { q: 'What about the backend?', a: 'Included. We build the API, database, auth and integrations your app needs, usually on Supabase or Laravel.' },
           { q: 'Do you work with startups?', a: 'Yes. We help founders go from an idea to a launched MVP. Because you own the code and the store accounts, you can raise, hire or bring development in-house later without starting over.' },
-          { q: 'Do you only build apps for Arizona businesses?', a: 'No. We are based in Gilbert and meet with clients across metro Phoenix in person, and we work with clients elsewhere over video. Con Gusto, for example, runs operations in Southern California.' },
+          { q: 'Do you only build apps for Arizona businesses?', a: 'No. We are based in Mesa and meet with clients across metro Phoenix in person, and we work with clients elsewhere over video. Con Gusto, for example, runs operations in Southern California.' },
         ],
       }}
     />

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import ServiceTemplate from '@/components/ServiceTemplate'
 import { openGraphBase } from '@/lib/metadata'
 
-const description = 'Custom web development in Phoenix and Gilbert, AZ. Hand-coded Next.js websites, web apps and e-commerce. No WordPress, no templates, and you own the code.'
+const description = 'Custom web development in Phoenix and Mesa, AZ. Hand-coded Next.js websites, web apps and e-commerce. No WordPress, no templates, and you own the code.'
 
 export const metadata: Metadata = {
   title: 'Custom Web Development in Phoenix, AZ',

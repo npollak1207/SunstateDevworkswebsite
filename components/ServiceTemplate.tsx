@@ -265,7 +265,7 @@ export default function ServiceTemplate({ data }: { data: ServiceData }) {
           <Reveal><SectionLabel index="07">Where we work</SectionLabel></Reveal>
           <Reveal delay={0.05}>
             <h2 style={{ ...h2, fontSize: 'clamp(26px, 3.6vw, 46px)', marginBottom: 16 }}>
-              Based in Gilbert. <span className="serif-em">Serving metro Phoenix.</span>
+              Based in Mesa. <span className="serif-em">Serving metro Phoenix.</span>
             </h2>
           </Reveal>
           <Reveal delay={0.08}>

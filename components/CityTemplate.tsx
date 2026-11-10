@@ -278,7 +278,7 @@ export default function CityTemplate({ content }: { content: CityContent }) {
       </section>
 
       <CTASection
-        eyebrow={`Based in Gilbert, AZ · Serving ${region}`}
+        eyebrow={`Based in Mesa, AZ · Serving ${region}`}
         title={<>Ready to build something<br />in <span className="serif-em" style={{ color: 'var(--accent)' }}>{city}?</span></>}
         blurb="A 30-minute discovery call, free of charge. We scope the project, put it in writing, and get to work."
       />

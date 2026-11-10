@@ -16,7 +16,7 @@ const sections: { h: string; body: React.ReactNode }[] = [
     body: (
       <p>
         Sunstate DevWorks (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is a custom web, mobile,
-        and AI development studio based in Gilbert, Arizona. This policy explains what information we collect when
+        and AI development studio based in Mesa, Arizona. This policy explains what information we collect when
         you visit our website or contact us, how we use it, and the choices you have.
       </p>
     ),
@@ -112,7 +112,7 @@ const sections: { h: string; body: React.ReactNode }[] = [
     body: (
       <p>
         Questions about this policy or your information? Email us at <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.
-        Sunstate DevWorks, Gilbert, Arizona.
+        Sunstate DevWorks, Mesa, Arizona.
       </p>
     ),
   },

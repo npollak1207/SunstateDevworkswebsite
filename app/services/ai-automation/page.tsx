@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import ServiceTemplate from '@/components/ServiceTemplate'
 import { openGraphBase } from '@/lib/metadata'
 
-const description = 'AI automation and integration for Phoenix and Gilbert, AZ businesses. Custom chatbots, document intelligence and workflow automation on Claude, OpenAI and n8n.'
+const description = 'AI automation and integration for Phoenix and Mesa, AZ businesses. Custom chatbots, document intelligence and workflow automation on Claude, OpenAI and n8n.'
 
 export const metadata: Metadata = {
   title: 'AI Automation & Integration, Phoenix AZ',

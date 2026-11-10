@@ -39,7 +39,7 @@ const processSteps = [
 const pillars = [
   { k: 'You own everything', v: '100% of the code, design and data is yours on delivery. No proprietary platforms. No licensing. No lock-in, ever.' },
   { k: 'Hand-coded, never templated', v: 'Every project is written from scratch. That is why our sites load in under a second, rank, and never break on a plugin update.' },
-  { k: 'Local & accountable', v: 'A Gilbert, Arizona studio. Real people, direct access, and one team that owns the entire outcome end to end.' },
+  { k: 'Local & accountable', v: 'A Mesa, Arizona studio. Real people, direct access, and one team that owns the entire outcome end to end.' },
 ]
 
 const testimonials = [
@@ -68,7 +68,7 @@ const faqs = [
   { q: 'Do I own the code when the project is done?', a: '100%. Every line of code, every asset, every database. You get a full handoff, with no subscriptions, no licensing, and no lock-in of any kind.' },
   { q: 'Do you use WordPress or page builders?', a: 'Never. Everything we ship is hand-written in Next.js, SwiftUI, React Native or Laravel. That is why our sites load fast, rank well, and do not break when a plugin updates.' },
   { q: 'Do you offer maintenance after launch?', a: 'Yes. Optional monthly care plans cover hosting, updates, uptime monitoring and priority support. Or we hand you the keys entirely. Your choice.' },
-  { q: 'Do you only work with Arizona clients?', a: 'No. We are based in Gilbert, AZ but we work with clients nationwide. Discovery and check-ins happen over video, so we can run a project the same way whether you are down the street or across the country. Local clients are welcome to meet in person.' },
+  { q: 'Do you only work with Arizona clients?', a: 'No. We are based in Mesa, AZ but we work with clients nationwide. Discovery and check-ins happen over video, so we can run a project the same way whether you are down the street or across the country. Local clients are welcome to meet in person.' },
 ]
 
 /* ────────────────────────────── shared bits ────────────────────────────── */
@@ -138,7 +138,7 @@ function Magnetic({ children, strength = 0.28 }: { children: React.ReactNode; st
   )
 }
 
-/* Live Gilbert, AZ local time (MST, no DST) — a small "active studio" signal.
+/* Live Mesa, AZ local time (MST, no DST) — a small "active studio" signal.
    Renders only after mount so server/client HTML never mismatch. */
 function LocalClock() {
   const [time, setTime] = useState<string | null>(null)
@@ -292,7 +292,7 @@ export default function HomePage() {
           >
             <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', flexShrink: 0 }} />
             <h1 style={{ font: 'inherit', letterSpacing: 'inherit', color: 'inherit', display: 'inline-flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center', gap: 10 }}>
-              Gilbert, Arizona{" "}
+              Mesa, Arizona{" "}
               <span className="hide-mobile">· Web Design &amp; Development Studio</span>
             </h1>
             <LocalClock />
@@ -592,7 +592,7 @@ export default function HomePage() {
           <Reveal>
             <p className="eyebrow" style={{ color: 'var(--accent-2)', marginBottom: 26, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)' }} />
-              Booking new projects · Gilbert, AZ
+              Booking new projects · Mesa, AZ
             </p>
           </Reveal>
           <Reveal delay={0.05}>
