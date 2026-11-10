@@ -48,15 +48,24 @@ export default function ContactPage() {
 
   const handle = (k: string, v: string) => setForm((p) => ({ ...p, [k]: v }))
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!valid.phone || !form.service || !form.budget || !form.timeline) {
+    // Read the values off the form itself, so fields filled by autofill, browser
+    // agents or WebMCP (which may not fire React change events) are included.
+    const fd = new FormData(e.currentTarget)
+    const data = { ...form }
+    for (const k of Object.keys(data) as (keyof typeof data)[]) {
+      const v = fd.get(k)
+      if (typeof v === 'string') data[k] = v
+    }
+    setForm(data)
+    if (data.phone.replace(/\D/g, '').length < 10 || !data.service || !data.budget || !data.timeline) {
       setShowErrors(true)
       return
     }
     setStatus('submitting')
     try {
-      const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
+      const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
       if (!res.ok) throw new Error()
       setStatus('success')
       try { localStorage.removeItem(STORAGE_KEY) } catch {}
@@ -91,6 +100,25 @@ export default function ContactPage() {
 
   const fieldError = (msg: string) => (
     <p style={{ marginTop: 8, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--accent-deep)', letterSpacing: '0.03em' }}>{msg}</p>
+  )
+
+  // Single-choice pickers are real radio groups (keyboard, screen readers, agents),
+  // drawn as chips; the radio itself is visually hidden. Called as a function
+  // (not <ChoiceGroup />) so re-renders never remount it and steal focus.
+  const choiceGroup = ({ name, legend, options, error, hint }: { name: 'service' | 'budget' | 'timeline'; legend: string; options: string[]; error: string; hint: string }) => (
+    <fieldset style={{ border: 'none', margin: 0, padding: 0, minWidth: 0 }}>
+      <legend style={{ ...labelStyle, padding: 0 }}>{legend} *</legend>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+        {options.map((o) => (
+          <label key={o} className="chip-choice" style={{ position: 'relative' }}>
+            <input type="radio" name={name} value={o} checked={form[name] === o} onChange={() => handle(name, o)} toolparamdescription={hint}
+              style={{ position: 'absolute', opacity: 0, width: 1, height: 1, margin: 0, pointerEvents: 'none' }} />
+            <span style={{ ...chip(form[name] === o), display: 'inline-block' }}>{o}</span>
+          </label>
+        ))}
+      </div>
+      {showErrors && !form[name] && fieldError(error)}
+    </fieldset>
   )
 
   const chip = (active: boolean): React.CSSProperties => ({
@@ -144,19 +172,21 @@ export default function ContactPage() {
               </p>
             </div>
           ) : (
-            <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+            <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 22 }}
+              toolname="request_project_quote"
+              tooldescription="Send Sunstate Devworks (a web, app, branding and AI studio in Mesa, Arizona) a project inquiry. Every field is required. The studio replies the same business day with next steps for a free discovery call.">
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="name-grid">
                 <div>
-                  <label style={labelStyle}>Name *</label>
+                  <label htmlFor="contact-name" style={labelStyle}>Name *</label>
                   <div style={{ position: 'relative' }}>
-                    <input required style={inputStyle('name', true)} placeholder="John Smith" value={form.name} onChange={(e) => handle('name', e.target.value)} onFocus={() => setFocused('name')} onBlur={() => setFocused('')} />
+                    <input required id="contact-name" name="name" autoComplete="name" toolparamdescription="Full name of the person making the inquiry." style={inputStyle('name', true)} placeholder="John Smith" value={form.name} onChange={(e) => handle('name', e.target.value)} onFocus={() => setFocused('name')} onBlur={() => setFocused('')} />
                     <CheckMark show={valid.name} />
                   </div>
                 </div>
                 <div>
-                  <label style={labelStyle}>Email *</label>
+                  <label htmlFor="contact-email" style={labelStyle}>Email *</label>
                   <div style={{ position: 'relative' }}>
-                    <input required type="email" style={inputStyle('email', true)} placeholder="john@company.com" value={form.email} onChange={(e) => handle('email', e.target.value)} onFocus={() => setFocused('email')} onBlur={() => setFocused('')} />
+                    <input required type="email" id="contact-email" name="email" autoComplete="email" toolparamdescription="Email address the studio should reply to." style={inputStyle('email', true)} placeholder="john@company.com" value={form.email} onChange={(e) => handle('email', e.target.value)} onFocus={() => setFocused('email')} onBlur={() => setFocused('')} />
                     <CheckMark show={valid.email} />
                   </div>
                 </div>
@@ -164,50 +194,30 @@ export default function ContactPage() {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="name-grid">
                 <div>
-                  <label style={labelStyle}>Phone *</label>
+                  <label htmlFor="contact-phone" style={labelStyle}>Phone *</label>
                   <div style={{ position: 'relative' }}>
-                    <input required type="tel" autoComplete="tel" style={inputStyle('phone', true)} placeholder="(480) 555-0123" value={form.phone} onChange={(e) => handle('phone', e.target.value)} onFocus={() => setFocused('phone')} onBlur={() => setFocused('')} />
+                    <input required type="tel" autoComplete="tel" id="contact-phone" name="phone" toolparamdescription="Phone number, at least 10 digits." style={inputStyle('phone', true)} placeholder="(480) 555-0123" value={form.phone} onChange={(e) => handle('phone', e.target.value)} onFocus={() => setFocused('phone')} onBlur={() => setFocused('')} />
                     <CheckMark show={valid.phone} />
                   </div>
                   {showErrors && !valid.phone && fieldError('Please enter a valid phone number')}
                 </div>
                 <div>
-                  <label style={labelStyle}>Company / Business *</label>
+                  <label htmlFor="contact-company" style={labelStyle}>Company / Business *</label>
                   <div style={{ position: 'relative' }}>
-                    <input required style={inputStyle('company', true)} placeholder="Acme Inc." value={form.company} onChange={(e) => handle('company', e.target.value)} onFocus={() => setFocused('company')} onBlur={() => setFocused('')} />
+                    <input required id="contact-company" name="company" autoComplete="organization" toolparamdescription="Name of the company or business." style={inputStyle('company', true)} placeholder="Acme Inc." value={form.company} onChange={(e) => handle('company', e.target.value)} onFocus={() => setFocused('company')} onBlur={() => setFocused('')} />
                     <CheckMark show={valid.company} />
                   </div>
                 </div>
               </div>
 
-              <div>
-                <label style={labelStyle}>Service needed *</label>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                  {services.map((s) => <button key={s} type="button" onClick={() => handle('service', s)} style={chip(form.service === s)}>{s}</button>)}
-                </div>
-                {showErrors && !form.service && fieldError('Please pick a service')}
-              </div>
+              {choiceGroup({ name: "service", legend: "Service needed", options: services, error: "Please pick a service", hint: "Which service the project needs." })}
+              {choiceGroup({ name: "budget", legend: "Estimated budget", options: budgets, error: "Please pick a budget range", hint: "Rough budget range for the project, in US dollars." })}
+              {choiceGroup({ name: "timeline", legend: "Timeline", options: timelines, error: "Please pick a timeline", hint: "When the client wants to start or launch." })}
 
               <div>
-                <label style={labelStyle}>Estimated budget *</label>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                  {budgets.map((b) => <button key={b} type="button" onClick={() => handle('budget', b)} style={chip(form.budget === b)}>{b}</button>)}
-                </div>
-                {showErrors && !form.budget && fieldError('Please pick a budget range')}
-              </div>
-
-              <div>
-                <label style={labelStyle}>Timeline *</label>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                  {timelines.map((t) => <button key={t} type="button" onClick={() => handle('timeline', t)} style={chip(form.timeline === t)}>{t}</button>)}
-                </div>
-                {showErrors && !form.timeline && fieldError('Please pick a timeline')}
-              </div>
-
-              <div>
-                <label style={labelStyle}>Tell us about your project *</label>
+                <label htmlFor="contact-message" style={labelStyle}>Tell us about your project *</label>
                 <div style={{ position: 'relative' }}>
-                  <textarea required rows={5} style={{ ...inputStyle('message', true), paddingRight: 44, resize: 'vertical' }} placeholder="What are you building? What problem does it solve? Any existing site or app to reference?" value={form.message} onChange={(e) => handle('message', e.target.value)} onFocus={() => setFocused('message')} onBlur={() => setFocused('')} />
+                  <textarea required rows={5} id="contact-message" name="message" toolparamdescription="What the client wants built, the problem it solves, and any existing site or app to reference (at least 20 characters)." style={{ ...inputStyle('message', true), paddingRight: 44, resize: 'vertical' }} placeholder="What are you building? What problem does it solve? Any existing site or app to reference?" value={form.message} onChange={(e) => handle('message', e.target.value)} onFocus={() => setFocused('message')} onBlur={() => setFocused('')} />
                   <CheckMark show={valid.message} top="14px" />
                 </div>
               </div>
@@ -251,7 +261,7 @@ export default function ContactPage() {
               {steps.map((s, i) => (
                 <div key={s.step} style={{ display: 'flex', gap: 16, marginBottom: i < steps.length - 1 ? 20 : 0 }}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
-                    <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)', borderRadius: '50%', border: '1px solid var(--accent-line)', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, fontSize: 10 }}>{s.step}</span>
+                    <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-deep)', borderRadius: '50%', border: '1px solid var(--accent-line)', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, fontSize: 10 }}>{s.step}</span>
                     {i < steps.length - 1 && <div style={{ width: 1, flex: 1, background: 'var(--line)', margin: '6px 0' }} />}
                   </div>
                   <div style={{ paddingBottom: 4 }}>
@@ -307,6 +317,8 @@ export default function ContactPage() {
         @keyframes spin { to { transform: rotate(360deg); } }
         .contact-method:hover { transform: translateX(2px); background: var(--paper-2) !important; }
         input::placeholder, textarea::placeholder { color: var(--faint); }
+        .chip-choice { cursor: pointer; }
+        .chip-choice input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
         @media (max-width: 860px) {
           .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
         }
