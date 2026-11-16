@@ -89,33 +89,6 @@ const Arrow = ({ s = 16 }: { s?: number }) => (
 
 const prefersReducedMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-/* Count-up numeral. Parses a leading symbol + number + trailing unit
-   (e.g. "<1.2s", "4.9★", "50+") and animates the numeric part on mount. */
-function CountUp({ value, delay = 0 }: { value: string; delay?: number }) {
-  const m = value.match(/^(\D*)([\d.]+)(.*)$/)
-  const [display, setDisplay] = useState(!m ? value : `${m[1]}0${m[3]}`)
-  useEffect(() => {
-    if (!m || prefersReducedMotion()) { setDisplay(value); return }
-    const prefix = m[1], target = parseFloat(m[2]), suffix = m[3]
-    const decimals = m[2].includes('.') ? m[2].split('.')[1].length : 0
-    let raf = 0, startT = 0
-    const dur = 1200
-    const to = setTimeout(() => {
-      const tick = (t: number) => {
-        if (!startT) startT = t
-        const p = Math.min((t - startT) / dur, 1)
-        const eased = 1 - Math.pow(1 - p, 3)
-        setDisplay(`${prefix}${(target * eased).toFixed(decimals)}${suffix}`)
-        if (p < 1) raf = requestAnimationFrame(tick)
-      }
-      raf = requestAnimationFrame(tick)
-    }, delay * 1000)
-    return () => { clearTimeout(to); cancelAnimationFrame(raf) }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  return <>{display}</>
-}
-
 /* Magnetic wrapper — child drifts slightly toward the cursor. No-op under reduced motion.
    Writes the transform straight to the DOM so mouse moves never re-render React. */
 function Magnetic({ children, strength = 0.28 }: { children: React.ReactNode; strength?: number }) {
@@ -139,26 +112,26 @@ function Magnetic({ children, strength = 0.28 }: { children: React.ReactNode; st
 }
 
 /* Live Mesa, AZ local time (MST, no DST) — a small "active studio" signal.
-   Renders only after mount so server/client HTML never mismatch. */
+   The time is only known after mount, so until then a same-width placeholder
+   holds its place: the caption never re-centers when the clock arrives. */
 function LocalClock() {
   const [time, setTime] = useState<string | null>(null)
   useEffect(() => {
-    const fmt = () => new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Phoenix' }).format(new Date())
+    const fmt = () => new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Phoenix' }).format(new Date())
     setTime(fmt())
     const id = setInterval(() => setTime(fmt()), 30000)
     return () => clearInterval(id)
   }, [])
-  if (!time) return null
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, color: 'var(--faint)' }}>
       <span aria-hidden="true" style={{ width: 1, height: 11, background: 'var(--line-2)' }} />
-      {time} MST
+      <span aria-hidden={!time} style={{ opacity: time ? 1 : 0, transition: 'opacity 0.5s ease' }}>{time ?? '00:00 AM'} MST</span>
     </span>
   )
 }
 
 /* Signature horizon divider — echoes the SunHero horizon line + coordinate tag. */
-function HorizonRule({ label = '33.35°N · 111.79°W' }: { label?: string }) {
+function HorizonRule({ label = '33.42°N · 111.83°W' }: { label?: string }) {
   return (
     <div aria-hidden="true" style={{ padding: '0 clamp(20px, 5vw, 44px)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', height: 52 }}>
@@ -279,16 +252,19 @@ export default function HomePage() {
     <>
       <HomeStructuredData faqs={faqs} />
       {/* ═══════════════════════ HERO (owns the first screen) ═══════════════════════ */}
-      <section className="hero-section" style={{ position: 'relative', minHeight: '100svh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden', paddingTop: 'calc(clamp(112px, 17vh, 200px) + env(safe-area-inset-top, 0px))', paddingBottom: 'clamp(40px, 8vh, 104px)' }}>
-        <SunHero horizon="45%" />
-        {/* grounding scrim so text stays crisp over the sun */}
-        <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 32%, var(--paper) 66%)', zIndex: 1, pointerEvents: 'none' }} />
+      <section className="hero-section" style={{ position: 'relative', minHeight: '100svh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden', paddingTop: 'calc(96px + env(safe-area-inset-top, 0px))', paddingBottom: 'clamp(36px, 6vh, 96px)', '--sun-h': 'clamp(84px, min(27vh - 62px, 34vw), 250px)' } as React.CSSProperties}>
+        {/* The sun owns the sky; everything else sits on the ground under its
+            horizon line, so the type never has to fight the disc. */}
+        <SunHero />
 
-        <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: 1080, margin: '0 auto', padding: '0 clamp(20px, 5vw, 44px)', textAlign: 'center' }}>
-          {/* The pill carries the page's H1 so the heading names the service and
-              location; the display headline below is the brand line. */}
+        {/* Everything is on screen from the first frame. The only entrance is one
+            short settle of the whole block (transform only, never transparent) plus
+            the underline draw, so nothing pops in late or shifts once it has landed. */}
+        <div className="in-slide" style={{ '--in-y': '14px', '--in-t': '0.7s', position: 'relative', zIndex: 2, width: '100%', maxWidth: 1120, margin: '0 auto', padding: '0 clamp(20px, 5vw, 44px)', textAlign: 'center' } as React.CSSProperties}>
+          {/* The horizon caption carries the page's H1 so the heading names the
+              service and location; the display headline below is the brand line. */}
           <div
-            className="eyebrow hero-eyebrow in-rise" style={{ '--in-y': '12px', '--in-t': '0.7s', marginBottom: 'clamp(14px, 2.4vh, 26px)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 10, maxWidth: 'calc(100vw - 32px)', background: 'rgba(244,241,234,0.68)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid var(--line)', borderRadius: 999, padding: '8px 16px' } as React.CSSProperties}
+            className="eyebrow hero-eyebrow" style={{ marginTop: 'clamp(24px, 3.4vh, 36px)', marginBottom: 'clamp(14px, 2.6vh, 28px)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 10, maxWidth: '100%' } as React.CSSProperties}
           >
             <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', flexShrink: 0 }} />
             <h1 style={{ font: 'inherit', letterSpacing: 'inherit', color: 'inherit', display: 'inline-flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center', gap: 10 }}>
@@ -298,45 +274,39 @@ export default function HomePage() {
             <LocalClock />
           </div>
 
-          <p className="hero-title" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(37px, 9.4vw, 120px)', lineHeight: 0.92, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 'clamp(20px, 3vh, 34px)' }}>
+          <p className="hero-title" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(37px, min(8.2vw, 11.2vh), 112px)', lineHeight: 0.94, letterSpacing: '-0.035em', color: 'var(--ink)', marginBottom: 'clamp(18px, 2.8vh, 32px)' }}>
             <span className="hl-line">
-              <span className="in-line" style={{ '--in-d': '0.1s' } as React.CSSProperties}>
-                The studio behind
-              </span>
+              The studio behind
             </span>
             <span className="hl-line">
-              <span className="in-line" style={{ '--in-d': '0.22s' } as React.CSSProperties}>
                 brands that <span style={{ position: 'relative', display: 'inline-block' }}>
                   <span className="serif-em" style={{ color: 'var(--accent)' }}>outshine.</span>
                   <span aria-hidden="true" className="in-underline" style={{ position: 'absolute', left: 0, right: '0.16em', bottom: '0.05em', height: 3, borderRadius: 2, background: 'var(--accent)' }} />
                 </span>
-              </span>
             </span>
           </p>
 
-          {/* Slides in but is never transparent: this is the page's LCP element, so it
-              must be visible on the very first frame. */}
-          <p
-            className="in-slide" style={{ '--in-d': '0.3s', fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.9vw, 20px)', lineHeight: 1.55, color: 'var(--muted)', maxWidth: 640, margin: '0 auto clamp(24px, 3.4vh, 40px)' } as React.CSSProperties}
+<p
+            style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 1.9vw, 20px)', lineHeight: 1.55, color: 'var(--muted)', maxWidth: 700, margin: '0 auto clamp(22px, 3.2vh, 38px)' } as React.CSSProperties}
           >
             We design and engineer custom websites, apps, and brands for companies that refuse to blend in. Every pixel hand-built. Every line of code <span style={{ color: 'var(--ink)', fontWeight: 500 }}>yours to keep.</span>
           </p>
 
           <div
-            className="hero-cta in-rise" style={{ '--in-d': '0.42s', display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 'clamp(22px, 3.6vh, 44px)' } as React.CSSProperties}
+            className="hero-cta" style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 'clamp(22px, 3.6vh, 44px)' } as React.CSSProperties}
           >
             <Magnetic><Link href="/contact" className="btn btn-primary">Start a Project <span className="btn-arrow"><Arrow s={15} /></span></Link></Magnetic>
             <Link href="/works" className="btn btn-ghost">See Our Work</Link>
           </div>
 
           <div
-            className="hero-stats in-rise" style={{ '--in-y': '0px', '--in-t': '0.9s', '--in-d': '0.6s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(16px, 3vw, 34px)', flexWrap: 'wrap' } as React.CSSProperties}
+            className="hero-stats" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(16px, 3vw, 34px)', flexWrap: 'wrap' } as React.CSSProperties}
           >
             {stats.map((s, i) => (
               <div key={s.l} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(16px, 3vw, 34px)' }}>
                 {i > 0 && <span style={{ width: 1, height: 26, background: 'var(--line-2)' }} className="hide-mobile" />}
                 <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 20, color: 'var(--ink)', lineHeight: 1 }}><CountUp value={s.n} delay={0.75 + i * 0.08} /></span>
+                  <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 20, color: 'var(--ink)', lineHeight: 1 }}>{s.n}</span>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--faint)', marginTop: 5 }}>{s.l}</span>
                 </span>
               </div>
@@ -344,13 +314,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* scroll cue — hides on short viewports (see media query below) */}
-        <div className="hero-cue" aria-hidden="true" style={{ position: 'absolute', bottom: 18, left: '50%', transform: 'translateX(-50%)', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 9 }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--faint)' }}>Scroll</span>
-          <span style={{ position: 'relative', width: 1, height: 34, background: 'linear-gradient(var(--line-strong), transparent)', overflow: 'hidden' }}>
-            <span className="hero-cue-dot" style={{ position: 'absolute', top: 0, left: 0, width: 1, height: 11, background: 'var(--accent)' }} />
-          </span>
-        </div>
       </section>
 
       {/* ═══════════════════════ TRUST STRIP ═══════════════════════ */}
@@ -406,7 +369,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <HorizonRule label="33.35°N · 111.79°W" />
+      <HorizonRule label="33.42°N · 111.83°W" />
 
       {/* ═══════════════════════ SELECTED WORK ═══════════════════════ */}
       <section className="cv" style={{ padding: 'clamp(88px, 12vh, 150px) clamp(20px, 5vw, 44px)', background: 'var(--paper-2)', borderBottom: '1px solid var(--line)' }}>
@@ -622,22 +585,8 @@ export default function HomePage() {
       </section>
 
       <style>{`
-        /* Hero headline mask-reveal — clip desktop, relax on mobile so wrapped lines never get cut */
-        .hl-line { display: block; overflow: hidden; padding-bottom: 0.09em; }
-        @media (max-width: 600px) { .hl-line { overflow: visible; } }
-        /* Scroll cue — a dot falling down a hairline */
-        .hero-cue-dot { animation: cueDrop 2.2s ease-in-out infinite; }
-        @keyframes cueDrop {
-          0% { transform: translateY(-11px); opacity: 0; }
-          35% { opacity: 1; }
-          100% { transform: translateY(34px); opacity: 0; }
-        }
-        /* Hide the scroll cue on shorter viewports so it never collides with the stats row */
-        @media (max-height: 860px) { .hero-cue { display: none !important; } }
         /* ── Mobile hero tuning ── */
         @media (max-width: 600px) {
-          /* never let the cue fight the stats/CTA for the bottom edge on phones */
-          .hero-cue { display: none !important; }
           /* full-width, thumb-friendly CTAs stacked in reading order */
           .hero-cta { flex-direction: column; gap: 12px; }
           .hero-cta > * { width: 100%; }
@@ -645,8 +594,6 @@ export default function HomePage() {
           /* stats as a tidy 2×2 grid instead of a cramped single-row wrap */
           .hero-stats { display: grid !important; grid-template-columns: 1fr 1fr; gap: 22px 16px !important; max-width: 340px; margin: 0 auto; }
           .hero-stats > div { justify-content: center; }
-          /* keep the eyebrow pill from crowding its own edges */
-          .hero-eyebrow { padding: 7px 14px; gap: 8px; }
         }
         @media (max-width: 380px) {
           /* guard the two long words on the narrowest phones */
@@ -676,7 +623,7 @@ export default function HomePage() {
         /* Short / landscape viewports (e.g. phones held sideways) — release the forced 100svh
            and trim padding so the stacked hero never overflows or clips its stats/CTA */
         @media (max-height: 680px) and (min-width: 601px) {
-          .hero-section { min-height: auto !important; padding-top: calc(clamp(96px, 16vh, 116px) + env(safe-area-inset-top, 0px)) !important; padding-bottom: 40px !important; }
+          .hero-section { min-height: auto !important; padding-top: calc(88px + env(safe-area-inset-top, 0px)) !important; padding-bottom: 40px !important; }
         }
       `}</style>
     </>

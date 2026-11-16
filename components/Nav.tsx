@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import SunGlyph from '@/components/SunGlyph'
+import Logo from '@/components/Logo'
 
 const PHONE_DISPLAY = '(480) 793-9161'
 const PHONE_TEL = '+14807939161'
@@ -90,11 +90,7 @@ export default function Nav() {
 
           {/* Wordmark */}
           <Link href="/" className="wm-link" style={{ display: 'flex', alignItems: 'center', gap: 11, textDecoration: 'none', flexShrink: 0 }}>
-            <span className="wm-glyph"><SunGlyph size={22} /></span>
-            <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, letterSpacing: '-0.02em', color: 'var(--ink)' }}>Sunstate Devworks</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--faint)', marginTop: 3 }}>Design & Engineering Studio</span>
-            </span>
+            <Logo size={19} />
           </Link>
 
           {/* Desktop nav */}
@@ -179,14 +175,14 @@ export default function Nav() {
         position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 201, width: 'min(340px, 90vw)',
         background: 'var(--paper)', borderLeft: '1px solid var(--line)', display: 'flex', flexDirection: 'column',
         transform: open ? 'translateX(0)' : 'translateX(100%)', transition: 'transform 0.34s cubic-bezier(0.22,1,0.36,1)',
-        boxShadow: '-24px 0 60px rgba(23,20,15,0.16)',
+        // only while open: off-canvas, this shadow would bleed back over the page's right edge
+        boxShadow: open ? '-24px 0 60px rgba(23,20,15,0.16)' : 'none',
         paddingTop: 'env(safe-area-inset-top, 0px)',
         paddingRight: 'env(safe-area-inset-right, 0px)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 22px', borderBottom: '1px solid var(--line)' }}>
           <Link href="/" onClick={() => setOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-            <SunGlyph size={20} />
-            <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 16, letterSpacing: '-0.02em', color: 'var(--ink)' }}>Sunstate Devworks</span>
+            <Logo size={17} />
           </Link>
           <button onClick={() => setOpen(false)} style={{ background: 'var(--paper-2)', border: '1px solid var(--line)', borderRadius: 3, cursor: 'pointer', color: 'var(--ink)', padding: '7px 9px', display: 'flex' }} aria-label="Close">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>
@@ -228,7 +224,7 @@ export default function Nav() {
 
       <style>{`
         .wm-glyph { transition: transform 0.4s cubic-bezier(0.22,1,0.36,1); }
-        .wm-link:hover .wm-glyph { transform: rotate(-8deg) scale(1.06); }
+        .wm-link:hover .wm-glyph { transform: translateY(-2px); }
         .nv-link { transition: color 0.2s ease; }
         .nv-link:hover { color: var(--ink) !important; }
         .nv-underline { position: absolute; bottom: 0; left: 0; width: 100%; height: 1.5px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s cubic-bezier(0.22,1,0.36,1); }

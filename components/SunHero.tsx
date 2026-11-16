@@ -1,14 +1,17 @@
 
 /**
- * Signature "Sunstate" motif — a precision-engineered sun RISING over a horizon.
+ * Signature "Sunstate" motif: a precision-engineered sun RISING over a horizon.
  * Layered like a real desert sunrise: sunburst haze, sky-wash, bloom, a banded
  * disc that melts into the horizon, orbit rings, ground light-spill, ticks.
  *
- * The horizon (viewBox y=300) is anchored to `horizon` (a % of hero height) via
- * translateY, so it lands at the same spot on every screen. The viewBox extends
- * well above y=0 so the rays fade out instead of being clipped into a hard box.
+ * It renders as a block in the hero's flow: a stage `--sun-h` tall whose bottom
+ * edge IS the horizon, so whatever follows it sits directly under the horizon
+ * line. The disc fills the stage; rays, haze and ground-spill overflow it on
+ * purpose (the hero section clips them) and every wash fades to nothing before
+ * its own edge, so there is never a visible box.
  *
- * Subtle scroll parallax + mount rise; respects reduced motion. All motion is
+ * Subtle scroll parallax; respects reduced motion. It is fully painted on the
+ * first frame (no fade-in), so the hero never flashes empty. All motion is
  * CSS (.sun-* in globals.css): no JS, so it paints with the first frame and
  * never waits on hydration.
  */
@@ -54,17 +57,17 @@ const EMBERS = [
   { x: 190, y: 292, r: 2.8, d: 16.5, delay: 8.6 },
 ]
 
-export default function SunHero({ horizon = '45%' }: { horizon?: string }) {
+export default function SunHero() {
   const rays = Array.from({ length: 56 })
 
   return (
-    <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+    <div aria-hidden="true" className="sun-stage" style={{ position: 'relative', height: 'var(--sun-h, 200px)', pointerEvents: 'none' }}>
       <div className="sun-parallax" style={{ position: 'absolute', inset: 0 }}>
-        <div className="sun-mount" style={{ position: 'absolute', inset: 0 }}>
+        <div style={{ position: 'absolute', inset: 0 }}>
           <svg
             viewBox="0 -320 1200 780"
             preserveAspectRatio="xMidYMid meet"
-            style={{ position: 'absolute', top: horizon, left: '50%', transform: `translate(-50%, -${HORIZON_FRAC}%)`, width: 'min(1240px, 128vw)', height: 'auto' }}
+            style={{ position: 'absolute', top: '100%', left: '50%', transform: `translate(-50%, -${HORIZON_FRAC}%)`, width: 'calc(var(--sun-h, 200px) * 6.3)', height: 'auto', overflow: 'visible' }}
           >
             <defs>
               <radialGradient id="sunDisc" cx="50%" cy="70%" r="70%">
@@ -88,13 +91,13 @@ export default function SunHero({ horizon = '45%' }: { horizon?: string }) {
                 <stop offset="40%" stopColor="rgba(245,110,45,0.10)" />
                 <stop offset="100%" stopColor="rgba(245,110,45,0)" />
               </radialGradient>
-              <radialGradient id="skyWash" cx="50%" cy="60%" r="60%">
+              <radialGradient id="skyWash" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stopColor="rgba(255,150,85,0.26)" />
                 <stop offset="42%" stopColor="rgba(245,120,60,0.12)" />
                 <stop offset="78%" stopColor="rgba(240,110,50,0.03)" />
                 <stop offset="100%" stopColor="rgba(240,110,50,0)" />
               </radialGradient>
-              <radialGradient id="spill" cx="50%" cy="0%" r="72%">
+              <radialGradient id="spill" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stopColor="rgba(255,140,80,0.16)" />
                 <stop offset="100%" stopColor="rgba(255,140,80,0)" />
               </radialGradient>
@@ -141,7 +144,7 @@ export default function SunHero({ horizon = '45%' }: { horizon?: string }) {
             </defs>
 
             {/* ground light-spill (below horizon) — radial so it fades on all sides */}
-            <ellipse cx="600" cy="300" rx="480" ry="150" fill="url(#spill)" />
+            <ellipse cx="600" cy="300" rx="520" ry="120" fill="url(#spill)" />
 
             <g clipPath="url(#aboveHorizon)">
               {/* atmosphere — radial washes only (they fade before the SVG edges, so no hard box) */}
@@ -206,13 +209,6 @@ export default function SunHero({ horizon = '45%' }: { horizon?: string }) {
                 {/* fine measurement ring + rim light */}
                 <circle cx="600" cy="300" r="196" fill="none" stroke="rgba(23,20,15,0.10)" strokeWidth="1" strokeDasharray="1 6" />
                 <path d="M 430 300 A 170 170 0 0 1 770 300" fill="none" stroke="url(#rim)" strokeWidth="2" clipPath="url(#sunClip)" opacity="0.7" />
-
-                {/* orbiting node with a faint radial guide */}
-                <g className="sun-orbit">
-                  <line x1="600" y1="300" x2="600" y2="34" stroke="rgba(23,20,15,0.10)" strokeWidth="1" />
-                  <circle cx="600" cy="34" r="4.5" fill="#17140F" />
-                  <circle cx="600" cy="34" r="9" fill="none" stroke="rgba(23,20,15,0.36)" strokeWidth="1" />
-                </g>
               </g>
 
               {/* rising embers — glowing motes drifting up from the horizon (in front of the disc) */}
@@ -232,7 +228,6 @@ export default function SunHero({ horizon = '45%' }: { horizon?: string }) {
               const edge = Math.min(i, 40 - i) / 12
               return <line key={i} x1={x} y1="300" x2={x} y2={major ? 314 : 308} stroke="rgba(23,20,15,0.3)" strokeWidth="1" opacity={Math.min(1, edge)} />
             })}
-            <text x="600" y="332" textAnchor="middle" fill="rgba(23,20,15,0.38)" style={{ font: '10px var(--font-mono, monospace)', letterSpacing: '0.14em' }}>33.35°N · 111.79°W · GILBERT, AZ</text>
           </svg>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import SunGlyph from '@/components/SunGlyph'
+import Logo from '@/components/Logo'
 
 const PHONE_DISPLAY = '(480) 793-9161'
 const PHONE_TEL = '+14807939161'
@@ -49,11 +49,7 @@ export default function Footer() {
           {/* Brand */}
           <div style={{ gridColumn: 'auto', minWidth: 220 }}>
             <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 11, textDecoration: 'none', marginBottom: 20 }}>
-              <SunGlyph size={26} />
-              <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, letterSpacing: '-0.02em', color: 'var(--ink)' }}>Sunstate Devworks</span>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--faint)', marginTop: 3 }}>Design & Engineering Studio</span>
-              </span>
+              <Logo size={20} tagline />
             </Link>
             <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, lineHeight: 1.7, color: 'var(--muted)', maxWidth: 260, marginBottom: 22 }}>
               Custom digital products, engineered from scratch in Mesa, Arizona. You own 100% of everything we build.
